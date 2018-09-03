@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class Ordenacao {	
 
-	 CadastroEmArquivo cad = new CadastroEmArquivo();	
+	 Object cad = new Object();	
 
 	public void ordenar(String path) {
 		File arq = new File(path);

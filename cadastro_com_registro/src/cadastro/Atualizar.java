@@ -17,7 +17,7 @@ public class Atualizar {
 	ValidaCelular celular = new ValidaCelular();
 	//ValidaNome nome = new ValidaNome();
 	CadastroEmArquivo cad = new CadastroEmArquivo();
-	ArrayList<CadastroEmArquivo> cadastroEmArquivo = new ArrayList<CadastroEmArquivo>();
+	ArrayList<Object> cadastroEmArquivo = new ArrayList<Object>();
 
 	private String textInput(String label) {
 		System.out.println(label);

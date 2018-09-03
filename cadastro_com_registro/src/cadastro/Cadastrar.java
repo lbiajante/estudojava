@@ -1,5 +1,6 @@
 package cadastro;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -9,47 +10,46 @@ public class Cadastrar {
 	ValidaData data = new ValidaData();
 	ValidaCPF cpf = new ValidaCPF();
 	ValidaCelular celular = new ValidaCelular();
-	ValidaStrings string = new ValidaStrings();	
-	
+	ValidaStrings string = new ValidaStrings();
 	Util util = new Util();
 	Scanner entrada = new Scanner(System.in);
 
-	ArrayList<CadastroEmArquivo> cadastroEmArquivo = new ArrayList<CadastroEmArquivo>();
-
-	public void cadastrar(String path) {
+	public void cadastrar(String path){
+		
+		 ArrayList<Object> cadastroEmArquivo = new ArrayList<Object>();
+				 //Util.lerArquivo(path);
 		boolean cadastrando = true;
+		String nomez, dataz, cpfz, empresaz, areaz, celularz, idz;
+
 		while (cadastrando) {
 
-			System.out.println("Cadastro de Usuario");
-			// util.contarLinhas(path);
-			
-			Id id  = new Id(util.verificaCodigo(textInput("Digite o ID a ser cadastrado")));
+			System.out.println("Cadastro de Usuario");			
+			textInput("");
+			Id id = new Id(util.verificaCodigo(textInput("Digite o ID a ser cadastrado")));
 			cad.setPosicao(id.getId());
-			
+			idz = cad.getPosicao();
 			String label = "Digite o nome";
 			cad.setNome(string.texto(textInput(label), label));
-			
+			nomez = cad.getNome();
 			cad.setDataNascimento(data.data());
-			
-			cad.setCpf(cpf.validarCPF());
-			
+			dataz = cad.getDataNascimento();
+			cad.setCpf (cpf.validarCPF());
+			cpfz = cad.getCpf();
 			label = "Digite o nome da empresa";
 			cad.setEmpresa(string.texto(textInput(label), label));
-			
+			empresaz = cad.getEmpresa();
 			label = "Digite a area de atuacao";
 			cad.setAreaDeAtuacao(string.texto(textInput(label), label));
-			
-			cad.setCelular(celular.formatarCelular());			
-
+			areaz = cad.getAreaDeAtuacao();
+			cad.setCelular(celular.formatarCelular());
+			celularz = cad.getCelular();
 			String cadastrar = textInput("Adicionar cadastro (S/N)?");
 			boolean confere = true;
-			while (confere){
+			while (confere) {
 				if (cadastrar.trim().equalsIgnoreCase("s")) {
 					System.out.println("Cadastro adicionado!");
-					cadastroEmArquivo.add(cad);
-					String linha = cad.toString();
 					System.out.println(cad.toString());
-					util.escreverNoArquivo(path, linha);
+					cadastroEmArquivo.add(new CadastroEmArquivo(path, nomez, dataz, cpfz, empresaz, areaz, celularz, idz));					
 					cadastrando = false;
 					confere = false;
 				} else if (cadastrar.trim().equalsIgnoreCase("n")) {
@@ -59,24 +59,25 @@ public class Cadastrar {
 				} else {
 					System.out.println("Opcao invalida");
 					cadastrar = textInput("Digite uma opcao valida. (S/N)");
-					confere = true;				
+					confere = true;
 				}
 			}
-			String continua = textInput("Continuar cadastrando (S/N)?");						
+			Util.escreverNoArquivo(cadastroEmArquivo, path);
+			String continua = textInput("Continuar cadastrando (S/N)?");
 			if (continua.equalsIgnoreCase("n")) {
-				cadastrando = false;				
+				cadastrando = false;
 			} else if (continua.equalsIgnoreCase("s")) {
-				cadastrando = true;				
-			} else {				
+				cadastrando = true;
+			} else {
 				System.out.println("Opcao invalida!");
 				cadastrando = false;
 			}
 		}
 	}
+
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();
 	}
-
 
 }

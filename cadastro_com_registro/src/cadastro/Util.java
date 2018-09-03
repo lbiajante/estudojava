@@ -1,15 +1,14 @@
 package cadastro;
 
-import java.io.DataInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.LineNumberReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.rmi.server.ObjID;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -22,20 +21,25 @@ public class Util {
 	public int verificaCodigo(String codigo) {
 		int cod = 0;
 		boolean confere = true;
-		try {
-			while (confere) {
-				cod = Integer.parseInt(codigo.trim());
-				if (cod <= 0) {
-					System.out.println("O codigo precisa ser maior que zero");
-					confere = true;
-				} else {
-					confere = false;
+
+		do {
+			try {
+				while (confere) {
+					cod = Integer.parseInt(codigo.trim());
+					if (cod <= 0) {
+						System.out
+								.println("O codigo precisa ser maior que zero");
+						confere = true;
+					} else {
+						confere = false;
+					}
 				}
+			} catch (NumberFormatException e) {
+				System.out.printf("Voce nao digitou um número inteiro!\n");
+				codigo = textInput("Digite um numero inteiro");
+				cod = 0;
 			}
-		} catch (NumberFormatException e) {
-			System.out.printf("Voce nao digitou um número inteiro!\n");
-			cod = 0;
-		}
+		} while (cod == 0);
 		return cod;
 	}
 
@@ -66,41 +70,79 @@ public class Util {
 		return path;
 	}
 
-	// ------------------CONTAR LINHAS -------------
-	public int contarLinhas(String path) {
-		int numeroLinhas = 0;
+	// serialização: gravando o objetos no arquivo binário "nomeArq"
+	public static void escreverNoArquivo(ArrayList<Object> cadastroEmArquivo,
+			String nomeArq) {
+		File arq = new File(nomeArq);
 		try {
-			File arq = new File(path);
-			long tamanhoCad = arq.length();
-			FileInputStream fs = new FileInputStream(arq);
-			DataInputStream in = new DataInputStream(fs);
-			@SuppressWarnings("resource")
-			LineNumberReader lineRead = new LineNumberReader(
-					new InputStreamReader(in));
-			lineRead.skip(tamanhoCad);
-			numeroLinhas = lineRead.getLineNumber() + 1;
-			// cad.setPosicao(numeroLinhas);
-			System.out.println("O arquivo tem " + (numeroLinhas - 1)
-					+ " linhas!");
-		} catch (Exception e) {
-			e.printStackTrace();
+			ObjectOutputStream objOutput = new ObjectOutputStream(
+					new FileOutputStream(arq, true));
+			objOutput.writeObject(cadastroEmArquivo);
+			objOutput.flush();
+			objOutput.close();
+
+		} catch (IOException erro) {
+			erro.printStackTrace();
 		}
-		return numeroLinhas;
 	}
 
-	public void escreverNoArquivo(String path, String linha) {
-		try {
-			FileOutputStream fw = new FileOutputStream(path, true);
-			ObjectOutputStream pw = new ObjectOutputStream(fw);
-			pw.writeObject(linha);
-			pw.flush();
-			pw.close();
-			fw.flush();
-			fw.close();
+	// desserialização: recuperando os objetos gravados no arquivo binário
+	// "nomeArq"
+	
+	
+	/*try{    
+	  
+	
+	
+		FileInputStream fin = null;
+try{  
+    JFileChooser caminhoArquivo = new JFileChooser();  
+    caminhoArquivo.showOpenDialog(frame);  
+    fin = new FileInputStream(new File(caminhoArquivo.getSelectedFile().getAbsolutePath()));     
+    while (true){  
+        ObjectInputStream ler = new ObjectInputStream(fin);
+        Contato contato = (Contato) ler.readObject();  
+        exibecontato.append(contatos.nome + "\n");  
+    }  
+} catch(ClassNotFoundException cnf){  
+    cnf.printStackTrace();  
+} catch(IOException ex){  
+    ex.printStackTrace();  
+} finally {
+  if(fin != null)
+     fin.close;
+}*/
 
-		} catch (IOException e) {
-			System.out.println("Erro ao cadastrar!");
+	public static ArrayList<Object> lerArquivo(String path) {
+		ArrayList<Object> lista = new ArrayList<Object>();
+		FileInputStream path1 = null;
+		try {
+			path1 = new FileInputStream(path);
+			while (true){ 
+			//File arq = new File(nomeArq);
+			ObjectInputStream objInput = new ObjectInputStream(path1);
+			
+			lista = (ArrayList<Object>) objInput.readObject();				
+		//	objInput.close();
+			}
+			
+		}catch (EOFException eof){
+			return (lista);
 		}
+		catch(ClassNotFoundException cnf){  
+		    cnf.printStackTrace();  
+		} catch(IOException ex){  
+		    ex.printStackTrace();  
+		}
+		finally {
+		  if(path1 != null)
+			try {
+				path1.close();
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}
+		}			
+		return (lista);
 	}
 
 	private String textInput(String label) {

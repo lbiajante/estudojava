@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class CadastroEmArquivo implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nomeDoArquivo;
 	private String nome;
 	private String dataNascimento;
@@ -20,7 +24,7 @@ public class CadastroEmArquivo implements Serializable {
 	public CadastroEmArquivo(String nomeDoArquivo, String nome,
 			String dataNascimento, String cpf, String empresa,
 			String areaDeAtuacao, String celular, String posicao) {
-		super();
+	
 		this.nomeDoArquivo = nomeDoArquivo;
 		this.nome = nome;
 		this.dataNascimento = dataNascimento;
@@ -106,5 +110,6 @@ public class CadastroEmArquivo implements Serializable {
 				+ cadastroEmArquivo.getEmpresa() + " - Celular: "
 				+ cadastroEmArquivo.getCelular() + ".";
 	}
+
 
 }
