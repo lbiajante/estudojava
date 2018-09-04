@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Util {
-
+	ArrayList<CadastroEmArquivo> lista = new ArrayList<CadastroEmArquivo>();
 	CadastroEmArquivo cad = new CadastroEmArquivo();
 	Scanner entrada = new Scanner(System.in);
 	private String path;
@@ -70,79 +70,49 @@ public class Util {
 		return path;
 	}
 
-	// serialização: gravando o objetos no arquivo binário "nomeArq"
-	public static void escreverNoArquivo(ArrayList<Object> cadastroEmArquivo,
-			String nomeArq) {
-		File arq = new File(nomeArq);
+	public void escreverNoArquivo(CadastroEmArquivo cad,
+			ArrayList<CadastroEmArquivo> cadastroEmArquivo, String nomeArq) {
+		this.lista = cadastroEmArquivo;
+		this.cad = cad;
 		try {
-			ObjectOutputStream objOutput = new ObjectOutputStream(
-					new FileOutputStream(arq, true));
-			objOutput.writeObject(cadastroEmArquivo);
+			FileOutputStream arq = new FileOutputStream(nomeArq, true);
+			ObjectOutputStream objOutput = new ObjectOutputStream(arq);
+			objOutput.writeObject(cad);
 			objOutput.flush();
-			objOutput.close();
+			objOutput.close();			
 
 		} catch (IOException erro) {
 			erro.printStackTrace();
 		}
 	}
-
-	// desserialização: recuperando os objetos gravados no arquivo binário
-	// "nomeArq"
 	
-	
-	/*try{    
-	  
-	
-	
-		FileInputStream fin = null;
-try{  
-    JFileChooser caminhoArquivo = new JFileChooser();  
-    caminhoArquivo.showOpenDialog(frame);  
-    fin = new FileInputStream(new File(caminhoArquivo.getSelectedFile().getAbsolutePath()));     
-    while (true){  
-        ObjectInputStream ler = new ObjectInputStream(fin);
-        Contato contato = (Contato) ler.readObject();  
-        exibecontato.append(contatos.nome + "\n");  
-    }  
-} catch(ClassNotFoundException cnf){  
-    cnf.printStackTrace();  
-} catch(IOException ex){  
-    ex.printStackTrace();  
-} finally {
-  if(fin != null)
-     fin.close;
-}*/
-
-	public static ArrayList<Object> lerArquivo(String path) {
-		ArrayList<Object> lista = new ArrayList<Object>();
+	public ArrayList<CadastroEmArquivo> lerArquivo(String path, int opcao) {
+		CadastroEmArquivo cad = new CadastroEmArquivo();		
 		FileInputStream path1 = null;
+
 		try {
 			path1 = new FileInputStream(path);
-			while (true){ 
-			//File arq = new File(nomeArq);
-			ObjectInputStream objInput = new ObjectInputStream(path1);
-			
-			lista = (ArrayList<Object>) objInput.readObject();				
-		//	objInput.close();
+			while (true) {
+				ObjectInputStream objInput = new ObjectInputStream(path1);
+				cad = (CadastroEmArquivo) objInput.readObject();
+			//	System.out.println(cad.toString());
+				this.lista.add(cad);
 			}
-			
-		}catch (EOFException eof){
-			return (lista);
+		} catch (EOFException eof) {
+			return this.lista;
+		} catch (ClassNotFoundException cnf) {
+			cnf.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} finally {
+			if (path1 != null)
+				try {
+					path1.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 		}
-		catch(ClassNotFoundException cnf){  
-		    cnf.printStackTrace();  
-		} catch(IOException ex){  
-		    ex.printStackTrace();  
-		}
-		finally {
-		  if(path1 != null)
-			try {
-				path1.close();
-			} catch (IOException e) {				
-				e.printStackTrace();
-			}
-		}			
-		return (lista);
+		return this.lista;		
 	}
 
 	private String textInput(String label) {

@@ -4,9 +4,7 @@ import java.io.Serializable;
 
 public class CadastroEmArquivo implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private String nomeDoArquivo;
 	private String nome;
@@ -102,7 +100,7 @@ public class CadastroEmArquivo implements Serializable {
 	@Override
 	public String toString() {
 		CadastroEmArquivo cadastroEmArquivo = this;
-		return "Posicao: " + cadastroEmArquivo.getPosicao() + " - Nome: "
+		return "ID: " + cadastroEmArquivo.getPosicao() + " - Nome: "
 				+ cadastroEmArquivo.getNome() + " - Data de nascimento: "
 				+ cadastroEmArquivo.getDataNascimento() + " - CPF: "
 				+ cadastroEmArquivo.getCpf() + " - Empresa: "
