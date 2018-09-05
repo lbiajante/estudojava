@@ -1,14 +1,12 @@
 package cadastro;
 
 import java.io.EOFException;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.rmi.server.ObjID;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,31 +15,7 @@ public class Util {
 	CadastroEmArquivo cad = new CadastroEmArquivo();
 	Scanner entrada = new Scanner(System.in);
 	private String path;
-
-	public int verificaCodigo(String codigo) {
-		int cod = 0;
-		boolean confere = true;
-
-		do {
-			try {
-				while (confere) {
-					cod = Integer.parseInt(codigo.trim());
-					if (cod <= 0) {
-						System.out
-								.println("O codigo precisa ser maior que zero");
-						confere = true;
-					} else {
-						confere = false;
-					}
-				}
-			} catch (NumberFormatException e) {
-				System.out.printf("Voce nao digitou um número inteiro!\n");
-				codigo = textInput("Digite um numero inteiro");
-				cod = 0;
-			}
-		} while (cod == 0);
-		return cod;
-	}
+	private String pathReg;
 
 	// ------------------GERAR ARQUIVO -------------
 	public String gerarArquivo() {
@@ -60,10 +34,14 @@ public class Util {
 			}
 		}
 		path = path + ".txt";
+		pathReg = path + "registro.txt";
 		try {
 			FileWriter criadorDeArquivo = new FileWriter(path, true);
 			criadorDeArquivo.flush();
 			criadorDeArquivo.close();
+			FileWriter criadorDeArquivoRegistro = new FileWriter(pathReg, true);
+			criadorDeArquivoRegistro.flush();
+			criadorDeArquivoRegistro.close();
 		} catch (IOException e) {
 			System.out.println("Erro na criacao do arquivo");
 		}
@@ -79,23 +57,24 @@ public class Util {
 			ObjectOutputStream objOutput = new ObjectOutputStream(arq);
 			objOutput.writeObject(cad);
 			objOutput.flush();
-			objOutput.close();			
+			objOutput.close();
+			arq.flush();
+			arq.close();
 
 		} catch (IOException erro) {
 			erro.printStackTrace();
 		}
 	}
-	
-	public ArrayList<CadastroEmArquivo> lerArquivo(String path, int opcao) {
-		CadastroEmArquivo cad = new CadastroEmArquivo();		
-		FileInputStream path1 = null;
 
+	public ArrayList<CadastroEmArquivo> lerArquivo(String path) {
+		CadastroEmArquivo cad = new CadastroEmArquivo();
+		FileInputStream path1 = null;
+		lista.clear();
 		try {
 			path1 = new FileInputStream(path);
 			while (true) {
 				ObjectInputStream objInput = new ObjectInputStream(path1);
 				cad = (CadastroEmArquivo) objInput.readObject();
-			//	System.out.println(cad.toString());
 				this.lista.add(cad);
 			}
 		} catch (EOFException eof) {
@@ -107,12 +86,13 @@ public class Util {
 		} finally {
 			if (path1 != null)
 				try {
+
 					path1.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 		}
-		return this.lista;		
+		return this.lista;
 	}
 
 	private String textInput(String label) {

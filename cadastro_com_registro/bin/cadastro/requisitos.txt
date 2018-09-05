@@ -4,21 +4,21 @@ Fase 2:
         Altere a sua aplicacao para atender os seguintes requisitos:
         1 - Cadastro de pessoas e cadastro de locais visitados (chamaremos um local visitado de Registro)
             As operacoes que a aplicacao deve suportar sao:
-            - Inclusao de pessoa
-            - Remocao de pessoa a partir do ID
-            - Atualizacao das informacoes da uma pessoa a partir de um ID (o campo ID de cada pessoa È imutavel)
-            - Listagem de todas as pessoas
+  x          - Inclusao de pessoa
+  x          - Remocao de pessoa a partir do ID
+  x          - Atualizacao das informacoes da uma pessoa a partir de um ID (o campo ID de cada pessoa È imutavel)
+  x          - Listagem de todas as pessoas
             - Inclusao de registro
             - Listagem de todos os registros (a listagem devem sempre estar ordenada por data de maneira crescente)
         
         2 - O cadastro de pessoas dever conter:
-            ID: String/obrigatorio/imutavel/gerado manualmente (tamanho fixo em 6 caracteres. Caso tenha menos que 6 caracteres, completar com ZERO no inicio)
-            Nome: String/obrigatorio
-            Data de Nascimento: String/obrigatorio
-            CPF: Double/obrigatorio (apenas os digitos)
-            Empresa: String/obrigatorio
-            Area de atuacao: String/Obrigatorio
-            Celular: String/opcional (na ausencia deste, deve ser gravado um null)
+  x          ID: String/obrigatorio/imutavel/gerado manualmente (tamanho fixo em 6 caracteres. Caso tenha menos que 6 caracteres, completar com ZERO no inicio)
+  x          Nome: String/obrigatorio
+  x          Data de Nascimento: String/obrigatorio
+  x          CPF: Double/obrigatorio (apenas os digitos)
+  x          Empresa: String/obrigatorio
+  x         Area de atuacao: String/Obrigatorio
+  x          Celular: String/opcional (na ausencia deste, deve ser gravado um null)
             
         3 - O cadastro de um registro deverá conter:
             - ID: String/obrigatorio (tamanho fixo em 6 caracteres)

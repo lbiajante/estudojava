@@ -1,21 +1,21 @@
-package cadastro;
+package registro;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class ValidaId {
+public class ValidaIdRegistro {
 
-	ArrayList<CadastroEmArquivo> lista = new ArrayList<CadastroEmArquivo>();
-	CadastroEmArquivo cad = new CadastroEmArquivo();
+	ArrayList<RegistroEmArquivo> lista = new ArrayList<RegistroEmArquivo>();
+	RegistroEmArquivo reg = new RegistroEmArquivo();
 	Scanner entrada = new Scanner(System.in);
-	Util util = new Util();
+	UtilRegistro util = new UtilRegistro();
 
 	public int verificaID(String codigo, String path) {
 
 		int cod = 0;
 		boolean confere = true;
 		String confereCod = null;
-		ArrayList<CadastroEmArquivo> list = new ArrayList<CadastroEmArquivo>();
+		ArrayList<RegistroEmArquivo> list = new ArrayList<RegistroEmArquivo>();
 		list = util.lerArquivo(path);
 
 		do {
@@ -33,7 +33,7 @@ public class ValidaId {
 							confere = false;
 						} else {
 							for (Object c : list) {
-								if (confereCod.equals(((CadastroEmArquivo) c)
+								if (confereCod.equals(((RegistroEmArquivo) c)
 										.getPosicao())) {
 									
 									System.out.println("Esse ID esta sendo usado, por favor digite outro");

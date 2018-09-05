@@ -1,8 +1,8 @@
-package cadastro;
+package registro;
 
 import java.util.Scanner;
 
-public class ValidaStrings {
+public class ValidaStringsRegistro {
 	Scanner entrada = new Scanner(System.in);
 	
 

@@ -1,23 +1,15 @@
 package cadastro;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Atualizar {
-	Util util = new Util();
 	Scanner entrada = new Scanner(System.in);
-	ValidaData data = new ValidaData();
-	ValidaCPF cpf = new ValidaCPF();
-	ValidaCelular celular = new ValidaCelular();
-	//ValidaNome nome = new ValidaNome();
-	CadastroEmArquivo cad = new CadastroEmArquivo();
-	ArrayList<Object> cadastroEmArquivo = new ArrayList<Object>();
 
 	private String textInput(String label) {
 		System.out.println(label);
@@ -25,73 +17,142 @@ public class Atualizar {
 	}
 
 	public void atualizarCadastro(String path) {
-		File arq = new File(path);
-		String posicao;
+		ValidaData data = new ValidaData();
+		ValidaCPF cpf = new ValidaCPF();
+		ValidaCelular celular = new ValidaCelular();
+		ValidaStrings string = new ValidaStrings();
+		Util util = new Util();
+		ArrayList<CadastroEmArquivo> list = new ArrayList<CadastroEmArquivo>();
+		CadastroEmArquivo cad = new CadastroEmArquivo();
+		boolean confere2 = true;
+		boolean confere = true;
+		String confereCod = null;
+		String codigo = null;
+		list = util.lerArquivo(path);
 
-		try {
-			FileReader fr = new FileReader(arq);
-			BufferedReader br = new BufferedReader(fr);
-			String linha = br.readLine();
-			ArrayList<String> salvar = new ArrayList<String>();
-
-			if (linha == null) {
-				System.out
-				.println("Arquivo de cadastro vazio, nao contem itens a serem apagados");
-			} else {
-				boolean confere = true;
-				while (confere) {
-					System.out
-					.println("Indique o numero de cadastro para atualizar: ");
-					String cod = entrada.nextLine();
-					int cod2 = util.verificaCodigo(cod);
-
-					if (cod2 == 0) {
-						confere = true;
-					} else {
-						confere = false;
-						posicao = (String.format("%03d", cod2)).trim();
-						System.out.println();
-						int verificaSeExiste = 0;
-						
-						while (linha != null) {							
-							if (linha.substring(8, 12).contains(posicao) == true) {
-								verificaSeExiste = 1;
-						//		cad.setPosicao(cod2);
-						//		cad.setNome(nome										.nome(textInput("Digite o nome atualizado")));
-								cad.setDataNascimento(data.data());
-								cad.setCpf(cpf.validarCPF());
-								cad.setCelular(celular.formatarCelular());
-								cadastroEmArquivo.add(cad);
-								salvar.add(cad.toString());
-								System.out.println("Atualizacao realizada");
-							} else if (linha.substring(0, 12).contains(posicao) == false) {
-								salvar.add(linha);
-							}
-							linha = br.readLine();
-						}
-						if (verificaSeExiste == 0) {
-							System.out
-							.println("Numero de cadastro nao encontrado");
-						}
-						br.close();
-						fr.close();
-						FileWriter fw = new FileWriter(arq);
-						BufferedWriter bw = new BufferedWriter(fw);
-
-						for (int i = 0; i < salvar.size(); i++) {
-							bw.write(salvar.get(i));
-							bw.newLine();
-						}
-						bw.flush();
-						fw.flush();
-						bw.close();
-						fw.close();
-					}
-				}
+		if (list.isEmpty()) {
+			System.out.println("Cadastro vazio, sem itens para atualizar");
+		} else {
+			String nomeArquivo = path;
+			String[] splitted = nomeArquivo.split("\\.");
+			nomeArquivo = splitted[0];
+			nomeArquivo = nomeArquivo + "2.txt";
+			try {
+				FileWriter criadorDeArquivo = new FileWriter(nomeArquivo);
+				criadorDeArquivo.flush();
+				criadorDeArquivo.close();
+			} catch (IOException e) {
+				System.out.println("Erro na criacao do arquivo");
 			}
-		} catch (IOException e) {
-			System.out.println("Erro ao tentar atualizar.");
-		}
+			do {
+				try {
+					while (confere) {
+						codigo = textInput("Digite um ID para ser atualizado ou 's' para sair");
+						if (codigo.trim().equalsIgnoreCase("s")) {
+							confere = false;
+							confere2 = false;
+						} else {
+							int cod = Integer.parseInt(codigo.trim());
+							if (cod <= 0) {
+								System.out
+										.println("O codigo precisa ser maior que zero");
+								confere = true;
+								confere2 = true;
+							} else {
+								confereCod = String.format("%06d", cod).trim();
+								for (Object c : list) {
+									if (confereCod
+											.equals(((CadastroEmArquivo) c)
+													.getPosicao())) {
+										System.out
+												.println("Cadastro localizado");
 
+										cad.setPosicao(((CadastroEmArquivo) c)
+												.getPosicao());
+										String label = "Digite o nome atualizado";
+										cad.setNome(string.texto(
+												textInput(label), label));
+										cad.setDataNascimento(data.data());
+										cad.setCpf(cpf.validarCPF());
+										label = "Digite o nome da empresa atualizado";
+										cad.setEmpresa(string.texto(
+												textInput(label), label));
+										label = "Digite a area de atuacao atualizado";
+										cad.setAreaDeAtuacao(string.texto(
+												textInput(label), label));
+										cad.setCelular(celular
+												.formatarCelular());
+										System.out
+												.println("Cadastro adicionado!");
+										System.out.println(cad.toString());
+
+										try {
+											FileOutputStream arq = new FileOutputStream(
+													nomeArquivo, true);
+											ObjectOutputStream objOutput = new ObjectOutputStream(
+													arq);
+											objOutput.writeObject(cad);
+											objOutput.flush();
+											objOutput.close();
+											arq.flush();
+											arq.close();
+										} catch (IOException erro) {
+											erro.printStackTrace();
+										}
+
+										confere = false;
+										confere2 = false;
+									} else {
+
+										cad.setPosicao(((CadastroEmArquivo) c)
+												.getPosicao());
+										cad.setNome(((CadastroEmArquivo) c)
+												.getNome());
+										cad.setDataNascimento(((CadastroEmArquivo) c)
+												.getDataNascimento());
+										cad.setCpf(((CadastroEmArquivo) c)
+												.getCpf());
+										cad.setEmpresa(((CadastroEmArquivo) c)
+												.getEmpresa());
+										cad.setAreaDeAtuacao(((CadastroEmArquivo) c)
+												.getAreaDeAtuacao());
+										cad.setCelular(((CadastroEmArquivo) c)
+												.getCelular());
+										try {
+											FileOutputStream arq = new FileOutputStream(
+													nomeArquivo, true);
+											ObjectOutputStream objOutput = new ObjectOutputStream(
+													arq);
+											objOutput.writeObject(cad);
+											objOutput.flush();
+											objOutput.close();
+											arq.flush();
+											arq.close();
+										} catch (IOException erro) {
+											erro.printStackTrace();
+										}
+									}
+								}
+							}
+							try {
+								File f = new File(path);
+								f.delete();
+								new File(nomeArquivo).renameTo(new File(path));
+
+							} catch (Exception e) {
+								System.out
+										.println("Falha ao atualizar cadastro");
+								return;
+							}
+						}
+					}
+				} catch (NumberFormatException e) {
+					System.out.printf("Voce nao digitou um numero inteiro!\n");
+					codigo = textInput("Digite um numero inteiro");
+					confere2 = true;
+				}
+			} while (confere2);
+
+		}
 	}
 }

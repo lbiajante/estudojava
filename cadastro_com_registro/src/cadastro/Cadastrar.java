@@ -1,12 +1,14 @@
 package cadastro;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import registro.*;
 
 public class Cadastrar {
 
 	CadastroEmArquivo cad = new CadastroEmArquivo();
+	CadastrarRegistro cadReg = new CadastrarRegistro();
 	ValidaData data = new ValidaData();
 	ValidaCPF cpf = new ValidaCPF();
 	ValidaCelular celular = new ValidaCelular();
@@ -20,7 +22,8 @@ public class Cadastrar {
 		ArrayList<CadastroEmArquivo> cadastroEmArquivo = new ArrayList<CadastroEmArquivo>();
 
 		System.out.println("Cadastro de Usuario");
-		Id id = new Id(validaId.verificaCodigo(textInput("Digite o ID a ser cadastrado"), path));
+		Id id = new Id(validaId.verificaID(
+				textInput("Digite o ID a ser cadastrado"), path));
 		cad.setPosicao(id.getId());
 		String label = "Digite o nome";
 		cad.setNome(string.texto(textInput(label), label));
@@ -31,6 +34,28 @@ public class Cadastrar {
 		label = "Digite a area de atuacao";
 		cad.setAreaDeAtuacao(string.texto(textInput(label), label));
 		cad.setCelular(celular.formatarCelular());
+
+		String opcaoVisita = textInput("Deseja registrar a visita a algum local? (S/N)");
+		boolean conf = true;
+		boolean repeat = true;
+		do{
+		while (conf) {
+			if (opcaoVisita.equalsIgnoreCase("s")) {
+				cadReg.cadastrar(path);
+				conf = false;
+
+			} else if (opcaoVisita.equalsIgnoreCase("n")) {
+				conf = false;
+
+			} else {
+				System.out.println("Opcao invalida! Tente novamente!");
+				conf = true;
+			}
+		}
+		
+		
+		} while (repeat);
+
 		String cadastrar = textInput("Adicionar cadastro (S/N)?");
 		boolean confere = true;
 		while (confere) {

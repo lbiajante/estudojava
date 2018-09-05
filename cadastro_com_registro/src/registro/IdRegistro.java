@@ -1,12 +1,11 @@
-package cadastro;
+package registro;
 
-import java.util.ArrayList;
 
-public final class Id {	
+public final class IdRegistro {	
 	private final String id;
-	Util util = new Util();
+	UtilRegistro util = new UtilRegistro();
 	
-	public Id(int id) {	
+	public IdRegistro(int id) {	
 		this.id = String.format("%06d", id).trim();			
 	}		
 	
