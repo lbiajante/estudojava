@@ -15,8 +15,6 @@ public class Util {
 	CadastroEmArquivo cad = new CadastroEmArquivo();
 	Scanner entrada = new Scanner(System.in);
 	private String path;
-	private String pathReg;
-
 	// ------------------GERAR ARQUIVO -------------
 	public String gerarArquivo() {
 		boolean confere = true;
@@ -34,14 +32,11 @@ public class Util {
 			}
 		}
 		path = path + ".txt";
-		pathReg = path + "registro.txt";
 		try {
 			FileWriter criadorDeArquivo = new FileWriter(path, true);
 			criadorDeArquivo.flush();
 			criadorDeArquivo.close();
-			FileWriter criadorDeArquivoRegistro = new FileWriter(pathReg, true);
-			criadorDeArquivoRegistro.flush();
-			criadorDeArquivoRegistro.close();
+			
 		} catch (IOException e) {
 			System.out.println("Erro na criacao do arquivo");
 		}

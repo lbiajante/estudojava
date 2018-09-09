@@ -35,26 +35,36 @@ public class Cadastrar {
 		cad.setAreaDeAtuacao(string.texto(textInput(label), label));
 		cad.setCelular(celular.formatarCelular());
 
-		String opcaoVisita = textInput("Deseja registrar a visita a algum local? (S/N)");
+		
 		boolean conf = true;
 		boolean repeat = true;
-		do{
-		while (conf) {
-			if (opcaoVisita.equalsIgnoreCase("s")) {
-				cadReg.cadastrar(path);
-				conf = false;
+		System.out.println("Deseja registrar a visita a algum local? (S/N)");
 
+		do {
+			String opcaoVisita = entrada.nextLine();
+			if (opcaoVisita.trim().equalsIgnoreCase("s")) {
+				cadReg.cadastrar(path, cad.getPosicao(), cad.getNome());
+				System.out.println("Deseja registrar outra visita? (S/N)");
+				do {
+					String opcaoContinua = entrada.nextLine();
+					if (opcaoContinua.trim().equalsIgnoreCase("s")) {
+						conf = true;
+						repeat = false;
+					} else if (opcaoContinua.equalsIgnoreCase("n")) {
+						conf = false;
+						repeat = false;
+					} else {
+						System.out.println("Opção Inválida! Tente novamente!");
+						repeat = true;
+					}
+				} while (repeat);
 			} else if (opcaoVisita.equalsIgnoreCase("n")) {
 				conf = false;
-
 			} else {
 				System.out.println("Opcao invalida! Tente novamente!");
 				conf = true;
 			}
-		}
-		
-		
-		} while (repeat);
+		} while (conf);
 
 		String cadastrar = textInput("Adicionar cadastro (S/N)?");
 		boolean confere = true;

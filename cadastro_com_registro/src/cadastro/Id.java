@@ -1,7 +1,5 @@
 package cadastro;
 
-import java.util.ArrayList;
-
 public final class Id {	
 	private final String id;
 	Util util = new Util();

@@ -83,7 +83,7 @@ public class ValidaCPF {
 					cad.setCpf(CPF);
 					confere = false;
 				} else {
-					System.out.println("Número de CPF invalido");
+					System.out.println("Numero de CPF invalido");
 				}
 			} catch (Exception e) {
 				System.out.println("Erro, CPF invalido!");

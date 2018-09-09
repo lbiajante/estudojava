@@ -14,34 +14,22 @@ public class UtilRegistro {
 	ArrayList<RegistroEmArquivo> lista = new ArrayList<RegistroEmArquivo>();
 	RegistroEmArquivo reg = new RegistroEmArquivo();
 	Scanner entrada = new Scanner(System.in);
-	private String path;
-
-//	// ------------------GERAR ARQUIVO -------------
-//	public String gerarArquivo() {
-//		boolean confere = true;
-//		path = textInput("Digite o nome do arquivo a ser criado ou lido");
-//		path = path.trim();
-//		while (confere) {
-//			if (path.isEmpty() || path.trim().equals("")
-//					|| path.trim().equals(null)) {
-//				System.out
-//						.println("O campo nome do arquivo nao pode ser em branco");
-//				path = textInput("Digite o nome do arquivo");
-//				confere = true;
-//			} else {
-//				confere = false;
-//			}
-//		}
-//		path = path + ".txt";
-//		try {
-//			FileWriter criadorDeArquivo = new FileWriter(path, true);
-//			criadorDeArquivo.flush();
-//			criadorDeArquivo.close();
-//		} catch (IOException e) {
-//			System.out.println("Erro na criacao do arquivo");
-//		}
-//		return path;
-//	}
+	// ------------------GERAR ARQUIVO -------------
+	public String gerarArquivo(String path) {
+		String pathReg = path;
+		String[] splitted = pathReg.split("\\.");
+		pathReg = splitted[0];
+		pathReg = pathReg + "registro.txt";
+		
+		try {
+			FileWriter criadorDeArquivo = new FileWriter(pathReg, true);
+			criadorDeArquivo.flush();
+			criadorDeArquivo.close();
+		} catch (IOException e) {
+			System.out.println("Erro na criacao do arquivo");
+		}
+		return pathReg;
+	}
 
 	public void escreverNoArquivo(RegistroEmArquivo reg,
 			ArrayList<RegistroEmArquivo> registroEmArquivo, String nomeArq) {
@@ -62,6 +50,7 @@ public class UtilRegistro {
 	}
 
 	public ArrayList<RegistroEmArquivo> lerArquivo(String path) {
+		
 		RegistroEmArquivo reg = new RegistroEmArquivo();
 		FileInputStream path1 = null;
 		lista.clear();
@@ -87,10 +76,5 @@ public class UtilRegistro {
 				}
 		}
 		return this.lista;
-	}
-
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
 	}
 }

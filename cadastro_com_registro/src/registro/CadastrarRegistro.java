@@ -13,33 +13,32 @@ public class CadastrarRegistro {
 	UtilRegistro util = new UtilRegistro();
 	Scanner entrada = new Scanner(System.in);
 
-	public void cadastrar(String path) {
+	public void cadastrar(String path, String IdPessoa, String nomePessoa) {
 		
-		String pathReg = path;
-		String[] splitted = pathReg.split("\\.");
-		pathReg = splitted[0];
-		pathReg = pathReg + "registro.txt";
+		
 
 		ArrayList<RegistroEmArquivo> registroEmArquivo = new ArrayList<RegistroEmArquivo>();
 
 		System.out.println("Cadastro de Registro");
-		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado"), pathReg));
+		util.gerarArquivo(path);
+		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado"), util.gerarArquivo(path)));
 		reg.setPosicao(id.getId());
 		String label = "Digite o local";
 		reg.setLocal(string.texto(textInput(label), label));
 		reg.setData(data.data());
 		reg.setHora(data.hora());
-		String cadastrar = textInput("Adicionar cadastro (S/N)?");
+		reg.setIDpessoa(IdPessoa);
+		reg.setNomePessoa(nomePessoa);
+		String cadastrar = textInput("Adicionar Registro (S/N)?");
 		boolean confere = true;
 		while (confere) {
 			if (cadastrar.trim().equalsIgnoreCase("s")) {
-				System.out.println("Cadastro adicionado!");
-				System.out.println(reg.toString());
+				System.out.println("Registro adicionado!");
 				registroEmArquivo.add(reg);
-				util.escreverNoArquivo(reg, registroEmArquivo, pathReg);
+				util.escreverNoArquivo(reg, registroEmArquivo, util.gerarArquivo(path));
 				confere = false;
 			} else if (cadastrar.trim().equalsIgnoreCase("n")) {
-				System.out.println("Cadastro ignorado!");
+				System.out.println("Registro ignorado!");
 				confere = false;
 			} else {
 				System.out.println("Opcao invalida");
