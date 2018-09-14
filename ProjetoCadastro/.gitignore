@@ -1,7 +1,8 @@
-﻿
 # Compiled class file
+.classpath
+.project
 *.class
-
+\bin
 # Log file
 *.log
 
