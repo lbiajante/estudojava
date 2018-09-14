@@ -2,7 +2,8 @@ package cadastro;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import registro.*;
+
+import registro.ListarRegistro;
 
 public class Listar {
 	Util util = new Util();
