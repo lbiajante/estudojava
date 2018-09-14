@@ -3,7 +3,7 @@ package cadastro;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import registro.*;
+import registro.CadastrarRegistro;
 
 public class Cadastrar {
 
