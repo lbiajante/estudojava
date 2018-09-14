@@ -1,14 +1,14 @@
 package cadastro;
 
 import java.io.File;
-
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
-import registro.*;
+
+import registro.CadastrarRegistro;
 
 public class Atualizar {
 	Scanner entrada = new Scanner(System.in);
@@ -191,7 +191,7 @@ public class Atualizar {
 								break;
 							}
 							if (count == 0) {
-								System.out.println("Cadastro não localizado");
+								System.out.println("Cadastro nï¿½o localizado");
 							}
 							conf = false;
 						}
