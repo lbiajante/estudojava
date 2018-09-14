@@ -35,37 +35,6 @@ public class Cadastrar {
 		cad.setAreaDeAtuacao(string.texto(textInput(label), label));
 		cad.setCelular(celular.formatarCelular());
 
-		
-		boolean conf = true;
-		boolean repeat = true;
-		System.out.println("Deseja registrar a visita a algum local? (S/N)");
-
-		do {
-			String opcaoVisita = entrada.nextLine();
-			if (opcaoVisita.trim().equalsIgnoreCase("s")) {
-				cadReg.cadastrar(path, cad.getPosicao(), cad.getNome());
-				System.out.println("Deseja registrar outra visita? (S/N)");
-				do {
-					String opcaoContinua = entrada.nextLine();
-					if (opcaoContinua.trim().equalsIgnoreCase("s")) {
-						conf = true;
-						repeat = false;
-					} else if (opcaoContinua.equalsIgnoreCase("n")) {
-						conf = false;
-						repeat = false;
-					} else {
-						System.out.println("Opção Inválida! Tente novamente!");
-						repeat = true;
-					}
-				} while (repeat);
-			} else if (opcaoVisita.equalsIgnoreCase("n")) {
-				conf = false;
-			} else {
-				System.out.println("Opcao invalida! Tente novamente!");
-				conf = true;
-			}
-		} while (conf);
-
 		String cadastrar = textInput("Adicionar cadastro (S/N)?");
 		boolean confere = true;
 		while (confere) {
@@ -84,11 +53,45 @@ public class Cadastrar {
 				confere = true;
 			}
 		}
+		
+		boolean conf = true;
+
+		do {	
+			System.out.println("Deseja registrar a visita a algum local? (S/N)");
+			String opcaoVisita = null;
+			opcaoVisita = entrada.nextLine();
+			if (opcaoVisita.trim().equalsIgnoreCase("s")) {
+				cadReg.cadastrar(path, cad.getPosicao(), cad.getNome());								
+				boolean repeat = true;
+				 
+				do {
+					System.out.println("Deseja registrar outra visita? (S/N)");
+					String opcaoContinua = null;
+					opcaoContinua = entrada.nextLine();
+					if (opcaoContinua.trim().equalsIgnoreCase("s")) {
+						cadReg.cadastrar(path, cad.getPosicao(), cad.getNome());	
+						conf = true;
+						repeat = true;
+					} else if (opcaoContinua.trim().equalsIgnoreCase("n")) {
+						conf = false;
+						repeat = false;
+					} else {
+						System.out.println("Opcao Invalida! Tente novamente!****");
+						repeat = true;
+					}					
+				} while (repeat); 
+				
+			} else if (opcaoVisita.equalsIgnoreCase("n")) {
+				conf = false;
+			} else {
+				System.out.println("Opcao invalida! Tente novamente!");
+				conf = true;
+			}
+		} while (conf);		
 	}
 
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();
 	}
-
 }

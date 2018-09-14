@@ -11,7 +11,7 @@ public class Listar {
 
 	public void listarCadastros(String path) {
 
-		System.out.println("Escolha uma opção: ");
+		System.out.println("Escolha uma opcao: ");
 		System.out.println("1- Listar cadastros de pessoas");
 		System.out.println("2- Listar registros de visitas");
 		entrada = new Scanner(System.in);

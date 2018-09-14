@@ -26,7 +26,7 @@ public class ValidaDataRegistro {
 		}
 		String horaVisita = null;
 		try {
-			SimpleDateFormat timeFormatOut = new SimpleDateFormat("HHmm");
+			SimpleDateFormat timeFormatOut = new SimpleDateFormat("HH:mm");
 			String timeToString = timeFormatOut.format(tmns);
 			horaVisita = timeToString;
 		} catch (Exception e) {
