@@ -191,7 +191,7 @@ public class Atualizar {
 								break;
 							}
 							if (count == 0) {
-								System.out.println("Cadastro n�o localizado");
+								System.out.println("Cadastro nao localizado");
 							}
 							conf = false;
 						}

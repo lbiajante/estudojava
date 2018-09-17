@@ -44,7 +44,7 @@ public class ValidaDataRegistro {
 			try {
 				SimpleDateFormat dataFormatIn = new SimpleDateFormat("ddMMyyyy");
 				System.out
-				.println("Digite a data da visita no formato: ddmmaaaa");
+				.println("Digite a data da visita no formato: 'ddmmaaaa'");
 				dataFormatIn.setLenient(false);
 				Date date = dataFormatIn.parse(entrada.nextLine().trim());
 				dtns = date;

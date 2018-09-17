@@ -49,7 +49,7 @@ public class ValidaIdRegistro {
 					}
 				}
 			} catch (NumberFormatException e) {
-				System.out.printf("Voce nao digitou um nÃºmero inteiro!\n");
+				System.out.printf("Voce nao digitou um numero inteiro!\n");
 				codigo = textInput("Digite um numero inteiro");
 				cod = 0;
 			}
