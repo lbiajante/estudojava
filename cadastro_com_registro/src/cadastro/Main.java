@@ -2,6 +2,7 @@ package cadastro;
 
 import java.util.Scanner;
 
+
 public class Main {
 	public static void main(String[] args) {
 
@@ -14,7 +15,7 @@ public class Main {
 		Listar listar = new Listar();
 		Scanner entrada;
 
-		System.out.println("BEM VINDO AO CADASTRO DE USUÁRIOS");
+		System.out.println("BEM VINDO AO CADASTRO DE USUARIOS");
 		System.out.println("");
 		path = util.gerarArquivo();		
 
