@@ -19,7 +19,7 @@ public class UtilRegistro {
 		String pathReg = path;
 		String[] splitted = pathReg.split("\\.");
 		pathReg = splitted[0];
-		pathReg = pathReg + "registro";
+		pathReg = pathReg + "_registro.bin";
 		
 		try {
 			FileWriter criadorDeArquivo = new FileWriter(pathReg, true);

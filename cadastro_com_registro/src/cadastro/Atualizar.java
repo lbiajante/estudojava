@@ -31,11 +31,11 @@ public class Atualizar {
 		boolean confere = true;
 		String confereCod = null;
 		String codigo = null;
-
 		list = util.lerArquivo(path);
+
 		System.out.println("Digite uma opcao: ");
 		System.out.println("1- Atualizar os dados de cadastro de pessoas");
-		System.out.println("2- Adicionar nova visita referente a um cadastro");
+		System.out.println("2- Adicionar registro de visita referente a um cadastro");
 		String opAtualizar = entrada.nextLine();
 
 		if (list.isEmpty()) {
@@ -45,7 +45,7 @@ public class Atualizar {
 				String nomeArquivo = path;
 				String[] splitted = nomeArquivo.split("\\.");
 				nomeArquivo = splitted[0];
-				nomeArquivo = nomeArquivo + "2.txt";
+				nomeArquivo = nomeArquivo + "2.bin";
 				try {
 					FileWriter criadorDeArquivo = new FileWriter(nomeArquivo);
 					criadorDeArquivo.flush();

@@ -31,7 +31,7 @@ public class Util {
 				confere = false;
 			}
 		}
-		//path = path + ".txt";
+		path = path + ".bin";
 		try {
 			FileWriter criadorDeArquivo = new FileWriter(path, true);
 			criadorDeArquivo.flush();

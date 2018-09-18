@@ -1,4 +1,4 @@
-package cadastro;
+ package cadastro;
 
 import java.util.Scanner;
 
@@ -15,7 +15,7 @@ public class Main {
 		Listar listar = new Listar();
 		Scanner entrada;
 
-		System.out.println("BEM VINDO AO CADASTRO DE USUARIOS");
+		System.out.println("BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS");
 		System.out.println("");
 		path = util.gerarArquivo();		
 
@@ -25,9 +25,9 @@ public class Main {
 			System.out.println("-------------------------------------------");
 			System.out.println("Digite o numero da opcao selecionada:");
 			System.out.println("1 - Novo cadastro");
-			System.out.println("2 - Listar cadastro");
-			System.out.println("3 - Apagar item do cadastro");
-			System.out.println("4 - Atualizar cadastro");
+			System.out.println("2 - Listar cadastro ou listar registros");
+			System.out.println("3 - Apagar item do cadastro ou apagar item do registro");
+			System.out.println("4 - Atualizar cadastro ou adicionar registro a um cadastro");
 			System.out.println("5 - Sair");
 			System.out.println("-------------------------------------------");
 			String opcao = entrada.next();
