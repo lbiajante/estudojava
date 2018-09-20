@@ -55,7 +55,7 @@ public class ValidaDataRegistro {
 		}
 		String dataVisita = null;
 		try {
-			SimpleDateFormat dataFormatOut = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dataFormatOut = new SimpleDateFormat("dd-MM-yyyy");
 			String dataToString = dataFormatOut.format(dtns);
 			dataVisita = dataToString;
 		} catch (Exception e) {

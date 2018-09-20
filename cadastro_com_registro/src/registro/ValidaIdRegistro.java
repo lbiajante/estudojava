@@ -1,22 +1,26 @@
 package registro;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import cadastro.CadastroPessoa;
 
 public class ValidaIdRegistro {
 
-	ArrayList<RegistroEmArquivo> lista = new ArrayList<RegistroEmArquivo>();
-	RegistroEmArquivo reg = new RegistroEmArquivo();
+	RegistroVisita reg = new RegistroVisita();
 	Scanner entrada = new Scanner(System.in);
-	UtilRegistro util = new UtilRegistro();
 
-	public int verificaID(String codigo, String path) {
+	public int verificaID(String codigo) {
 
+		EntityManagerFactory emf = Persistence
+				.createEntityManagerFactory("databasePU");
+		EntityManager em = emf.createEntityManager();
 		int cod = 0;
 		boolean confere = true;
 		String confereCod = null;
-		ArrayList<RegistroEmArquivo> list = new ArrayList<RegistroEmArquivo>();
-		list = util.lerArquivo(path);
 
 		do {
 			try {
@@ -24,27 +28,23 @@ public class ValidaIdRegistro {
 					cod = Integer.parseInt(codigo.trim());
 					if (cod <= 0) {
 						System.out
-								.println("O codigo precisa ser maior que zero");
+						.println("O codigo precisa ser maior que zero");
 						confere = true;
 						cod = 0;
 					} else {
 						confereCod = String.format("%06d", cod).trim();
-						if (list.isEmpty()) {
-							confere = false;
+						CadastroPessoa pessoa = em.find(CadastroPessoa.class,
+								confereCod);
+						if (pessoa != null) {
+							System.out
+							.println("Esse ID esta sendo usado, por favor digite outro");
+							codigo = entrada.next();
+							confere = true;
+							cod = 0;
+							break;
+
 						} else {
-							for (Object c : list) {
-								if (confereCod.equals(((RegistroEmArquivo) c)
-										.getPosicao())) {
-									
-									System.out.println("Esse ID esta sendo usado, por favor digite outro");
-									codigo = entrada.next();
-									confere = true;
-									cod = 0;
-									break;
-								} else {
-									confere = false;
-								}
-							}
+							confere = false;
 						}
 					}
 				}
@@ -63,4 +63,3 @@ public class ValidaIdRegistro {
 	}
 
 }
-

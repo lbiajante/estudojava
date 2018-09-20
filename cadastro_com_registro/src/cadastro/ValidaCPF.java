@@ -72,7 +72,7 @@ public class ValidaCPF {
 
 	public String validarCPF() {
 		String CPF = null;
-		CadastroEmArquivo cad = new CadastroEmArquivo();
+		CadastroPessoa cad = new CadastroPessoa();
 		boolean confere = true;
 		while (confere) {
 			try {

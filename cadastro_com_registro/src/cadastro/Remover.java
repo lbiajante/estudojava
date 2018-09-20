@@ -1,15 +1,10 @@
 package cadastro;
 
-import java.io.File;
-
-import registro.*;
-
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class Remover {
 
@@ -20,36 +15,18 @@ public class Remover {
 		return entrada.nextLine();
 	}
 
-	public void removerCadastro(String path) {
-		Util util = new Util();
-		ArrayList<CadastroEmArquivo> list = new ArrayList<CadastroEmArquivo>();
-		CadastroEmArquivo cad = new CadastroEmArquivo();
+	public void removerCadastro() {
 		boolean confere2 = true;
 		boolean confere = true;
 		String confereCod = null;
 		String codigo = null;
-		list = util.lerArquivo(path);
 
 		System.out.println("Digite uma opcao: ");
 		System.out.println("1- Remover cadastro de pessoas");
 		System.out.println("2- Remover registro de visita");
 		String opRemover = entrada.nextLine();
 
-		if (opRemover.equals("1")) {
-			if (list.isEmpty()) {
-				System.out.println("Cadastro vazio, sem itens para remover");
-			} else {
-				String nomeArquivo = path;
-				 String[] splitted = nomeArquivo.split("\\.");
-				 nomeArquivo = splitted[0];
-				 nomeArquivo = nomeArquivo + "2.bin";
-				try {
-					FileWriter criadorDeArquivo = new FileWriter(nomeArquivo);
-					criadorDeArquivo.flush();
-					criadorDeArquivo.close();
-				} catch (IOException e) {
-					System.out.println("Erro na criacao de arquivo temporario");
-				}
+		if (opRemover.equals("1")) {		
 				do {
 					try {
 						while (confere) {
@@ -65,72 +42,33 @@ public class Remover {
 									confere = true;
 									confere2 = true;
 								} else {
-									confereCod = String.format("%06d", cod)
-											.trim();
-									for (Object c : list) {
-										if (confereCod
-												.equals(((CadastroEmArquivo) c)
-														.getPosicao())) {
-											System.out
-											.println("Cadastro removido");
-											confere = false;
-											confere2 = false;
-										} else {
-
-											cad.setPosicao(((CadastroEmArquivo) c)
-													.getPosicao());
-											cad.setNome(((CadastroEmArquivo) c)
-													.getNome());
-											cad.setDataNascimento(((CadastroEmArquivo) c)
-													.getDataNascimento());
-											cad.setCpf(((CadastroEmArquivo) c)
-													.getCpf());
-											cad.setEmpresa(((CadastroEmArquivo) c)
-													.getEmpresa());
-											cad.setAreaDeAtuacao(((CadastroEmArquivo) c)
-													.getAreaDeAtuacao());
-											cad.setCelular(((CadastroEmArquivo) c)
-													.getCelular());
-											try {
-												FileOutputStream arq = new FileOutputStream(
-														nomeArquivo, true);
-												ObjectOutputStream objOutput = new ObjectOutputStream(
-														arq);
-												objOutput.writeObject(cad);
-												objOutput.flush();
-												objOutput.close();
-												arq.flush();
-												arq.close();
-											} catch (IOException erro) {
-												erro.printStackTrace();
-											}
-										}
+									confereCod = String.format("%06d", cod).trim();
+									EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
+									EntityManager em = emf.createEntityManager();									
+									CadastroPessoa pessoa = em.find(CadastroPessoa.class, confereCod);
+									
+									if (pessoa != null){
+									em.getTransaction().begin();
+									em.remove(pessoa);
+									em.getTransaction().commit();
+									confere = false;
+									confere2 = false;
+									System.out.println("Cadastro removido com sucesso");
+									} else {
+										System.out.println("Nao existe passoa cadastrada com esse ID");
 									}
-								}
-								try {
-									File f = new File(path);
-									f.delete();
-									new File(nomeArquivo).renameTo(new File(
-											path));
-
-								} catch (Exception e) {
-									System.out
-									.println("Falha ao remover cadastro");
-									return;
-								}
+								}						
 							}
 						}
 					} catch (NumberFormatException e) {
-						System.out
-						.printf("Voce nao digitou um numero inteiro!\n");
+						System.out.printf("Voce nao digitou um numero inteiro!\n");
 						codigo = textInput("Digite um numero inteiro");
 						confere2 = true;
 					}
 				} while (confere2);
-			}
+			
 		} else if (opRemover.equals("2")) {
-			RemoverRegistro remRegistro = new RemoverRegistro();
-			remRegistro.removerRegistro(path);
+			
 		}
 	}
 }
