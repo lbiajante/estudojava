@@ -1,27 +1,29 @@
 package registro;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 
 public class CadastrarRegistro {
 
-	RegistroEmArquivo reg = new RegistroEmArquivo();
+	RegistroVisita reg = new RegistroVisita();
 	ValidaDataRegistro data = new ValidaDataRegistro();	
 	ValidaStringsRegistro string = new ValidaStringsRegistro();
 	ValidaIdRegistro validaId = new ValidaIdRegistro();
-	UtilRegistro util = new UtilRegistro();
 	Scanner entrada = new Scanner(System.in);
 
-	public void cadastrar(String path, String IdPessoa, String nomePessoa) {
+	public void cadastrar(String IdPessoa, String nomePessoa) {
 		
 		
 
-		ArrayList<RegistroEmArquivo> registroEmArquivo = new ArrayList<RegistroEmArquivo>();
+	//	ArrayList<RegistroVisita> registroEmArquivo = new ArrayList<RegistroVisita>();
 
 		System.out.println("Cadastro de Registro");
-		util.gerarArquivo(path);
-		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado"), util.gerarArquivo(path)));
+//		util.gerarArquivo(path);
+		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado")));
 		reg.setPosicao(id.getId());
 		String label = "Digite o local";
 		reg.setLocal(string.texto(textInput(label), label));
@@ -33,9 +35,15 @@ public class CadastrarRegistro {
 		boolean confere = true;
 		while (confere) {
 			if (cadastrar.trim().equalsIgnoreCase("s")) {
+				
+				EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
+				EntityManager em = emf.createEntityManager();
+				em.getTransaction().begin();
+				em.persist(reg);
+				em.getTransaction().commit();
+				
 				System.out.println("Registro adicionado!");
-				registroEmArquivo.add(reg);
-				util.escreverNoArquivo(reg, registroEmArquivo, util.gerarArquivo(path));
+//		
 				confere = false;
 			} else if (cadastrar.trim().equalsIgnoreCase("n")) {
 				System.out.println("Registro ignorado!");

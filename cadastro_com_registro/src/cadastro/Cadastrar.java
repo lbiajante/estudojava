@@ -1,29 +1,28 @@
 package cadastro;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import registro.CadastrarRegistro;
 
 public class Cadastrar {
 
-	CadastroEmArquivo cad = new CadastroEmArquivo();
+	CadastroPessoa cad = new CadastroPessoa();
 	CadastrarRegistro cadReg = new CadastrarRegistro();
 	ValidaData data = new ValidaData();
 	ValidaCPF cpf = new ValidaCPF();
 	ValidaCelular celular = new ValidaCelular();
 	ValidaStrings string = new ValidaStrings();
 	ValidaId validaId = new ValidaId();
-	Util util = new Util();
 	Scanner entrada = new Scanner(System.in);
 
-	public void cadastrar(String path) {
-
-		ArrayList<CadastroEmArquivo> cadastroEmArquivo = new ArrayList<CadastroEmArquivo>();
-
+	public void cadastrar() {
+	
 		System.out.println("Cadastro de Usuario");
 		Id id = new Id(validaId.verificaID(
-				textInput("Digite o ID a ser cadastrado"), path));
+				textInput("Digite o ID a ser cadastrado")));
 		cad.setPosicao(id.getId());
 		String label = "Digite o nome";
 		cad.setNome(string.texto(textInput(label), label));
@@ -39,10 +38,19 @@ public class Cadastrar {
 		boolean confere = true;
 		while (confere) {
 			if (cadastrar.trim().equalsIgnoreCase("s")) {
+				
+//				EntityManagerCadastro emcCadastro = new EntityManagerCadastro();
+//				emcCadastro.cadastrarBD(cad);
+				
+				EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
+				EntityManager em = emf.createEntityManager();
+				em.getTransaction().begin();
+				em.persist(cad);
+				em.getTransaction().commit();
+				
 				System.out.println("Cadastro adicionado!");
 				System.out.println(cad.toString());
-				cadastroEmArquivo.add(cad);
-				util.escreverNoArquivo(cad, cadastroEmArquivo, path);
+			
 				confere = false;
 			} else if (cadastrar.trim().equalsIgnoreCase("n")) {
 				System.out.println("Cadastro ignorado!");
@@ -61,7 +69,7 @@ public class Cadastrar {
 			String opcaoVisita = null;
 			opcaoVisita = entrada.nextLine();
 			if (opcaoVisita.trim().equalsIgnoreCase("s")) {
-				cadReg.cadastrar(path, cad.getPosicao(), cad.getNome());								
+				cadReg.cadastrar(cad.getPosicao(), cad.getNome());								
 				boolean repeat = true;
 				 
 				do {
@@ -69,7 +77,7 @@ public class Cadastrar {
 					String opcaoContinua = null;
 					opcaoContinua = entrada.nextLine();
 					if (opcaoContinua.trim().equalsIgnoreCase("s")) {
-						cadReg.cadastrar(path, cad.getPosicao(), cad.getNome());	
+						cadReg.cadastrar(cad.getPosicao(), cad.getNome());	
 						conf = true;
 						repeat = true;
 					} else if (opcaoContinua.trim().equalsIgnoreCase("n")) {

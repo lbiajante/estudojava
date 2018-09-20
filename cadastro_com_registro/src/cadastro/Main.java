@@ -7,8 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		boolean execute = true;
-		String path;
-		Util util = new Util();
+	//	EntityManagerCadastro emc = new EntityManagerCadastro();
 		Cadastrar cadastrar = new Cadastrar();
 		Remover remover = new Remover();
 		Atualizar atualizar = new Atualizar();
@@ -17,7 +16,8 @@ public class Main {
 
 		System.out.println("BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS");
 		System.out.println("");
-		path = util.gerarArquivo();		
+		
+		//emc.iniciarBD();
 
 		while (execute) {
 			entrada = new Scanner(System.in);
@@ -33,16 +33,16 @@ public class Main {
 			String opcao = entrada.next();
 			if (opcao.equals("1")) {
 				System.out.println("");
-				cadastrar.cadastrar(path);
+				cadastrar.cadastrar();
 				execute =  true;
 			} else if (opcao.equals("2")) {
-				listar.listarCadastros(path);
+				listar.listarCadastros();
 				execute =  true;
 			} else if (opcao.equals("3")) {
-				remover.removerCadastro(path);
+				remover.removerCadastro();
 				execute =  true;
 			} else if (opcao.equals("4")) {
-				atualizar.atualizarCadastro(path);
+				atualizar.atualizarCadastro();
 				execute =  true;
 			} else if (opcao.equals("5")) {
 				System.out.println("Programa de cadastro finalizado!");

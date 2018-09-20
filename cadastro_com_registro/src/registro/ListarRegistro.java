@@ -1,21 +1,25 @@
 package registro;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 
 public class ListarRegistro {
-	UtilRegistro util = new UtilRegistro();
 
-	public void listarRegistros(String path) {
-
-		ArrayList<RegistroEmArquivo> list = new ArrayList<RegistroEmArquivo>();		
-		
-		list = util.lerArquivo(util.gerarArquivo(path));
-		if (list.isEmpty()) {
-			System.out.println("Cadastro vazio");
-		} else {
-			for (Object c : list) {
-				System.out.println(((RegistroEmArquivo) c).toString());				
+	public void listarRegistros() {					
+				
+				EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
+				EntityManager em = emf.createEntityManager();
+				List<RegistroVisita> registros = em.createQuery("from RegistroVisita", RegistroVisita.class).getResultList();
+				
+				for (RegistroVisita registro : registros){
+				System.out.println(registro.toString());
+				System.out.println();
+				
 			}			
 		}
 	}
-}
+
