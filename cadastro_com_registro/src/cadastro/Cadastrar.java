@@ -37,88 +37,81 @@ public class Cadastrar {
 		String cadastrar = textInput("Adicionar cadastro (S/N)?");
 		boolean confere = true;
 		while (confere) {
-<<<<<<< HEAD
+
 			if (cadastrar.trim().equalsIgnoreCase("s")) {
 
 				String sql = "INSERT INTO cadastro_de_pessoas "
-						+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuação) values" 
-						+ "( '" + cad.getPosicao() + "' , '" 
-						+ cad.getNome() + "' , '"
-						+ cad.getDataNascimento() + "' , '"
-						+ cad.getCpf() + "' , '" + cad.getCelular()
-						+ "' , '" + cad.getEmpresa() + "' , '"
-						+ cad.getAreaDeAtuacao()+"' );";
+						+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuação) values"
+						+ "( '" + cad.getPosicao() + "' , '" + cad.getNome()
+						+ "' , '" + cad.getDataNascimento() + "' , '"
+						+ cad.getCpf() + "' , '" + cad.getCelular() + "' , '"
+						+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
+						+ "' );";
 				try {
 					PreparedStatement ps = con.conexao().prepareStatement(sql);
 					System.out.println(sql);
-					ps.execute();						
+					ps.execute();
 
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 
-=======
-			if (cadastrar.trim().equalsIgnoreCase("s")) {				
-		
-				EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
-				EntityManager em = emf.createEntityManager();
-				em.getTransaction().begin();
-				em.persist(cad);
-				em.getTransaction().commit();
-				
->>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
-				System.out.println("Cadastro adicionado!");
-				System.out.println(cad.toString());
-				confere = false;
+				if (cadastrar.trim().equalsIgnoreCase("s")) {
 
-			} else if (cadastrar.trim().equalsIgnoreCase("n")) {
-				System.out.println("Cadastro ignorado!");
-				confere = false;
-			} else {
-				System.out.println("Opcao invalida");
-				cadastrar = textInput("Digite uma opcao valida. (S/N)");
-				confere = true;
+					System.out.println("Cadastro adicionado!");
+					System.out.println(cad.toString());
+					confere = false;
+
+				} else if (cadastrar.trim().equalsIgnoreCase("n")) {
+					System.out.println("Cadastro ignorado!");
+					confere = false;
+				} else {
+					System.out.println("Opcao invalida");
+					cadastrar = textInput("Digite uma opcao valida. (S/N)");
+					confere = true;
+				}
 			}
-		}
 
-		boolean conf = true;
+			boolean conf = true;
 
-		do {
-			System.out
-			.println("Deseja registrar a visita a algum local? (S/N)");
-			String opcaoVisita = null;
-			opcaoVisita = entrada.nextLine();
-			if (opcaoVisita.trim().equalsIgnoreCase("s")) {
-				cadReg.cadastrar(cad.getPosicao(), cad.getNome());
-				boolean repeat = true;
+			do {
+				System.out
+						.println("Deseja registrar a visita a algum local? (S/N)");
+				String opcaoVisita = null;
+				opcaoVisita = entrada.nextLine();
+				if (opcaoVisita.trim().equalsIgnoreCase("s")) {
+					cadReg.cadastrar(cad.getPosicao(), cad.getNome());
+					boolean repeat = true;
 
-				do {
-					System.out.println("Deseja registrar outra visita? (S/N)");
-					String opcaoContinua = null;
-					opcaoContinua = entrada.nextLine();
-					if (opcaoContinua.trim().equalsIgnoreCase("s")) {
-						cadReg.cadastrar(cad.getPosicao(), cad.getNome());
-						conf = true;
-						repeat = true;
-					} else if (opcaoContinua.trim().equalsIgnoreCase("n")) {
-						conf = false;
-						repeat = false;
-					} else {
+					do {
 						System.out
-						.println("Opcao Invalida! Tente novamente!****");
-						repeat = true;
-					}
-				} while (repeat);
+								.println("Deseja registrar outra visita? (S/N)");
+						String opcaoContinua = null;
+						opcaoContinua = entrada.nextLine();
+						if (opcaoContinua.trim().equalsIgnoreCase("s")) {
+							cadReg.cadastrar(cad.getPosicao(), cad.getNome());
+							conf = true;
+							repeat = true;
+						} else if (opcaoContinua.trim().equalsIgnoreCase("n")) {
+							conf = false;
+							repeat = false;
+						} else {
+							System.out
+									.println("Opcao Invalida! Tente novamente!****");
+							repeat = true;
+						}
+					} while (repeat);
 
-			} else if (opcaoVisita.equalsIgnoreCase("n")) {
-				conf = false;
-			} else {
-				System.out.println("Opcao invalida! Tente novamente!");
-				conf = true;
-			}
-		} while (conf);
+				} else if (opcaoVisita.equalsIgnoreCase("n")) {
+					conf = false;
+				} else {
+					System.out.println("Opcao invalida! Tente novamente!");
+					conf = true;
+				}
+			} while (conf);
+		}
 	}
-	
+
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();
