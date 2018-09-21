@@ -99,8 +99,6 @@ public class CadastroPessoa implements Serializable {
 				+ "\nCelular: " + cadastroEmArquivo.getCelular() 
 				+ "\nEmpresa: " + cadastroEmArquivo.getEmpresa() 
 				+ "\nArea de Atuacao: " + cadastroEmArquivo.getAreaDeAtuacao()
-				+ "\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*"; 
-				
+				+ "\n*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*"; 				
 	}
-
 }

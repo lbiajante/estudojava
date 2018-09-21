@@ -16,13 +16,8 @@ public class CadastrarRegistro {
 	Scanner entrada = new Scanner(System.in);
 
 	public void cadastrar(String IdPessoa, String nomePessoa) {
-		
-		
-
-	//	ArrayList<RegistroVisita> registroEmArquivo = new ArrayList<RegistroVisita>();
-
+	
 		System.out.println("Cadastro de Registro");
-//		util.gerarArquivo(path);
 		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado")));
 		reg.setPosicao(id.getId());
 		String label = "Digite o local";
@@ -43,7 +38,6 @@ public class CadastrarRegistro {
 				em.getTransaction().commit();
 				
 				System.out.println("Registro adicionado!");
-//		
 				confere = false;
 			} else if (cadastrar.trim().equalsIgnoreCase("n")) {
 				System.out.println("Registro ignorado!");

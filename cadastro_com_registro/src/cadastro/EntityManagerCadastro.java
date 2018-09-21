@@ -17,15 +17,6 @@ public class EntityManagerCadastro {
 		em.getTransaction().begin();
 		em.persist(cad);
 		em.getTransaction().commit();
-		em.close();
-		
+		em.close();		
 	}
-	
-//	public void listarBD(CadastroPessoa cad){
-//		EntityManager em = this.iniciarBD();
-//		em.getTransaction().begin();
-//		em.persist(cad);
-//		em.getTransaction().commit();
-//		em.close();
-
 }
