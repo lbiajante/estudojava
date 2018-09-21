@@ -43,20 +43,20 @@ public class Remover {
 									confere2 = true;
 								} else {
 									confereCod = String.format("%06d", cod).trim();
-									EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
-									EntityManager em = emf.createEntityManager();									
-									CadastroPessoa pessoa = em.find(CadastroPessoa.class, confereCod);
-									
-									if (pessoa != null){
-									em.getTransaction().begin();
-									em.remove(pessoa);
-									em.getTransaction().commit();
-									confere = false;
-									confere2 = false;
-									System.out.println("Cadastro removido com sucesso");
-									} else {
-										System.out.println("Nao existe passoa cadastrada com esse ID");
-									}
+//									EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
+//									EntityManager em = emf.createEntityManager();									
+//									CadastroPessoa pessoa = em.find(CadastroPessoa.class, confereCod);
+//									
+//									if (pessoa != null){
+//									em.getTransaction().begin();
+//									em.remove(pessoa);
+//									em.getTransaction().commit();
+//									confere = false;
+//									confere2 = false;
+//									System.out.println("Cadastro removido com sucesso");
+//									} else {
+//										System.out.println("Nao existe passoa cadastrada com esse ID");
+//									}
 								}						
 							}
 						}

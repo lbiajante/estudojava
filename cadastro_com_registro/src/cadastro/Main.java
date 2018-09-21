@@ -1,4 +1,4 @@
- package cadastro;
+package cadastro;
 
 import java.util.Scanner;
 
@@ -7,7 +7,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		boolean execute = true;
-	//	EntityManagerCadastro emc = new EntityManagerCadastro();
 		Cadastrar cadastrar = new Cadastrar();
 		Remover remover = new Remover();
 		Atualizar atualizar = new Atualizar();
@@ -16,8 +15,6 @@ public class Main {
 
 		System.out.println("BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS");
 		System.out.println("");
-		
-		//emc.iniciarBD();
 
 		while (execute) {
 			entrada = new Scanner(System.in);

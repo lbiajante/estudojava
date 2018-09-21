@@ -1,29 +1,27 @@
 package registro;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Scanner;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
+import cadastro.Conexao;
+import cadastro.ValidaStrings;
 
 public class CadastrarRegistro {
 
+	Conexao con = new Conexao();
 	RegistroVisita reg = new RegistroVisita();
-	ValidaDataRegistro data = new ValidaDataRegistro();	
-	ValidaStringsRegistro string = new ValidaStringsRegistro();
+	ValidaDataRegistro data = new ValidaDataRegistro();
+	ValidaStrings string = new ValidaStrings();
 	ValidaIdRegistro validaId = new ValidaIdRegistro();
 	Scanner entrada = new Scanner(System.in);
 
 	public void cadastrar(String IdPessoa, String nomePessoa) {
-		
-		
-
-	//	ArrayList<RegistroVisita> registroEmArquivo = new ArrayList<RegistroVisita>();
 
 		System.out.println("Cadastro de Registro");
-//		util.gerarArquivo(path);
-		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado")));
+
+		IdRegistro id = new IdRegistro(
+				validaId.verificaID(textInput("Digite o ID do local visitado")));
 		reg.setPosicao(id.getId());
 		String label = "Digite o local";
 		reg.setLocal(string.texto(textInput(label), label));
@@ -35,15 +33,22 @@ public class CadastrarRegistro {
 		boolean confere = true;
 		while (confere) {
 			if (cadastrar.trim().equalsIgnoreCase("s")) {
-				
-				EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
-				EntityManager em = emf.createEntityManager();
-				em.getTransaction().begin();
-				em.persist(reg);
-				em.getTransaction().commit();
-				
+				String sql = "INSERT INTO registro_de_visitas "
+						+ "(id, visitante, data_visita, hora_visita, id_pessoa, lugar) values"
+						+ "( '" + reg.getPosicao() + "' , '"
+						+ reg.getNomePessoa() + "' , '" + reg.getData()
+						+ "' , '" + reg.getHora() + "' , '" + reg.getIDpessoa()
+						+ "' , '" + reg.getLocal() + " ' );";
+				try {
+					PreparedStatement ps = con.conexao().prepareStatement(sql);
+					System.out.println(sql);
+					ps.execute();
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
 				System.out.println("Registro adicionado!");
-//		
 				confere = false;
 			} else if (cadastrar.trim().equalsIgnoreCase("n")) {
 				System.out.println("Registro ignorado!");

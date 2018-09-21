@@ -6,9 +6,7 @@ public final class Id {
 	public Id(int id) {	
 		this.id = String.format("%06d", id).trim();			
 	}		
-	
 	public String getId() {
 		return id;
-	}		
-	
+	}	
 }

@@ -1,5 +1,8 @@
 package cadastro;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
@@ -17,6 +20,9 @@ public class Atualizar {
 	}
 
 	public void atualizarCadastro() {
+		
+		CadastroPessoa cad = new CadastroPessoa();
+		Conexao con = new Conexao();
 		ValidaData data = new ValidaData();
 		ValidaCPF cpf = new ValidaCPF();
 		ValidaCelular celular = new ValidaCelular();
@@ -31,10 +37,6 @@ public class Atualizar {
 		System.out
 		.println("2- Adicionar registro de visita referente a um cadastro");
 		String opAtualizar = entrada.nextLine();
-
-		EntityManagerFactory emf = Persistence
-				.createEntityManagerFactory("databasePU");
-		EntityManager em = emf.createEntityManager();
 
 		if (opAtualizar.equalsIgnoreCase("1")) {
 			do {
@@ -53,32 +55,66 @@ public class Atualizar {
 								confere2 = true;
 							} else {
 								confereCod = String.format("%06d", cod).trim();
+								
+								String sql = "SELECT * FROM cadastro_de_pessoas";
+								try {
+									PreparedStatement ps = con.conexao().prepareStatement(sql);
+									ResultSet rs = ps.executeQuery();
+									
+									while(rs.next()){							    
+									    cad.setPosicao(rs.getString("id"));
+										if (cad.getPosicao().equals(confereCod)) {
+											
+											String label = "Digite o nome atualizado";
+											cad.setNome(string.texto(
+													textInput(label), label));
+											cad.setDataNascimento(data.data());
+											cad.setCpf(cpf.validarCPF());
+											label = "Digite o nome da empresa atualizado";
+											cad.setEmpresa(string.texto(
+													textInput(label), label));
+											label = "Digite a area de atuacao";
+											cad.setAreaDeAtuacao(string.texto(
+													textInput(label), label));
+											cad.setCelular(celular.formatarCelular());
+											
+											String sql2 = "UPDATE cadastro_de_pessoas SET "
+													+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuação) values" 
+													+ "( '" + cad.getPosicao() + "' , '" 
+													+ cad.getNome() + "' , '"
+													+ cad.getDataNascimento() + "' , '"
+													+ cad.getCpf() + "' , '" + cad.getCelular()
+													+ "' , '" + cad.getEmpresa() + "' , '"
+													+ cad.getAreaDeAtuacao()+"' );";
+											try {
+												PreparedStatement ps2 = con.conexao().prepareStatement(sql2);
+												System.out.println(sql2);
+												ps2.execute();						
 
-								CadastroPessoa pessoa = em.find(
-										CadastroPessoa.class, confereCod);
+											} catch (SQLException e) {
+												e.printStackTrace();
+											}
 
-								if (pessoa != null) {
-									em.getTransaction().begin();
-									String label = "Digite o nome atualizado";
-									pessoa.setNome(string.texto(
-											textInput(label), label));
-									pessoa.setDataNascimento(data.data());
-									pessoa.setCpf(cpf.validarCPF());
-									label = "Digite o nome da empresa atualizado";
-									pessoa.setEmpresa(string.texto(
-											textInput(label), label));
-									label = "Digite a area de atuacao";
-									pessoa.setAreaDeAtuacao(string.texto(
-											textInput(label), label));
-									pessoa.setCelular(celular.formatarCelular());
-									em.getTransaction().commit();
-									confere = false;
-									confere2 = false;
-								} else {
-									System.out
-									.println("Não existe cadastro com esse ID");
-								}
-							}
+											System.out.println("Cadastro adicionado!");
+											System.out.println(cad.toString());
+											
+											confere = false;
+											confere2 = false;
+										} else {
+											System.out
+											.println("Não existe cadastro com esse ID");
+										}										
+									    	
+											codigo = entrada.next();
+											confere = true;									
+											break;
+									
+									}
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}			
+							
+							}	
 						}
 					}
 				} catch (NumberFormatException e) {
@@ -103,18 +139,18 @@ public class Atualizar {
 					} else {
 						confereCod = String.format("%06d", cod).trim();
 
-						CadastroPessoa pessoa = em.find(CadastroPessoa.class,
-								confereCod);
+//						CadastroPessoa pessoa = em.find(CadastroPessoa.class,
+//								confereCod);
 
-						if (pessoa != null) {
-							System.out.println("Cadastro localizado");
-							conf = false;
-							CadastrarRegistro cadReg = new CadastrarRegistro();
-							cadReg.cadastrar(pessoa.getPosicao(), pessoa.getNome());
-						} else {
-							System.out.println("Cadastro nao localizado");
-							conf = true;
-						}
+//						if (pessoa != null) {
+//							System.out.println("Cadastro localizado");
+//							conf = false;
+//							CadastrarRegistro cadReg = new CadastrarRegistro();
+//							cadReg.cadastrar(pessoa.getPosicao(), pessoa.getNome());
+//						} else {
+//							System.out.println("Cadastro nao localizado");
+//							conf = true;
+						//}
 					}
 				}
 			}
