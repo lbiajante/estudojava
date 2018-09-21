@@ -31,8 +31,7 @@ public class Listar {
 				System.out.println();
 				}
 		}else if (opLista.equals("2")){
-			listarRegistro.listarRegistros();
-		
+			listarRegistro.listarRegistros();		
 		}
 	}
 }

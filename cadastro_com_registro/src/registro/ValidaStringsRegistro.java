@@ -6,8 +6,6 @@ public class ValidaStringsRegistro {
 	Scanner entrada = new Scanner(System.in);
 	
 
-	// String verificaNome;
-
 	public String texto(String verificaTexto, String label) {
 		boolean confere = true;
 

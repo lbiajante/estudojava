@@ -37,11 +37,8 @@ public class Cadastrar {
 		String cadastrar = textInput("Adicionar cadastro (S/N)?");
 		boolean confere = true;
 		while (confere) {
-			if (cadastrar.trim().equalsIgnoreCase("s")) {
-				
-//				EntityManagerCadastro emcCadastro = new EntityManagerCadastro();
-//				emcCadastro.cadastrarBD(cad);
-				
+			if (cadastrar.trim().equalsIgnoreCase("s")) {				
+		
 				EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
 				EntityManager em = emf.createEntityManager();
 				em.getTransaction().begin();
@@ -97,7 +94,7 @@ public class Cadastrar {
 			}
 		} while (conf);		
 	}
-
+	
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();
