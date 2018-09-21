@@ -40,6 +40,7 @@ public class Listar {
 				    
 				    System.out.println(cad.toString());					
 				}
+<<<<<<< HEAD
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -48,6 +49,11 @@ public class Listar {
 	}else if (opLista.equals("2")){
 					listarRegistro.listarRegistros();
 				
+=======
+		}else if (opLista.equals("2")){
+			listarRegistro.listarRegistros();		
+		}
+>>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
 	}
 }
 }

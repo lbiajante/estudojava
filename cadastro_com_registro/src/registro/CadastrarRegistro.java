@@ -17,11 +17,17 @@ public class CadastrarRegistro {
 	Scanner entrada = new Scanner(System.in);
 
 	public void cadastrar(String IdPessoa, String nomePessoa) {
+<<<<<<< HEAD
 
 		System.out.println("Cadastro de Registro");
 
 		IdRegistro id = new IdRegistro(
 				validaId.verificaID(textInput("Digite o ID do local visitado")));
+=======
+	
+		System.out.println("Cadastro de Registro");
+		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado")));
+>>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
 		reg.setPosicao(id.getId());
 		String label = "Digite o local";
 		reg.setLocal(string.texto(textInput(label), label));

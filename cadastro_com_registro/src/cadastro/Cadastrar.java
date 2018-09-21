@@ -37,6 +37,7 @@ public class Cadastrar {
 		String cadastrar = textInput("Adicionar cadastro (S/N)?");
 		boolean confere = true;
 		while (confere) {
+<<<<<<< HEAD
 			if (cadastrar.trim().equalsIgnoreCase("s")) {
 
 				String sql = "INSERT INTO cadastro_de_pessoas "
@@ -56,6 +57,16 @@ public class Cadastrar {
 					e.printStackTrace();
 				}
 
+=======
+			if (cadastrar.trim().equalsIgnoreCase("s")) {				
+		
+				EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
+				EntityManager em = emf.createEntityManager();
+				em.getTransaction().begin();
+				em.persist(cad);
+				em.getTransaction().commit();
+				
+>>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
 				System.out.println("Cadastro adicionado!");
 				System.out.println(cad.toString());
 				confere = false;
@@ -107,7 +118,7 @@ public class Cadastrar {
 			}
 		} while (conf);
 	}
-
+	
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();

@@ -15,7 +15,11 @@ public class Main {
 
 		System.out.println("BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS");
 		System.out.println("");
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
 		while (execute) {
 			entrada = new Scanner(System.in);
 			System.out.println("");
