@@ -1,4 +1,4 @@
-package cadastro;
+package Utilitarias;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

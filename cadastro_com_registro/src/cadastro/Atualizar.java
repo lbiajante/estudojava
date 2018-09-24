@@ -5,11 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import registro.CadastrarRegistro;
+import Utilitarias.Conexao;
+import Utilitarias.ValidaCPF;
+import Utilitarias.ValidaCelular;
+import Utilitarias.ValidaData;
+import Utilitarias.ValidaId;
+import Utilitarias.ValidaStrings;
 
 public class Atualizar {
 	Scanner entrada = new Scanner(System.in);
@@ -127,36 +129,8 @@ public class Atualizar {
 			} while (confere2);
 
 		} else if (opAtualizar.equals("2")) {
-			boolean conf = true;
-			while (conf) {
-				codigo = textInput("Digite o ID do cadastro da pessoa \n para incluir novo registro ou 's' para sair");
-				if (codigo.trim().equalsIgnoreCase("s")) {
-					conf = false;
-				} else {
-
-					codigo = validaId.confereID(codigo);
-
-					String sql = "SELECT * FROM cadastro_de_pessoas";
-
-					try {
-						PreparedStatement ps = con.conexao().prepareStatement(
-								sql);
-						ResultSet rs = ps.executeQuery();
-						while (rs.next()) {
-							cad.setPosicao(rs.getString("id"));
-							cad.setNome(rs.getString("nome_pessoa"));
-							if (cad.getPosicao().equals(codigo)) {
-								reg.cadastrar(cad.getPosicao(), cad.getNome());
-								break;
-							}
-						}
-						ps.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-
-				}
-			}
+			
 		}
+			
 	}
 }

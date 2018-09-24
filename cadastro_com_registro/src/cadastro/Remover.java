@@ -5,11 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 import registro.RemoverRegistro;
+import Utilitarias.Conexao;
+import Utilitarias.ValidaId;
 
 public class Remover {
 
@@ -29,73 +27,66 @@ public class Remover {
 		boolean confere = true;
 		String codigo = null;
 		RemoverRegistro remVisita = new RemoverRegistro();
-		System.out.println("Digite uma opcao: ");
-		System.out.println("1- Remover cadastro de pessoas");
-		System.out.println("2- Remover registro de visita");
-		String opRemover = entrada.nextLine();
+		System.out.println("Remover: cadastro de pessoas");
 
-		if (opRemover.equals("1")) {
-			do {
-				try {
-					while (confere) {
-						codigo = textInput("Digite um ID para ser removido ou 's' para sair");
-						if (codigo.trim().equalsIgnoreCase("s")) {
-							confere = false;
-							confere2 = false;
-						} else {
-							codigo = validaId.confereID(codigo);
-							String sql = "SELECT * FROM cadastro_de_pessoas;";
+		do {
+			try {
+				while (confere) {
+					codigo = textInput("Digite um ID para ser removido ou 's' para sair");
+					if (codigo.trim().equalsIgnoreCase("s")) {
+						confere = false;
+						confere2 = false;
+					} else {
+						codigo = validaId.confereID(codigo);
+						String sql = "SELECT * FROM cadastro_de_pessoas;";
 
-							try {
-								PreparedStatement ps = con.conexao()
-										.prepareStatement(sql);
-								ResultSet rs = ps.executeQuery();
+						try {
+							PreparedStatement ps = con.conexao()
+									.prepareStatement(sql);
+							ResultSet rs = ps.executeQuery();
 
-								while (rs.next()) {
-									cad.setPosicao(rs.getString("id"));
-									if (cad.getPosicao().equals(codigo)) {
-										existe = true;
-										break;
-									}
+							while (rs.next()) {
+								cad.setPosicao(rs.getString("id"));
+								if (cad.getPosicao().equals(codigo)) {
+									existe = true;
+									break;
 								}
-								ps.close();
+							}
+							ps.close();
+							rs.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						if (existe) {
+							String sql2 = "DELETE FROM cadastro_de_pessoas WHERE id = '"
+									+ codigo + "';";
+							try {
+								PreparedStatement ps2 = con.conexao()
+										.prepareStatement(sql2);
+								ps2.execute();
+								ps2.close();
+								System.out.println("Cadastro removido");
+
 							} catch (SQLException e) {
 								e.printStackTrace();
 							}
-							if (existe) {
-								String sql2 = "DELETE FROM cadastro_de_pessoas WHERE id = '"
-										+ codigo + "';";
-								try {
-									PreparedStatement ps2 = con.conexao()
-											.prepareStatement(sql2);
-									ps2.execute();
-									ps2.close();
-									System.out.println("Cadastro removido");
+							confere = false;
+							confere2 = false;
 
-								} catch (SQLException e) {
-									e.printStackTrace();
-								}
-								confere = false;
-								confere2 = false;
-
-							} else if (existe == false) {
-								System.out
-								.println("Nao existe cadastro com esse ID para ser removido");
-								confere = true;
-								confere2 = true;
-							}
+						} else if (existe == false) {
+							System.out
+									.println("Nao existe cadastro com esse ID para ser removido");
+							confere = true;
+							confere2 = true;
 						}
 					}
-				} catch (NumberFormatException e) {
-					System.out.printf("Voce nao digitou um numero inteiro!\n");
-					codigo = textInput("Digite um numero inteiro");
-					confere2 = true;
 				}
-			} while (confere2);
+			} catch (NumberFormatException e) {
+				System.out.printf("Voce nao digitou um numero inteiro!\n");
+				codigo = textInput("Digite um numero inteiro");
+				confere2 = true;
+			}
+		} while (confere2);
 
-		} else if (opRemover.equals("2")) {
-			remVisita.removerRegistro();
-
-		}
 	}
 }

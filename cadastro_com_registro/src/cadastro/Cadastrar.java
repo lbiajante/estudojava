@@ -4,6 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import Utilitarias.Conexao;
+import Utilitarias.ValidaCPF;
+import Utilitarias.ValidaCelular;
+import Utilitarias.ValidaData;
+import Utilitarias.ValidaId;
+import Utilitarias.ValidaStrings;
 import registro.CadastrarRegistro;
 
 public class Cadastrar {
@@ -20,9 +26,8 @@ public class Cadastrar {
 
 	public void cadastrar() {
 
-		String table = "cadastro_de_pessoas";
 		System.out.println("Cadastro de Usuario");
-		
+		String table = "cadastro_de_pessoas";
 		String label = "Digite o ID a ser cadastrado";	
 		cad.setPosicao(validaId.verificaID(textInput(label), table));
 		label = "Digite o nome";
@@ -49,10 +54,10 @@ public class Cadastrar {
 						+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
 						+ "' );";
 				try {
-					PreparedStatement ps = con.conexao().prepareStatement(sql);
-				
+					PreparedStatement ps = con.conexao().prepareStatement(sql);				
 					ps.execute();
 
+					ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

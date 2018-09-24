@@ -3,13 +3,8 @@ package registro;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import cadastro.Conexao;
+import Utilitarias.Conexao;
 
 public class ListarRegistro {
 
@@ -18,6 +13,8 @@ public class ListarRegistro {
 
 	public void listarRegistros() {
 
+		System.out.println("Lista: registro de visitas");
+		
 		String sql = "SELECT * FROM registro_de_visitas";
 		try {
 			PreparedStatement ps = con.conexao().prepareStatement(sql);
@@ -34,6 +31,8 @@ public class ListarRegistro {
 
 				System.out.println(reg.toString());
 			}
+			ps.close();
+			rs.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

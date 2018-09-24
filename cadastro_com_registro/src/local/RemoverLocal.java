@@ -1,15 +1,15 @@
-package registro;
+package local;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import registro.RegistroVisita;
 import Utilitarias.Conexao;
 import Utilitarias.ValidaId;
 
-public class RemoverRegistro {
-
+public class RemoverLocal {
 	Scanner entrada = new Scanner(System.in);
 
 	private String textInput(String label) {
@@ -17,10 +17,10 @@ public class RemoverRegistro {
 		return entrada.nextLine();
 	}
 
-	public void removerRegistro() {
+	public void removerLocal() {
 		ValidaId validaId = new ValidaId();
 		Conexao con = new Conexao();
-		RegistroVisita reg = new RegistroVisita();
+		Local local = new Local();
 		boolean existe = false;
 		boolean confere2 = true;
 		boolean confere = true;
@@ -36,14 +36,14 @@ public class RemoverRegistro {
 					} else {
 						codigo = validaId.confereID(codigo);
 
-						String sql = "SELECT * FROM registro_de_visitas";
+						String sql = "SELECT * FROM local";
 						try {
 							PreparedStatement ps = con.conexao()
 									.prepareStatement(sql);
 							ResultSet rs = ps.executeQuery();
 							while (rs.next()) {
-								reg.setPosicao(rs.getString("id"));
-								if (reg.getPosicao().equals(codigo)) {
+								local.setId(rs.getString("id"));
+								if (local.getId().equals(codigo)) {
 									existe = true;
 									break;
 								}
@@ -54,14 +54,14 @@ public class RemoverRegistro {
 							e.printStackTrace();
 						}
 						if (existe) {
-							String sql2 = "DELETE FROM registro_de_visitas WHERE id = '"
+							String sql2 = "DELETE FROM local WHERE id = '"
 									+ codigo + "';";
 							try {
 								PreparedStatement ps2 = con.conexao()
 										.prepareStatement(sql2);
 								ps2.execute();
 								ps2.close();
-								System.out.println("Registro removido");
+								System.out.println("Local removido");
 
 							} catch (SQLException e) {
 								e.printStackTrace();
@@ -71,7 +71,7 @@ public class RemoverRegistro {
 
 						} else if (existe == false) {
 							System.out
-							.println("Nao existe registro com esse ID para ser removido");
+							.println("Nao existe local com esse ID para ser removido");
 							confere = true;
 							confere2 = true;
 						}
@@ -84,4 +84,5 @@ public class RemoverRegistro {
 			}
 		} while (confere2);
 	}
+
 }
