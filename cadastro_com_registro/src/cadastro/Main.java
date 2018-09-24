@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 
 public class Main {
+	
+	
+	
 	public static void main(String[] args) {
 
 		boolean execute = true;
@@ -15,25 +18,24 @@ public class Main {
 
 		System.out.println("BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS");
 		System.out.println("");
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
 		while (execute) {
 			entrada = new Scanner(System.in);
 			System.out.println("");
-			System.out.println("-------------------------------------------");
+			System.out.println("------------------------------------------------------------------------------");
 			System.out.println("Digite o numero da opcao selecionada:");
-			System.out.println("1 - Novo cadastro");
-			System.out.println("2 - Listar cadastro ou listar registros");
-			System.out.println("3 - Apagar item do cadastro ou apagar item do registro");
-			System.out.println("4 - Atualizar cadastro ou adicionar registro a um cadastro");
+			System.out.println("1 - Cadastrar pessoas, registros de visitas ou locais");
+			System.out.println("2 - Listar cadastro de pessoas, registros de visitas ou locais");
+			System.out.println("3 - Apagar item do cadastro de pessoas, registros de visitas ou locais");
+			System.out.println("4 - Atualizar cadastro cadastro de pessoas, registros de visitas ou locais");
 			System.out.println("5 - Sair");
-			System.out.println("-------------------------------------------");
+			System.out.println("------------------------------------------------------------------------------");
+			
+			
 			String opcao = entrada.next();
 			if (opcao.equals("1")) {
-				System.out.println("");
+				
+				
 				cadastrar.cadastrar();
 				execute =  true;
 			} else if (opcao.equals("2")) {

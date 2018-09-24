@@ -20,13 +20,14 @@ public class Cadastrar {
 
 	public void cadastrar() {
 
+		String table = "cadastro_de_pessoas";
 		System.out.println("Cadastro de Usuario");
-		Id id = new Id(
-				validaId.verificaID(textInput("Digite o ID a ser cadastrado")));
-		cad.setPosicao(id.getId());
-		String label = "Digite o nome";
+		
+		String label = "Digite o ID a ser cadastrado";	
+		cad.setPosicao(validaId.verificaID(textInput(label), table));
+		label = "Digite o nome";
 		cad.setNome(string.texto(textInput(label), label));
-		cad.setDataNascimento(data.data());
+		cad.setDataNascimento(data.data("Digite a data de nascimento com o formato: ddmmaaaa"));
 		cad.setCpf(cpf.validarCPF());
 		label = "Digite o nome da empresa";
 		cad.setEmpresa(string.texto(textInput(label), label));
@@ -49,7 +50,7 @@ public class Cadastrar {
 						+ "' );";
 				try {
 					PreparedStatement ps = con.conexao().prepareStatement(sql);
-					System.out.println(sql);
+				
 					ps.execute();
 
 				} catch (SQLException e) {

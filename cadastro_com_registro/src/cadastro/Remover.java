@@ -1,5 +1,8 @@
 package cadastro;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
@@ -18,9 +21,12 @@ public class Remover {
 	}
 
 	public void removerCadastro() {
+		ValidaId validaId = new ValidaId();
+		CadastroPessoa cad = new CadastroPessoa();
+		Conexao con = new Conexao();
+		boolean existe = false;
 		boolean confere2 = true;
 		boolean confere = true;
-		String confereCod = null;
 		String codigo = null;
 		RemoverRegistro remVisita = new RemoverRegistro();
 		System.out.println("Digite uma opcao: ");
@@ -28,7 +34,7 @@ public class Remover {
 		System.out.println("2- Remover registro de visita");
 		String opRemover = entrada.nextLine();
 
-		if (opRemover.equals("1")) {		
+		if (opRemover.equals("1")) {
 			do {
 				try {
 					while (confere) {
@@ -37,56 +43,47 @@ public class Remover {
 							confere = false;
 							confere2 = false;
 						} else {
-							int cod = Integer.parseInt(codigo.trim());
-							if (cod <= 0) {
+							codigo = validaId.confereID(codigo);
+							String sql = "SELECT * FROM cadastro_de_pessoas;";
+
+							try {
+								PreparedStatement ps = con.conexao()
+										.prepareStatement(sql);
+								ResultSet rs = ps.executeQuery();
+
+								while (rs.next()) {
+									cad.setPosicao(rs.getString("id"));
+									if (cad.getPosicao().equals(codigo)) {
+										existe = true;
+										break;
+									}
+								}
+								ps.close();
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+							if (existe) {
+								String sql2 = "DELETE FROM cadastro_de_pessoas WHERE id = '"
+										+ codigo + "';";
+								try {
+									PreparedStatement ps2 = con.conexao()
+											.prepareStatement(sql2);
+									ps2.execute();
+									ps2.close();
+									System.out.println("Cadastro removido");
+
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+								confere = false;
+								confere2 = false;
+
+							} else if (existe == false) {
 								System.out
-								.println("O codigo precisa ser maior que zero");
+								.println("Nao existe cadastro com esse ID para ser removido");
 								confere = true;
 								confere2 = true;
-							} else {
-<<<<<<< HEAD
-								int cod = Integer.parseInt(codigo.trim());
-								if (cod <= 0) {
-									System.out
-									.println("O codigo precisa ser maior que zero");
-									confere = true;
-									confere2 = true;
-								} else {
-									confereCod = String.format("%06d", cod).trim();
-//									EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
-//									EntityManager em = emf.createEntityManager();									
-//									CadastroPessoa pessoa = em.find(CadastroPessoa.class, confereCod);
-//									
-//									if (pessoa != null){
-//									em.getTransaction().begin();
-//									em.remove(pessoa);
-//									em.getTransaction().commit();
-//									confere = false;
-//									confere2 = false;
-//									System.out.println("Cadastro removido com sucesso");
-//									} else {
-//										System.out.println("Nao existe passoa cadastrada com esse ID");
-//									}
-								}						
 							}
-=======
-								confereCod = String.format("%06d", cod).trim();
-								EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
-								EntityManager em = emf.createEntityManager();									
-								CadastroPessoa pessoa = em.find(CadastroPessoa.class, confereCod);
-
-								if (pessoa != null){
-									em.getTransaction().begin();
-									em.remove(pessoa);
-									em.getTransaction().commit();
-									confere = false;
-									confere2 = false;
-									System.out.println("Cadastro removido com sucesso");
-								} else {
-									System.out.println("Nao existe passoa cadastrada com esse ID");
-								}
-							}						
->>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
 						}
 					}
 				} catch (NumberFormatException e) {

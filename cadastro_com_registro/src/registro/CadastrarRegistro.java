@@ -5,34 +5,33 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import cadastro.Conexao;
+import cadastro.ValidaData;
+import cadastro.ValidaId;
 import cadastro.ValidaStrings;
 
 public class CadastrarRegistro {
 
 	Conexao con = new Conexao();
 	RegistroVisita reg = new RegistroVisita();
-	ValidaDataRegistro data = new ValidaDataRegistro();
+	ValidaData data = new ValidaData();
 	ValidaStrings string = new ValidaStrings();
-	ValidaIdRegistro validaId = new ValidaIdRegistro();
+	ValidaId validaId = new ValidaId();
 	Scanner entrada = new Scanner(System.in);
 
 	public void cadastrar(String IdPessoa, String nomePessoa) {
-<<<<<<< HEAD
 
 		System.out.println("Cadastro de Registro");
 
-		IdRegistro id = new IdRegistro(
-				validaId.verificaID(textInput("Digite o ID do local visitado")));
-=======
+		String table = "registro_de_visitas";		
 	
 		System.out.println("Cadastro de Registro");
-		IdRegistro id = new IdRegistro(validaId.verificaID(textInput("Digite o ID do local visitado")));
->>>>>>> c6db60d449a225053e0f384b9329fec62ed1aab2
-		reg.setPosicao(id.getId());
-		String label = "Digite o local";
+		
+		String label = "Digite o ID do local visitado";
+		reg.setPosicao(validaId.verificaID(textInput(label), table));
+		label = "Digite o local";
 		reg.setLocal(string.texto(textInput(label), label));
-		reg.setData(data.data());
-		reg.setHora(data.hora());
+		reg.setData(data.data("Digite a data da visita com o formato: ddmmaaaa"));
+		reg.setHora(data.hora("Digite a hora da visita com o formato: hhmm"));
 		reg.setIDpessoa(IdPessoa);
 		reg.setNomePessoa(nomePessoa);
 		String cadastrar = textInput("Adicionar Registro (S/N)?");
@@ -47,12 +46,13 @@ public class CadastrarRegistro {
 						+ "' , '" + reg.getLocal() + " ' );";
 				try {
 					PreparedStatement ps = con.conexao().prepareStatement(sql);
-					System.out.println(sql);
+				
 					ps.execute();
+					ps.close();
 
 				} catch (SQLException e) {
 					e.printStackTrace();
-				}
+				}			
 
 				System.out.println("Registro adicionado!");
 				confere = false;

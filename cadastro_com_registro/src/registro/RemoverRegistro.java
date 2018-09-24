@@ -1,10 +1,16 @@
 package registro;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import cadastro.Conexao;
+import cadastro.ValidaId;
 
 public class RemoverRegistro {
 
@@ -16,10 +22,12 @@ public class RemoverRegistro {
 	}
 
 	public void removerRegistro() {
-
+		ValidaId validaId = new ValidaId();
+		Conexao con = new Conexao();
+		RegistroVisita reg = new RegistroVisita();
+		boolean existe = false;
 		boolean confere2 = true;
 		boolean confere = true;
-		String confereCod = null;
 		String codigo = null;
 
 		do {
@@ -30,35 +38,49 @@ public class RemoverRegistro {
 						confere = false;
 						confere2 = false;
 					} else {
-						int cod = Integer.parseInt(codigo.trim());
-						if (cod <= 0) {
+						codigo = validaId.confereID(codigo);
+
+						String sql = "SELECT * FROM registro_de_visitas";
+						try {
+							PreparedStatement ps = con.conexao()
+									.prepareStatement(sql);
+							ResultSet rs = ps.executeQuery();
+							while (rs.next()) {
+								reg.setPosicao(rs.getString("id"));
+								if (reg.getPosicao().equals(codigo)) {
+									existe = true;
+									break;
+								}
+							}
+							ps.close();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						if (existe) {
+							String sql2 = "DELETE FROM registro_de_visitas WHERE id = '"
+									+ codigo + "';";
+							try {
+								PreparedStatement ps2 = con.conexao()
+										.prepareStatement(sql2);
+								ps2.execute();
+								ps2.close();
+								System.out.println("Registro removido");
+
+							} catch (SQLException e) {
+								e.printStackTrace();
+							}
+							confere = false;
+							confere2 = false;
+
+						} else if (existe == false) {
 							System.out
-							.println("O codigo precisa ser maior que zero");
+							.println("Nao existe registro com esse ID para ser removido");
 							confere = true;
 							confere2 = true;
-						} else {
-							confereCod = String.format("%06d", cod).trim();
-
-//							EntityManagerFactory emf = Persistence.createEntityManagerFactory("databasePU");
-//							EntityManager em = emf.createEntityManager();									
-//							RegistroVisita registro = em.find(RegistroVisita.class, confereCod);
-//
-//							if (registro != null){
-//								em.getTransaction().begin();
-//								em.remove(registro);
-//								em.getTransaction().commit();
-//								confere = false;
-//								confere2 = false;
-//								System.out.println("Cadastro removido com sucesso");
-//							} else {
-//								System.out.println("Nao existe passoa cadastrada com esse ID");
-//							}
-
-						}	
+						}
 					}
 				}
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				System.out.printf("Voce nao digitou um numero inteiro!\n");
 				codigo = textInput("Digite um numero inteiro");
 				confere2 = true;
@@ -66,4 +88,3 @@ public class RemoverRegistro {
 		} while (confere2);
 	}
 }
-

@@ -1,3 +1,0 @@
-Main-Class: cadastro.Main
-Name: cadastro/Main.class
-Java-Bean: True
