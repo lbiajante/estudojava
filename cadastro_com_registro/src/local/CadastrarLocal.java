@@ -4,9 +4,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import Utilitarias.Conexao;
-import Utilitarias.ValidaId;
-import Utilitarias.ValidaStrings;
+import utilitarias.Conexao;
+import utilitarias.ValidaId;
+import utilitarias.ValidaStrings;
 
 public class CadastrarLocal {
 	Conexao con = new Conexao();

@@ -1,4 +1,4 @@
-package Utilitarias;
+package utilitarias;
 
 import java.text.ParseException;
 import java.util.InputMismatchException;

@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import registro.RegistroVisita;
-import Utilitarias.Conexao;
-import Utilitarias.ValidaId;
+import utilitarias.Conexao;
+import utilitarias.ValidaId;
 
 public class RemoverLocal {
 	Scanner entrada = new Scanner(System.in);

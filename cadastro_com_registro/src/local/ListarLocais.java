@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import registro.RegistroVisita;
-import Utilitarias.Conexao;
+import utilitarias.Conexao;
 
 public class ListarLocais {
 	Conexao con = new Conexao();

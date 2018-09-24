@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import Utilitarias.Conexao;
+import utilitarias.Conexao;
 
 public class ListarRegistro {
 

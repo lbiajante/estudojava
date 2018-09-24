@@ -1,4 +1,4 @@
-package Utilitarias;
+package utilitarias;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

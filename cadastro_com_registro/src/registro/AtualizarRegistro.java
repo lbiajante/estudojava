@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import Utilitarias.Conexao;
-import Utilitarias.ValidaCPF;
-import Utilitarias.ValidaCelular;
-import Utilitarias.ValidaData;
-import Utilitarias.ValidaId;
-import Utilitarias.ValidaStrings;
+import utilitarias.Conexao;
+import utilitarias.ValidaCPF;
+import utilitarias.ValidaCelular;
+import utilitarias.ValidaData;
+import utilitarias.ValidaId;
+import utilitarias.ValidaStrings;
 import cadastro.CadastroPessoa;
 
 public class AtualizarRegistro {

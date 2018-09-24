@@ -5,11 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import utilitarias.Conexao;
+import utilitarias.ValidaData;
+import utilitarias.ValidaId;
+import utilitarias.ValidaStrings;
 import cadastro.CadastroPessoa;
-import Utilitarias.Conexao;
-import Utilitarias.ValidaData;
-import Utilitarias.ValidaId;
-import Utilitarias.ValidaStrings;
 
 public class CadastrarRegistro {
 

@@ -5,9 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import Utilitarias.Conexao;
-import Utilitarias.ValidaId;
-import Utilitarias.ValidaStrings;
+import utilitarias.Conexao;
+import utilitarias.ValidaId;
+import utilitarias.ValidaStrings;
 
 public class AtualizaLocal {
 	Scanner entrada = new Scanner(System.in);
