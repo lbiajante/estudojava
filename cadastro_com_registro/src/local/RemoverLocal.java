@@ -5,9 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import registro.RegistroVisita;
 import utilitarias.Conexao;
-import utilitarias.ValidaId;
+import utilitarias.ValidaStrings;
 
 public class RemoverLocal {
 	Scanner entrada = new Scanner(System.in);
@@ -18,71 +17,57 @@ public class RemoverLocal {
 	}
 
 	public void removerLocal() {
-		ValidaId validaId = new ValidaId();
-		Conexao con = new Conexao();
+		ValidaStrings string = new ValidaStrings();
 		Local local = new Local();
 		boolean existe = false;
-		boolean confere2 = true;
 		boolean confere = true;
-		String codigo = null;
+		String input = null;
 
-		do {
-			try {
-				while (confere) {
-					codigo = textInput("Digite um ID para ser removido ou 's' para sair");
-					if (codigo.trim().equalsIgnoreCase("s")) {
-						confere = false;
-						confere2 = false;
-					} else {
-						codigo = validaId.confereID(codigo);
-
-						String sql = "SELECT * FROM local";
-						try {
-							PreparedStatement ps = con.conexao()
-									.prepareStatement(sql);
-							ResultSet rs = ps.executeQuery();
-							while (rs.next()) {
-								local.setId(rs.getString("id"));
-								if (local.getId().equals(codigo)) {
-									existe = true;
-									break;
-								}
-							}
-							ps.close();
-							rs.close();
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-						if (existe) {
-							String sql2 = "DELETE FROM local WHERE id = '"
-									+ codigo + "';";
-							try {
-								PreparedStatement ps2 = con.conexao()
-										.prepareStatement(sql2);
-								ps2.execute();
-								ps2.close();
-								System.out.println("Local removido");
-
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-							confere = false;
-							confere2 = false;
-
-						} else if (existe == false) {
-							System.out
-							.println("Nao existe local com esse ID para ser removido");
-							confere = true;
-							confere2 = true;
+		while (confere) {
+			String label = "Digite um lugar para ser removido ou 's' para sair";
+			input = (string.texto(textInput(label), label));
+			if (input.trim().equalsIgnoreCase("s")) {
+				confere = false;
+			} else {
+				String sql = "SELECT * FROM local";
+				try {
+					PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
+					ResultSet rs = ps.executeQuery();
+					while (rs.next()) {
+						local.setLugar(rs.getString("lugar"));
+						if (local.getLugar().equals(input)) {
+							existe = true;
+							break;
 						}
 					}
+					ps.close();
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
-			} catch (NumberFormatException e) {
-				System.out.printf("Voce nao digitou um numero inteiro!\n");
-				codigo = textInput("Digite um numero inteiro");
-				confere2 = true;
+				if (existe) {
+					String sql2 = "DELETE FROM local WHERE lugar = '" + input
+							+ "';";
+					try {
+						PreparedStatement ps2 = Conexao.conexao().prepareStatement(
+								sql2);
+						ps2.execute();
+						ps2.close();
+						System.out.println("Local removido");
+
+					} catch (SQLException e) {
+						System.out.println("Local nao pode ser removido \nporque está vinculado a uma ou mais visitas");
+					}
+					confere = false;
+
+				} else if (existe == false) {
+					System.out
+							.println("O local indicado não existe para ser removido");
+					confere = true;
+
+				}
 			}
-		} while (confere2);
+		}
 	}
 
 }

@@ -1,30 +1,20 @@
 package local;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
-public class Local {
+public class Local implements Serializable{
 
-	@Id
-	
-	private String id;
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public String toString() {
-		return "Local: ID = " + id + ", lugar = " + lugar;
+		return "Local: " + lugar;
 	}
 
 	private String lugar;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getLugar() {
 		return lugar;

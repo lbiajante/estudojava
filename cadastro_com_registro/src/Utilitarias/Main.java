@@ -22,7 +22,7 @@ public class Main {
 		RemoverLocal remLocal = new RemoverLocal();
 		Atualizar atualizar = new Atualizar();
 		AtualizarRegistro atualRegistro = new AtualizarRegistro();
-		AtualizaLocal atualLocal = new AtualizaLocal();
+	//	AtualizaLocal atualLocal = new AtualizaLocal();
 		Listar listar = new Listar();
 		ListarRegistro listRegistro = new ListarRegistro();
 		ListarLocais listLocal = new ListarLocais();
@@ -38,19 +38,20 @@ public class Main {
 			entrada = new Scanner(System.in);
 			System.out.println("");
 			System.out
-					.println("------------------------------------------------------------------------------");
+					.println("---------------------------------------------------------------------------------------------");
 			System.out.println("Digite o numero da opcao selecionada:");
 			System.out
-					.println("1 - Cadastrar pessoas, registros de visitas ou locais");
+					.println("1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais");
 			System.out
-					.println("2 - Listar cadastro de pessoas, registros de visitas ou locais");
+					.println("2 - Listar cadastro de pessoas/ Listar registros de visitas/ Listar locais cadstrados");
 			System.out
-					.println("3 - Apagar item do cadastro de pessoas, registros de visitas ou locais");
+					.println("3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais");
 			System.out
-					.println("4 - Atualizar cadastro cadastro de pessoas, registros de visitas ou locais");
+					.println("4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas"); /// Atualizar locais
+
 			System.out.println("5 - Sair");
 			System.out
-					.println("------------------------------------------------------------------------------");
+					.println("---------------------------------------------------------------------------------------------");
 
 			opcao = entrada.next();
 			if (opcao.equals("1")) {
@@ -91,17 +92,17 @@ public class Main {
 					remLocal.removerLocal();
 				}
 				execute = true;
-			
+
 			} else if (opcao.equals("4")) {
 				System.out
-						.println("Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais");
+						.println("Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n "); //3- Locais
 				subOpcao = entrada.next();
 				if (subOpcao.equals("1")) {
 					atualizar.atualizarCadastro();
 				} else if (subOpcao.equals("2")) {
 					atualRegistro.atualizarRegistro();
-				} else if (subOpcao.equals("3")) {
-					atualLocal.atualizarLocal();
+//				} else if (subOpcao.equals("3")) {
+//					atualLocal.atualizarLocal();
 				}
 				execute = true;
 			} else if (opcao.equals("5")) {

@@ -3,14 +3,12 @@ package cadastro;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import registro.ListarRegistro;
 import utilitarias.Conexao;
 
 public class Listar {
 	ListarRegistro listarRegistro = new ListarRegistro();
-	private Scanner entrada;
 	Conexao con = new Conexao();
 	CadastroPessoa cad = new CadastroPessoa();
 
@@ -20,7 +18,7 @@ public class Listar {
 
 		String sql = "SELECT * FROM cadastro_de_pessoas";
 		try {
-			PreparedStatement ps = con.conexao().prepareStatement(sql);
+			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {

@@ -19,7 +19,6 @@ public class RemoverRegistro {
 
 	public void removerRegistro() {
 		ValidaId validaId = new ValidaId();
-		Conexao con = new Conexao();
 		RegistroVisita reg = new RegistroVisita();
 		boolean existe = false;
 		boolean confere2 = true;
@@ -38,7 +37,7 @@ public class RemoverRegistro {
 
 						String sql = "SELECT * FROM registro_de_visitas";
 						try {
-							PreparedStatement ps = con.conexao()
+							PreparedStatement ps = Conexao.conexao()
 									.prepareStatement(sql);
 							ResultSet rs = ps.executeQuery();
 							while (rs.next()) {
@@ -57,7 +56,7 @@ public class RemoverRegistro {
 							String sql2 = "DELETE FROM registro_de_visitas WHERE id = '"
 									+ codigo + "';";
 							try {
-								PreparedStatement ps2 = con.conexao()
+								PreparedStatement ps2 = Conexao.conexao()
 										.prepareStatement(sql2);
 								ps2.execute();
 								ps2.close();

@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import registro.RemoverRegistro;
 import utilitarias.Conexao;
 import utilitarias.ValidaId;
 
@@ -21,12 +20,10 @@ public class Remover {
 	public void removerCadastro() {
 		ValidaId validaId = new ValidaId();
 		CadastroPessoa cad = new CadastroPessoa();
-		Conexao con = new Conexao();
 		boolean existe = false;
 		boolean confere2 = true;
 		boolean confere = true;
 		String codigo = null;
-		RemoverRegistro remVisita = new RemoverRegistro();
 		System.out.println("Remover: cadastro de pessoas");
 
 		do {
@@ -41,7 +38,7 @@ public class Remover {
 						String sql = "SELECT * FROM cadastro_de_pessoas;";
 
 						try {
-							PreparedStatement ps = con.conexao()
+							PreparedStatement ps = Conexao.conexao()
 									.prepareStatement(sql);
 							ResultSet rs = ps.executeQuery();
 
@@ -61,14 +58,15 @@ public class Remover {
 							String sql2 = "DELETE FROM cadastro_de_pessoas WHERE id = '"
 									+ codigo + "';";
 							try {
-								PreparedStatement ps2 = con.conexao()
+								PreparedStatement ps2 = Conexao.conexao()
 										.prepareStatement(sql2);
 								ps2.execute();
 								ps2.close();
 								System.out.println("Cadastro removido");
 
 							} catch (SQLException e) {
-								e.printStackTrace();
+								System.out
+										.println("Cadastro desta pessoa nao pode ser removido, \npois esta vinculado a um ou mais registros de visitas");
 							}
 							confere = false;
 							confere2 = false;

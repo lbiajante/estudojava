@@ -28,7 +28,7 @@ public class ValidaId {
 					cod = Integer.parseInt(codigo.trim());
 					if (cod <= 0) {
 						System.out
-						.println("O codigo precisa ser maior que zero");
+						.println("O lugar precisa ser maior que zero");
 						confere = true;
 						cod = 0;
 					} else {
@@ -51,7 +51,7 @@ public class ValidaId {
 		String sql = "SELECT * FROM " + table + ";";
 		
 		try {
-			PreparedStatement ps = con.conexao()
+			PreparedStatement ps = Conexao.conexao()
 					.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();			
 			
@@ -87,22 +87,6 @@ public class ValidaId {
 						
 					}
 				}				
-			}else if (table.equals("local")) {
-				System.out.println(confereCod);
-				while (rs.next()) {
-					local.setId(rs.getString("id"));
-					if (local.getId().equals(confereCod)) {
-						System.out
-						.println("Esse ID esta sendo usado, por favor digite outro");
-						confereCod = entrada.next();
-						rs.close();
-						ps.close();
-						this.verificaID(confereCod, table);						
-						break;
-					} else {
-						
-					}
-				}						
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

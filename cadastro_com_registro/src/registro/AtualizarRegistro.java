@@ -5,13 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import local.CadastrarLocal;
 import utilitarias.Conexao;
-import utilitarias.ValidaCPF;
-import utilitarias.ValidaCelular;
 import utilitarias.ValidaData;
 import utilitarias.ValidaId;
-import utilitarias.ValidaStrings;
-import cadastro.CadastroPessoa;
 
 public class AtualizarRegistro {
 	Scanner entrada = new Scanner(System.in);
@@ -24,13 +21,9 @@ public class AtualizarRegistro {
 	public void atualizarRegistro() {
 
 		RegistroVisita regg = new RegistroVisita();
-
-		Conexao con = new Conexao();
+		CadastrarLocal cadLocal = new CadastrarLocal();
 		ValidaId validaId = new ValidaId();
 		ValidaData data = new ValidaData();
-		ValidaCPF cpf = new ValidaCPF();
-		ValidaCelular celular = new ValidaCelular();
-		ValidaStrings string = new ValidaStrings();
 		boolean confere2 = true;
 		boolean confere = true;
 		boolean existe = false;
@@ -52,7 +45,7 @@ public class AtualizarRegistro {
 
 						String sql = "SELECT * FROM registro_de_visitas";
 						try {
-							PreparedStatement ps = con.conexao()
+							PreparedStatement ps = Conexao.conexao()
 									.prepareStatement(sql);
 							ResultSet rs = ps.executeQuery();
 							while (rs.next()) {
@@ -69,35 +62,21 @@ public class AtualizarRegistro {
 
 						if (existe) {
 
-							String label = "Digite o nome atualizado";
-							regg.setNomePessoa(string.texto(textInput(label),
-									label));
-							regg.setLocal(string.texto(textInput(label), label));
+							regg.setLocal(cadLocal.cadastrarLocal());
 							regg.setData(data
-									.data("Digite a data da visita com o formato: ddmmaaaa"));
+									.data("Atualize a data da visita com o formato: ddmmaaaa"));
 							regg.setHora(data
-									.hora("Digite a hora da visita com o formato: hhmm"));
-							label = "Digite o ID da pessoa";
-							regg.setIDpessoa(string.texto(textInput(label),
-									label));
-							label = "Digite o nome da pessoa";
-							regg.setNomePessoa(string.texto(textInput(label),
-									label));
-
-							String sql2 = "UPDATE registro_de_visitas SET visitante = '"
-									+ regg.getNomePessoa()
-									+ "' , data_visita = '"
+									.hora("Atualize a hora da visita com o formato: hhmm"));
+							String sql2 = "UPDATE registro_de_visitas SET data_visita = '"
 									+ regg.getData()
 									+ "' , hora_visita = '"
 									+ regg.getHora()
-									+ "' , id_pessoa = '"
-									+ regg.getIDpessoa()
-									+ "' , lugar = '" + regg.getLocal()
-
-									+ "' WHERE id = '" + codigo + "';";
-							System.out.println(sql2);
+									+ "' , lugar = '"
+									+ regg.getLocal()
+									+ "' WHERE id = '"
+									+ codigo + "';";
 							try {
-								PreparedStatement ps2 = con.conexao()
+								PreparedStatement ps2 = Conexao.conexao()
 										.prepareStatement(sql2);
 								ps2.execute();
 								ps2.close();
@@ -110,7 +89,7 @@ public class AtualizarRegistro {
 
 						} else if (existe == false) {
 							System.out
-							.println("Nao existe cadastro com esse ID para ser atualizado");
+									.println("Nao existe cadastro com esse ID para ser atualizado");
 							confere = true;
 							confere2 = true;
 						}

@@ -54,16 +54,14 @@ public class Cadastrar {
 						+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
 						+ "' );";
 				try {
-					PreparedStatement ps = con.conexao().prepareStatement(sql);				
+					PreparedStatement ps = Conexao.conexao().prepareStatement(sql);				
 					ps.execute();
-
 					ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 
 				if (cadastrar.trim().equalsIgnoreCase("s")) {
-
 					System.out.println("Cadastro adicionado!");
 					System.out.println(cad.toString());
 					confere = false;
@@ -71,6 +69,7 @@ public class Cadastrar {
 				} else if (cadastrar.trim().equalsIgnoreCase("n")) {
 					System.out.println("Cadastro ignorado!");
 					confere = false;
+					
 				} else {
 					System.out.println("Opcao invalida");
 					cadastrar = textInput("Digite uma opcao valida. (S/N)");
@@ -79,7 +78,6 @@ public class Cadastrar {
 			}
 
 			boolean conf = true;
-
 			do {
 				System.out
 						.println("Deseja registrar a visita a algum local? (S/N)");

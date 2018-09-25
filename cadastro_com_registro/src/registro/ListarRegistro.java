@@ -17,7 +17,7 @@ public class ListarRegistro {
 		
 		String sql = "SELECT * FROM registro_de_visitas";
 		try {
-			PreparedStatement ps = con.conexao().prepareStatement(sql);
+			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {

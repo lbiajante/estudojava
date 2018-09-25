@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import registro.RegistroVisita;
 import utilitarias.Conexao;
 
 public class ListarLocais {
@@ -16,15 +15,11 @@ public class ListarLocais {
 		System.out.println("Lista: locais");
 		String sql = "SELECT * FROM local";
 		try {
-			PreparedStatement ps = con.conexao().prepareStatement(sql);
+			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
-			while (rs.next()) {
-
-				local.setId(rs.getString("id"));
+			while (rs.next()) {				
 				local.setLugar(rs.getString("lugar"));
-				
-
 				System.out.println(local.toString());
 			}
 			ps.close();

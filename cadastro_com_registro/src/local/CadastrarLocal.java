@@ -1,44 +1,62 @@
 package local;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 import utilitarias.Conexao;
-import utilitarias.ValidaId;
 import utilitarias.ValidaStrings;
 
 public class CadastrarLocal {
 	Conexao con = new Conexao();
 	Local cadLocal = new Local();
 	ValidaStrings string = new ValidaStrings();
-	ValidaId validaId = new ValidaId();
+	String lugar = null;
+	
 	Scanner entrada = new Scanner(System.in);
 
-	public void cadastrarLocal(){
-		
-		System.out.println("Cadastro de lugares");		
-		String table = "local";
-		String label = "Digite o ID do lugar";
-		cadLocal.setId(validaId.verificaID(textInput(label), table));		
-		 label = "Digite o lugar";
-		cadLocal.setLugar(string.texto(textInput(label), label));
-		
-		String sql = "INSERT INTO local "
-				+ "(id, lugar) values"
-				+ "( '" + cadLocal.getId()+"' , '" + cadLocal.getLugar()+ "' );";
+	public String cadastrarLocal() {
+
+		System.out.println("Cadastro de lugares");
+		boolean existe = true;
+
+		String label = "Digite o lugar";
+		lugar = (string.texto(textInput(label), label));
+
+		String sql = "SELECT * FROM local";
+
 		try {
-			PreparedStatement ps = con.conexao().prepareStatement(sql);				
-			ps.execute();
+			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				cadLocal.setLugar(rs.getString("lugar"));
+				if (cadLocal.getLugar().equals(lugar)) {
+					existe = false;
+					break;
+				}
+			}
+			if (existe == false) {
+				System.out.println("Lugar já cadastrado");
+				lugar = cadLocal.getLugar();
+
+			} else if (existe == true) {
+				System.out.println("Lugar não cadastrado ainda!");
+				sql = "INSERT INTO local " + "(lugar) values" + "( '" + lugar.trim()
+						+ "' );";
+				ps = Conexao.conexao().prepareStatement(sql);
+				ps.execute();
+				System.out.println("Ok! Lugar adicionado!");
+			}
 			ps.close();
-			System.out.println("Lugar adicionado!");
-			
+			rs.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		return lugar;
 	}
-	
+
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();
