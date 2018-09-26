@@ -9,27 +9,26 @@ import utilitarias.Conexao;
 import utilitarias.ValidaStrings;
 
 public class CadastrarLocal {
-	Conexao con = new Conexao();
+
 	Local cadLocal = new Local();
 	ValidaStrings string = new ValidaStrings();
 	String lugar = null;
-	
 	Scanner entrada = new Scanner(System.in);
 
 	public String cadastrarLocal() {
-
 		System.out.println("Cadastro de lugares");
 		boolean existe = true;
 
 		String label = "Digite o lugar";
 		lugar = (string.texto(textInput(label), label));
-
+		// SQL de listagem de todos os itens da tabela local
 		String sql = "SELECT * FROM local";
 
-		try {
+		try { // conexão com o BD
 			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
+				// laço para a verificação se o local digitado já existe no BD
 				cadLocal.setLugar(rs.getString("lugar"));
 				if (cadLocal.getLugar().equals(lugar)) {
 					existe = false;
@@ -42,8 +41,9 @@ public class CadastrarLocal {
 
 			} else if (existe == true) {
 				System.out.println("Lugar não cadastrado ainda!");
-				sql = "INSERT INTO local " + "(lugar) values" + "( '" + lugar.trim()
-						+ "' );";
+				// novo SQL para inserção de item ainda não cadastrado
+				sql = "INSERT INTO local " + "(lugar) values" + "( '"
+						+ lugar.trim() + "' );";
 				ps = Conexao.conexao().prepareStatement(sql);
 				ps.execute();
 				System.out.println("Ok! Lugar adicionado!");
@@ -57,6 +57,7 @@ public class CadastrarLocal {
 		return lugar;
 	}
 
+	// método para impressão em tela e captura de entrada de dados do usuário
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();

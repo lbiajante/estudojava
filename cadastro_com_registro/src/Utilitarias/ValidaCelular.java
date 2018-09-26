@@ -14,8 +14,10 @@ public class ValidaCelular {
 		if (opcaoCelular.equalsIgnoreCase("s")) {
 			while (confere) {
 				try {
-					System.out.println("Digite o celular, somente os numeros com DDD ((##)9####-####): ");
+					System.out
+							.println("Digite o celular, somente os numeros com DDD ((##)9####-####): ");
 					String cf = entrada.nextLine().trim();
+					// gera uma máscara para validar o celular
 					if (cf.matches("[1-9][1-9][9][0-9]{8}")) {
 						cf = cpf.formatString(cf, "(##) #####-####");
 						celularFormatado = cf;
@@ -29,6 +31,7 @@ public class ValidaCelular {
 					confere = true;
 				}
 			}
+			// opção de não cadastrar um celular (único item não obrigatório)
 		} else if (opcaoCelular.equalsIgnoreCase("n")) {
 			celularFormatado = ("Celular nao cadastrado");
 			System.out.println("Sem telefone");
@@ -38,6 +41,7 @@ public class ValidaCelular {
 		return celularFormatado;
 	}
 
+	// método para impressão em tela e captura de entrada de dados do usuário
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();

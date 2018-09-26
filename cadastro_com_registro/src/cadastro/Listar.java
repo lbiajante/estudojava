@@ -15,12 +15,13 @@ public class Listar {
 	public void listarCadastros() {
 
 		System.out.println("Lista: cadastros de pessoas");
-
+		// SQL de listagem completa dos cadastros de pessoas
 		String sql = "SELECT * FROM cadastro_de_pessoas";
 		try {
 			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
-
+			// laço para a apresentação de todos os elementos da tabela cadastro
+			// de pessoas do BD
 			while (rs.next()) {
 
 				cad.setPosicao(rs.getString("id"));

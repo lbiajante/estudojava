@@ -13,6 +13,7 @@ public class ListarLocais {
 	public void listarLocais() {
 
 		System.out.println("Lista: locais");
+		//SQL de listagem
 		String sql = "SELECT * FROM local";
 		try {
 			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);

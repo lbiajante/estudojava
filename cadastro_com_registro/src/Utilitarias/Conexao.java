@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//classe de abertura de conexão com o BD
 public class Conexao {
 	public static Connection conexao() {
+		//constantes utilizadas para conexão
 		String driver = "org.postgresql.Driver";
 		String user = "postgres";
 		String senha = "root";
