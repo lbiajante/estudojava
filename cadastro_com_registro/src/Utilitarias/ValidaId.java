@@ -28,8 +28,10 @@ public class ValidaId {
 					cod = Integer.parseInt(codigo.trim());
 					if (cod <= 0) {
 						System.out
-						.println("O lugar precisa ser maior que zero");
+						.println("O codigo precisa ser maior que zero");
+						codigo = textInput("Digite um numero maior que zero");
 						confere = true;
+						
 						cod = 0;
 					} else {
 						codigo = String.format("%06d", cod).trim();

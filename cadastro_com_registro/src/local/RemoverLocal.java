@@ -56,7 +56,8 @@ public class RemoverLocal {
 						System.out.println("Local removido");
 
 					} catch (SQLException e) {
-						System.out.println("Local nao pode ser removido \nporque está vinculado a uma ou mais visitas");
+						System.out.println("Local nao pode ser removido "
+								+ "\nporque está vinculado a uma ou mais visitas");
 					}
 					confere = false;
 
@@ -64,7 +65,6 @@ public class RemoverLocal {
 					System.out
 							.println("O local indicado não existe para ser removido");
 					confere = true;
-
 				}
 			}
 		}

@@ -28,11 +28,12 @@ public class Cadastrar {
 
 		System.out.println("Cadastro de Usuario");
 		String table = "cadastro_de_pessoas";
-		String label = "Digite o ID a ser cadastrado";	
+		String label = "Digite o ID a ser cadastrado";
 		cad.setPosicao(validaId.verificaID(textInput(label), table));
 		label = "Digite o nome";
 		cad.setNome(string.texto(textInput(label), label));
-		cad.setDataNascimento(data.data("Digite a data de nascimento com o formato: ddmmaaaa"));
+		cad.setDataNascimento(data
+				.data("Digite a data de nascimento com o formato: ddmmaaaa"));
 		cad.setCpf(cpf.validarCPF());
 		label = "Digite o nome da empresa";
 		cad.setEmpresa(string.texto(textInput(label), label));
@@ -43,9 +44,7 @@ public class Cadastrar {
 		String cadastrar = textInput("Adicionar cadastro (S/N)?");
 		boolean confere = true;
 		while (confere) {
-
 			if (cadastrar.trim().equalsIgnoreCase("s")) {
-
 				String sql = "INSERT INTO cadastro_de_pessoas "
 						+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuação) values"
 						+ "( '" + cad.getPosicao() + "' , '" + cad.getNome()
@@ -54,7 +53,8 @@ public class Cadastrar {
 						+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
 						+ "' );";
 				try {
-					PreparedStatement ps = Conexao.conexao().prepareStatement(sql);				
+					PreparedStatement ps = Conexao.conexao().prepareStatement(
+							sql);
 					ps.execute();
 					ps.close();
 				} catch (SQLException e) {
@@ -69,7 +69,7 @@ public class Cadastrar {
 				} else if (cadastrar.trim().equalsIgnoreCase("n")) {
 					System.out.println("Cadastro ignorado!");
 					confere = false;
-					
+
 				} else {
 					System.out.println("Opcao invalida");
 					cadastrar = textInput("Digite uma opcao valida. (S/N)");
@@ -79,32 +79,13 @@ public class Cadastrar {
 
 			boolean conf = true;
 			do {
-				System.out
-						.println("Deseja registrar a visita a algum local? (S/N)");
+				System.out.println("Deseja registrar uma visita? (S/N)");
 				String opcaoVisita = null;
 				opcaoVisita = entrada.nextLine();
+
 				if (opcaoVisita.trim().equalsIgnoreCase("s")) {
 					cadReg.cadastrar(cad.getPosicao(), cad.getNome());
-					boolean repeat = true;
-
-					do {
-						System.out
-								.println("Deseja registrar outra visita? (S/N)");
-						String opcaoContinua = null;
-						opcaoContinua = entrada.nextLine();
-						if (opcaoContinua.trim().equalsIgnoreCase("s")) {
-							cadReg.cadastrar(cad.getPosicao(), cad.getNome());
-							conf = true;
-							repeat = true;
-						} else if (opcaoContinua.trim().equalsIgnoreCase("n")) {
-							conf = false;
-							repeat = false;
-						} else {
-							System.out
-									.println("Opcao Invalida! Tente novamente!****");
-							repeat = true;
-						}
-					} while (repeat);
+					conf = true;
 
 				} else if (opcaoVisita.equalsIgnoreCase("n")) {
 					conf = false;

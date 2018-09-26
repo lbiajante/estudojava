@@ -15,8 +15,7 @@ public class CadastroPessoa implements Serializable {
 
 	@Id
 	@Column(name = "ID")
-	private String posicao;
-	
+	private String posicao;	
 	@Column(name = "nome_pessoa")
 	private String nome;
 	@Column(name = "data_nasc")
