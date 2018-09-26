@@ -24,16 +24,21 @@ public class RemoverLocal {
 		String input = null;
 
 		while (confere) {
+			// laço que confere se o item exuste no BD
 			String label = "Digite um lugar para ser removido ou 's' para sair";
 			input = (string.texto(textInput(label), label));
 			if (input.trim().equalsIgnoreCase("s")) {
 				confere = false;
 			} else {
+				// SQL de listagem
 				String sql = "SELECT * FROM local";
-				try {
-					PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
+				try { // conexão com o BD
+					PreparedStatement ps = Conexao.conexao().prepareStatement(
+							sql);
 					ResultSet rs = ps.executeQuery();
 					while (rs.next()) {
+						// laço que varre a tabela para se verificar se o tiem
+						// existe
 						local.setLugar(rs.getString("lugar"));
 						if (local.getLugar().equals(input)) {
 							existe = true;
@@ -45,19 +50,23 @@ public class RemoverLocal {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+				// rotina de exclusão do item validado
 				if (existe) {
 					String sql2 = "DELETE FROM local WHERE lugar = '" + input
 							+ "';";
-					try {
-						PreparedStatement ps2 = Conexao.conexao().prepareStatement(
-								sql2);
+					try {// nova conexão com o BD
+						PreparedStatement ps2 = Conexao.conexao()
+								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
 						System.out.println("Local removido");
 
 					} catch (SQLException e) {
-						System.out.println("Local nao pode ser removido "
-								+ "\nporque está vinculado a uma ou mais visitas");
+						// O local que está vinculado ao registro de visitas por
+						// foreign key e lança SQLException se tentar se excluir
+						System.out
+								.println("Local nao pode ser removido "
+										+ "\nporque está vinculado a uma ou mais visitas");
 					}
 					confere = false;
 

@@ -15,13 +15,14 @@ import utilitarias.ValidaStrings;
 public class Atualizar {
 	Scanner entrada = new Scanner(System.in);
 
+	//método para impressão em tela e captura de entrada de dados do usuário
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();
 	}
 
 	public void atualizarCadastro() {
-
+		
 		CadastroPessoa cad = new CadastroPessoa();
 		ValidaId validaId = new ValidaId();
 		ValidaData data = new ValidaData();
@@ -34,30 +35,31 @@ public class Atualizar {
 
 		System.out.println("Atualizar: cadastro de pessoas ");
 
-		while (confere) {
+		while (confere) { //laço para garantir que a entrada do código será válida
 			codigo = textInput("Digite um ID para ser atualizado ou 's' para sair");
-			if (codigo.trim().equalsIgnoreCase("s")) {
+			if (codigo.trim().equalsIgnoreCase("s")) { //opção de sair sem a obrigação de finalizar a rotina de atualização inteira 
 				confere = false;
 			} else {
-				codigo = validaId.confereID(codigo);
-				String sql = "SELECT * FROM cadastro_de_pessoas";
+				codigo = validaId.confereID(codigo); //método de validação de ID
+				String sql = "SELECT * FROM cadastro_de_pessoas"; //SQL para verificar se o cadastro a ser atualizado está no BD
 				try {
 					PreparedStatement ps = Conexao.conexao().prepareStatement(
-							sql);
-					ResultSet rs = ps.executeQuery();
-					while (rs.next()) {
-						cad.setPosicao(rs.getString("id"));
+							sql); //abertura de conexão com o BD
+					ResultSet rs = ps.executeQuery(); 
+					while (rs.next()) { //laço de procura no BD
+						cad.setPosicao(rs.getString("id")); 
 						if (cad.getPosicao().equals(codigo)) {
-							existe = true;
+							existe = true;  //marcador de existência do cadastro no BD
 							break;
 						}
 					}
+					rs.close();
 					ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
 
-				if (existe) {
+				if (existe) { //rotina de atualização com solicitação de novos valores para os atributos
 					String label = "Digite o nome atualizado";
 					cad.setNome(string.texto(textInput(label), label));
 					cad.setDataNascimento(data
@@ -69,7 +71,7 @@ public class Atualizar {
 					cad.setAreaDeAtuacao(string.texto(textInput(label), label));
 					cad.setCelular(celular.formatarCelular());
 
-					String sql2 = "UPDATE cadastro_de_pessoas SET nome_pessoa = '"
+					String sql2 = "UPDATE cadastro_de_pessoas SET nome_pessoa = '" //SQL de atualização dos atributos no BD
 							+ cad.getNome()
 							+ "' , data_nasc = '"
 							+ cad.getDataNascimento()
@@ -85,7 +87,7 @@ public class Atualizar {
 							+ codigo + "';";
 					try {
 						PreparedStatement ps2 = Conexao.conexao()
-								.prepareStatement(sql2);
+								.prepareStatement(sql2); //nova conexão com o BD para atualizar
 						ps2.execute();
 						ps2.close();
 

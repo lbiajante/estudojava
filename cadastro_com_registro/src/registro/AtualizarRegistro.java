@@ -30,22 +30,26 @@ public class AtualizarRegistro {
 		String codigo = null;
 
 		System.out.println("Atualizar registros");
-
+		// laço que espera a inserção de um ID válido
 		while (confere) {
 			codigo = textInput("Digite um ID para ser atualizado ou 's' para sair");
+			// opção de sair sem ter que atualizar um registro para encerrar
 			if (codigo.trim().equalsIgnoreCase("s")) {
-
 				confere = false;
-			} else {
-				codigo = validaId.confereID(codigo);
 
+			} else {
+				// método que valida o ID inserido
+				codigo = validaId.confereID(codigo);
+				// SQL de listagem dos itens da tabela registro de visitas
 				String sql = "SELECT * FROM registro_de_visitas";
-				try {
+				try { // conexão com o BD
 					PreparedStatement ps = Conexao.conexao().prepareStatement(
 							sql);
 					ResultSet rs = ps.executeQuery();
+					// laço que traz todos os itens da tabela
 					while (rs.next()) {
 						regg.setPosicao(rs.getString("id"));
+						// marcação se o item solicitado existe
 						if (regg.getPosicao().equals(codigo)) {
 							existe = true;
 							break;
@@ -56,13 +60,15 @@ public class AtualizarRegistro {
 					e.printStackTrace();
 				}
 
+				// rotina de solicitação de novos valores para a atualização do
+				// item
 				if (existe) {
-
 					regg.setLocal(cadLocal.cadastrarLocal());
 					regg.setData(data
 							.data("Atualize a data da visita com o formato: ddmmaaaa"));
 					regg.setHora(data
 							.hora("Atualize a hora da visita com o formato: hhmm"));
+					// SQL de atualização
 					String sql2 = "UPDATE registro_de_visitas SET data_visita = '"
 							+ regg.getData()
 							+ "' , hora_visita = '"
@@ -72,7 +78,7 @@ public class AtualizarRegistro {
 							+ "' WHERE id = '"
 							+ codigo
 							+ "';";
-					try {
+					try { // nova conexão com o BD
 						PreparedStatement ps2 = Conexao.conexao()
 								.prepareStatement(sql2);
 						ps2.execute();

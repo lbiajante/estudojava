@@ -10,7 +10,7 @@ import cadastro.CadastroPessoa;
 
 public class ValidaCPF {
 	private Scanner entrada = new Scanner(System.in);
-
+//método de verificação se o número digitado é um cpf válido
 	public static boolean isCPF(String CPF) {
 
 		if (CPF.equals("00000000000") || CPF.equals("11111111111")
@@ -21,7 +21,6 @@ public class ValidaCPF {
 				|| (CPF.length() != 11)) {
 			return (false);
 		}
-
 		char dig10, dig11;
 		int sm, i, r, num, peso;
 
@@ -66,12 +65,12 @@ public class ValidaCPF {
 			return (false);
 		}
 	}
-
+//formata o retorno do cpf
 	public static String imprimeCPF(String CPF) {
 		return (CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "."
 				+ CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
 	}
-
+//faz solicitação de entrada de dados
 	public String validarCPF() {
 		String CPF = null;
 		CadastroPessoa cad = new CadastroPessoa();
@@ -94,7 +93,7 @@ public class ValidaCPF {
 		}
 		return CPF;
 	}
-
+//cria uma máscara para retorno do campo formatado 
 	public String formatString(String campo, String mascara) {
 		MaskFormatter mf;
 		try {

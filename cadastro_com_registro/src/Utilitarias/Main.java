@@ -14,6 +14,7 @@ import cadastro.Cadastrar;
 import cadastro.Listar;
 import cadastro.Remover;
 
+//classe main inclui o menu principal e os sub menus que chamam os métodos respectivos
 public class Main {
 
 	public static void main(String[] args) {
@@ -37,7 +38,7 @@ public class Main {
 		System.out
 				.println("BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS");
 		System.out.println("");
-
+		// menu principal
 		while (execute) {
 			entrada = new Scanner(System.in);
 			System.out.println("");
@@ -51,13 +52,16 @@ public class Main {
 			System.out
 					.println("3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais");
 			System.out
-					.println("4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas"); /// Atualizar locais
+					.println("4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas"); // /
+																									// Atualizar
+																									// locais
 
 			System.out.println("5 - Sair");
 			System.out
 					.println("---------------------------------------------------------------------------------------------");
 
 			opcao = entrada.next();
+			// submenu de cadastro
 			if (opcao.equals("1")) {
 				System.out
 						.println("Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais");
@@ -70,7 +74,7 @@ public class Main {
 					cadLocal.cadastrarLocal();
 				}
 				execute = true;
-
+				// submenu de listagem
 			} else if (opcao.equals("2")) {
 				System.out
 						.println("Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais");
@@ -83,7 +87,7 @@ public class Main {
 					listLocal.listarLocais();
 				}
 				execute = true;
-
+				// submenu de remoção
 			} else if (opcao.equals("3")) {
 				System.out
 						.println("Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais");
@@ -96,17 +100,18 @@ public class Main {
 					remLocal.removerLocal();
 				}
 				execute = true;
-
+				// submenu de atualização
 			} else if (opcao.equals("4")) {
 				System.out
-						.println("Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n "); //3- Locais
+						.println("Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n "); // 3-
+																									// Locais
 				subOpcao = entrada.next();
 				if (subOpcao.equals("1")) {
 					atualizar.atualizarCadastro();
 				} else if (subOpcao.equals("2")) {
 					atualRegistro.atualizarRegistro();
-		
 				}
+
 				execute = true;
 			} else if (opcao.equals("5")) {
 				System.out.println("Programa de cadastro finalizado!");

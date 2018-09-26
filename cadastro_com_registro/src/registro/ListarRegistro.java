@@ -14,7 +14,7 @@ public class ListarRegistro {
 	public void listarRegistros() {
 
 		System.out.println("Lista: registro de visitas");
-		
+		//SQL delistagem dos itens da tabela registros de visitas
 		String sql = "SELECT * FROM registro_de_visitas";
 		try {
 			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
