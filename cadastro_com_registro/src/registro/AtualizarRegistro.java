@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import local.CadastrarLocal;
 import utilitarias.Conexao;
 import utilitarias.ValidaData;
 import utilitarias.ValidaId;
+import local.CadastrarLocal;
 
 public class AtualizarRegistro {
 	Scanner entrada = new Scanner(System.in);
@@ -24,7 +24,6 @@ public class AtualizarRegistro {
 		CadastrarLocal cadLocal = new CadastrarLocal();
 		ValidaId validaId = new ValidaId();
 		ValidaData data = new ValidaData();
-		boolean confere2 = true;
 		boolean confere = true;
 		boolean existe = false;
 
@@ -32,75 +31,65 @@ public class AtualizarRegistro {
 
 		System.out.println("Atualizar registros");
 
-		do {
-			try {
-				while (confere) {
-					codigo = textInput("Digite um ID para ser atualizado ou 's' para sair");
-					if (codigo.trim().equalsIgnoreCase("s")) {
+		while (confere) {
+			codigo = textInput("Digite um ID para ser atualizado ou 's' para sair");
+			if (codigo.trim().equalsIgnoreCase("s")) {
 
-						confere = false;
-						confere2 = false;
-					} else {
-						codigo = validaId.confereID(codigo);
+				confere = false;
+			} else {
+				codigo = validaId.confereID(codigo);
 
-						String sql = "SELECT * FROM registro_de_visitas";
-						try {
-							PreparedStatement ps = Conexao.conexao()
-									.prepareStatement(sql);
-							ResultSet rs = ps.executeQuery();
-							while (rs.next()) {
-								regg.setPosicao(rs.getString("id"));
-								if (regg.getPosicao().equals(codigo)) {
-									existe = true;
-									break;
-								}
-							}
-							ps.close();
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-
-						if (existe) {
-
-							regg.setLocal(cadLocal.cadastrarLocal());
-							regg.setData(data
-									.data("Atualize a data da visita com o formato: ddmmaaaa"));
-							regg.setHora(data
-									.hora("Atualize a hora da visita com o formato: hhmm"));
-							String sql2 = "UPDATE registro_de_visitas SET data_visita = '"
-									+ regg.getData()
-									+ "' , hora_visita = '"
-									+ regg.getHora()
-									+ "' , lugar = '"
-									+ regg.getLocal()
-									+ "' WHERE id = '"
-									+ codigo + "';";
-							try {
-								PreparedStatement ps2 = Conexao.conexao()
-										.prepareStatement(sql2);
-								ps2.execute();
-								ps2.close();
-
-							} catch (SQLException e) {
-								e.printStackTrace();
-							}
-							confere = false;
-							confere2 = false;
-
-						} else if (existe == false) {
-							System.out
-									.println("Nao existe cadastro com esse ID para ser atualizado");
-							confere = true;
-							confere2 = true;
+				String sql = "SELECT * FROM registro_de_visitas";
+				try {
+					PreparedStatement ps = Conexao.conexao().prepareStatement(
+							sql);
+					ResultSet rs = ps.executeQuery();
+					while (rs.next()) {
+						regg.setPosicao(rs.getString("id"));
+						if (regg.getPosicao().equals(codigo)) {
+							existe = true;
+							break;
 						}
 					}
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
-			} catch (NumberFormatException e) {
-				System.out.printf("Voce nao digitou um numero inteiro!\n");
-				codigo = textInput("Digite um numero inteiro");
-				confere2 = true;
+
+				if (existe) {
+
+					regg.setLocal(cadLocal.cadastrarLocal());
+					regg.setData(data
+							.data("Atualize a data da visita com o formato: ddmmaaaa"));
+					regg.setHora(data
+							.hora("Atualize a hora da visita com o formato: hhmm"));
+					String sql2 = "UPDATE registro_de_visitas SET data_visita = '"
+							+ regg.getData()
+							+ "' , hora_visita = '"
+							+ regg.getHora()
+							+ "' , lugar = '"
+							+ regg.getLocal()
+							+ "' WHERE id = '"
+							+ codigo
+							+ "';";
+					try {
+						PreparedStatement ps2 = Conexao.conexao()
+								.prepareStatement(sql2);
+						ps2.execute();
+						ps2.close();
+
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					confere = false;
+
+				} else if (existe == false) {
+					System.out
+							.println("Nao existe cadastro com esse ID para ser atualizado");
+					confere = true;
+				}
 			}
-		} while (confere2);
+		}
 	}
 
 }

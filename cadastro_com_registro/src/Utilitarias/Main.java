@@ -2,12 +2,17 @@ package utilitarias;
 
 import java.util.Scanner;
 
+import local.CadastrarLocal;
+import local.ListarLocais;
+import local.RemoverLocal;
+import registro.AtualizarRegistro;
+import registro.CadastrarRegistro;
+import registro.ListarRegistro;
+import registro.RemoverRegistro;
 import cadastro.Atualizar;
 import cadastro.Cadastrar;
 import cadastro.Listar;
 import cadastro.Remover;
-import local.*;
-import registro.*;
 
 public class Main {
 
@@ -22,7 +27,6 @@ public class Main {
 		RemoverLocal remLocal = new RemoverLocal();
 		Atualizar atualizar = new Atualizar();
 		AtualizarRegistro atualRegistro = new AtualizarRegistro();
-	//	AtualizaLocal atualLocal = new AtualizaLocal();
 		Listar listar = new Listar();
 		ListarRegistro listRegistro = new ListarRegistro();
 		ListarLocais listLocal = new ListarLocais();
@@ -101,8 +105,7 @@ public class Main {
 					atualizar.atualizarCadastro();
 				} else if (subOpcao.equals("2")) {
 					atualRegistro.atualizarRegistro();
-//				} else if (subOpcao.equals("3")) {
-//					atualLocal.atualizarLocal();
+		
 				}
 				execute = true;
 			} else if (opcao.equals("5")) {

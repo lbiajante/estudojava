@@ -5,12 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import local.CadastrarLocal;
-import local.Local;
 import utilitarias.Conexao;
 import utilitarias.ValidaData;
 import utilitarias.ValidaId;
 import utilitarias.ValidaStrings;
+import local.CadastrarLocal;
+import local.Local;
 import cadastro.CadastroPessoa;
 
 public class CadastrarRegistro {
@@ -92,7 +92,6 @@ public class CadastrarRegistro {
 						+ "' , '" + reg.getLocal().trim() + "' );";
 				try {
 					PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
-
 					ps.execute();
 					ps.close();
 

@@ -21,17 +21,14 @@ public class RemoverRegistro {
 		ValidaId validaId = new ValidaId();
 		RegistroVisita reg = new RegistroVisita();
 		boolean existe = false;
-		boolean confere2 = true;
 		boolean confere = true;
 		String codigo = null;
 
-		do {
-			try {
+		
 				while (confere) {
 					codigo = textInput("Digite um ID para ser removido ou 's' para sair");
 					if (codigo.trim().equalsIgnoreCase("s")) {
 						confere = false;
-						confere2 = false;
 					} else {
 						codigo = validaId.confereID(codigo);
 
@@ -66,21 +63,14 @@ public class RemoverRegistro {
 								e.printStackTrace();
 							}
 							confere = false;
-							confere2 = false;
 
 						} else if (existe == false) {
 							System.out
 							.println("Nao existe registro com esse ID para ser removido");
 							confere = true;
-							confere2 = true;
 						}
 					}
 				}
-			} catch (NumberFormatException e) {
-				System.out.printf("Voce nao digitou um numero inteiro!\n");
-				codigo = textInput("Digite um numero inteiro");
-				confere2 = true;
-			}
-		} while (confere2);
+			
 	}
 }
