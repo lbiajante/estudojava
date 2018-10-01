@@ -28,15 +28,15 @@ public class Menu {
 	RemoverLocal remLocal = new RemoverLocal();
 	Atualizar atualizar = new Atualizar();
 	AtualizarRegistro atualRegistro = new AtualizarRegistro();
-	private int opcao = 0;
-	private int subOpcao;
+	int opcao;
+	int subOpcao;
 
 	private String textInput(String label) {
 		System.out.println(label);
 		return entrada.nextLine();
 	}
 
-	void menu() {
+	public void menu() {
 		
 		switch (opcao = Integer
 				.parseInt(textInput(
