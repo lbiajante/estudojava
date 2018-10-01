@@ -56,7 +56,6 @@ public class ValidaCPF {
 				dig11 = (char) (r + 48);
 			}
 			if ((dig10 == CPF.charAt(9)) && (dig11 == CPF.charAt(10))) {
-
 				return (true);
 			} else {
 				return (false);

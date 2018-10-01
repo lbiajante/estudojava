@@ -14,7 +14,6 @@ import utilitarias.ValidaStrings;
 
 public class Cadastrar {
 
-	Conexao con = new Conexao();
 	CadastroPessoa cad = new CadastroPessoa();
 	CadastrarRegistro cadReg = new CadastrarRegistro();
 	ValidaData data = new ValidaData();
