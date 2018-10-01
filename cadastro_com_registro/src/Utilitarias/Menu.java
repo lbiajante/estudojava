@@ -29,7 +29,7 @@ public class Menu {
 	Atualizar atualizar = new Atualizar();
 	AtualizarRegistro atualRegistro = new AtualizarRegistro();
 	private int opcao = 0;
-	private int subOpcao = 0;
+	private int subOpcao;
 
 	private String textInput(String label) {
 		System.out.println(label);

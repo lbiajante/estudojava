@@ -37,8 +37,7 @@ public class RemoverLocal {
 							sql);
 					ResultSet rs = ps.executeQuery();
 					while (rs.next()) {
-						// laço que varre a tabela para se verificar se o tiem
-						// existe
+						// laço que verifica na tabela se o item existe
 						local.setLugar(rs.getString("lugar"));
 						if (local.getLugar().equals(input)) {
 							existe = true;

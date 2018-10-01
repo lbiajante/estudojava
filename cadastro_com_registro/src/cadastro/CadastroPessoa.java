@@ -2,31 +2,26 @@ package cadastro;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table (name = "Cadastro_de_pessoas")
+//@Entity
+//@Table (name = "Cadastro_de_pessoas")
 public class CadastroPessoa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "ID")
+	//@Id
+	//@Column(name = "ID")
 	private String posicao;	
-	@Column(name = "nome_pessoa")
+	//@Column(name = "nome_pessoa")
 	private String nome;
-	@Column(name = "data_nasc")
+	//@Column(name = "data_nasc")
 	private String dataNascimento;
-	@Column(name = "CPF")
+	//@Column(name = "CPF")
 	private String cpf;
-	@Column(name = "empresa")
+	//@Column(name = "empresa")
 	private String empresa;
-	@Column(name = "area_atuação")
+	//@Column(name = "area_atuação")
 	private String areaDeAtuacao;
-	@Column(name = "celular")
+	//@Column(name = "celular")
 	private String celular;
 
 	public CadastroPessoa() {
