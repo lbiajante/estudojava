@@ -30,7 +30,6 @@ public class ValidaId {
 								.println("O codigo precisa ser maior que zero");
 						codigo = textInput("Digite um numero maior que zero");
 						confere = true;
-
 						cod = 0;
 					} else {
 						codigo = String.format("%06d", cod).trim();
@@ -50,7 +49,7 @@ public class ValidaId {
 	public String verificaID(String codigo, String table) {
 		String confereCod = this.confereID(codigo);
 		String sql = "SELECT * FROM " + table + ";";
-
+		
 		try {
 			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();

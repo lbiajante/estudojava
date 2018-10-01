@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class ValidaStrings {
 	Scanner entrada = new Scanner(System.in);
 	
-
-	// String verificaNome;
+	// String verificaTexto;
 
 	public String texto(String verificaTexto, String label) {
 		boolean confere = true;
