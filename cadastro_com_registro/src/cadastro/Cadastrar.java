@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import registro.CadastrarRegistro;
-import utilitarias.Conexao;
+import utilitarias.ConexaoBD;
 import utilitarias.ValidaCPF;
 import utilitarias.ValidaCelular;
 import utilitarias.ValidaData;
@@ -55,7 +55,7 @@ public class Cadastrar {
 						+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
 						+ "' );";
 				try {
-					PreparedStatement ps = Conexao.conexao().prepareStatement(
+					PreparedStatement ps = ConexaoBD.conexao().prepareStatement(
 							sql); // conexão com o BD para se executar a SQL
 					ps.execute();
 					ps.close();

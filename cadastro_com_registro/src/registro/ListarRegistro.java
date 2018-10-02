@@ -4,11 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import utilitarias.Conexao;
+import utilitarias.ConexaoBD;
 
 public class ListarRegistro {
 
-	Conexao con = new Conexao();
+	ConexaoBD con = new ConexaoBD();
 	RegistroVisita reg = new RegistroVisita();
 
 	public void listarRegistros() {
@@ -17,7 +17,7 @@ public class ListarRegistro {
 		//SQL delistagem dos itens da tabela registros de visitas
 		String sql = "SELECT * FROM registro_de_visitas";
 		try {
-			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConexaoBD.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
