@@ -27,9 +27,7 @@ public class Server {
 			ObjectOutputStream output = new ObjectOutputStream(
 					socket.getOutputStream());
 			ObjectInputStream input = new ObjectInputStream(
-					socket.getInputStream());
-
-			
+					socket.getInputStream());			
 
 			String msg = input.readUTF();
 			System.out.println("Mensagem recebida..." + msg);
@@ -45,20 +43,4 @@ public class Server {
 			this.fechaConexao(socket);
 		}
 	}
-
-//	public static void main(String[] args) {
-//
-//		try {
-//			Server server = new Server();
-//			System.out.println("Aguardando conexão...");
-//			server.criarConexao(3333);
-//			Socket socket = server.esperaConexao();
-//			System.out.println("Cliente conectado");
-//			server.trataConexao(socket);
-//			System.out.println("Cliente finalizado");
-//			
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-//	}
 }
