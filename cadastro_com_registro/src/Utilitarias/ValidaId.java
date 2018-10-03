@@ -51,7 +51,7 @@ public class ValidaId {
 		String sql = "SELECT * FROM " + table + ";";
 		
 		try {
-			PreparedStatement ps = ConexaoBD.conexao().prepareStatement(sql);
+			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			if (table.equals("cadastro_de_pessoas")) {

@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.ConexaoBD;
+import utilitarias.Conexao;
 import utilitarias.ValidaData;
 import utilitarias.ValidaId;
 import local.CadastrarLocal;
@@ -43,7 +43,7 @@ public class AtualizarRegistro {
 				// SQL de listagem dos itens da tabela registro de visitas
 				String sql = "SELECT * FROM registro_de_visitas";
 				try { // conexão com o BD
-					PreparedStatement ps = ConexaoBD.conexao().prepareStatement(
+					PreparedStatement ps = Conexao.conexao().prepareStatement(
 							sql);
 					ResultSet rs = ps.executeQuery();
 					// laço que traz todos os itens da tabela
@@ -79,7 +79,7 @@ public class AtualizarRegistro {
 							+ codigo
 							+ "';";
 					try { // nova conexão com o BD
-						PreparedStatement ps2 = ConexaoBD.conexao()
+						PreparedStatement ps2 = Conexao.conexao()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
