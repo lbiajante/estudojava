@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.ConexaoBD;
+import utilitarias.Conexao;
 import utilitarias.ValidaCPF;
 import utilitarias.ValidaCelular;
 import utilitarias.ValidaData;
@@ -43,7 +43,7 @@ public class Atualizar {
 				codigo = validaId.confereID(codigo); //método de validação de ID
 				String sql = "SELECT * FROM cadastro_de_pessoas"; //SQL para verificar se o cadastro a ser atualizado está no BD
 				try {
-					PreparedStatement ps = ConexaoBD.conexao().prepareStatement(
+					PreparedStatement ps = Conexao.conexao().prepareStatement(
 							sql); //abertura de conexão com o BD
 					ResultSet rs = ps.executeQuery(); 
 					while (rs.next()) { //laço de procura no BD
@@ -86,7 +86,7 @@ public class Atualizar {
 							+ "' WHERE id = '"
 							+ codigo + "';";
 					try {
-						PreparedStatement ps2 = ConexaoBD.conexao()
+						PreparedStatement ps2 = Conexao.conexao()
 								.prepareStatement(sql2); //nova conexão com o BD para atualizar
 						ps2.execute();
 						ps2.close();

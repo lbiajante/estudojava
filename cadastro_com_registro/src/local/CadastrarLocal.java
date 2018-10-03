@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.ConexaoBD;
+import utilitarias.Conexao;
 import utilitarias.ValidaStrings;
 
 public class CadastrarLocal {
@@ -25,7 +25,7 @@ public class CadastrarLocal {
 		String sql = "SELECT * FROM local";
 
 		try { // conexão com o BD
-			PreparedStatement ps = ConexaoBD.conexao().prepareStatement(sql);
+			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				// laço para a verificação se o local digitado já existe no BD
@@ -44,7 +44,7 @@ public class CadastrarLocal {
 				// novo SQL para inserção de item ainda não cadastrado
 				sql = "INSERT INTO local " + "(lugar) values" + "( '"
 						+ lugar.trim() + "' );";
-				ps = ConexaoBD.conexao().prepareStatement(sql);
+				ps = Conexao.conexao().prepareStatement(sql);
 				ps.execute();
 				System.out.println("Ok! Lugar adicionado!");
 			}

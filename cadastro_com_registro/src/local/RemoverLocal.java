@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.ConexaoBD;
+import utilitarias.Conexao;
 import utilitarias.ValidaStrings;
 
 public class RemoverLocal {
@@ -33,7 +33,7 @@ public class RemoverLocal {
 				// SQL de listagem
 				String sql = "SELECT * FROM local";
 				try { // conexão com o BD
-					PreparedStatement ps = ConexaoBD.conexao().prepareStatement(
+					PreparedStatement ps = Conexao.conexao().prepareStatement(
 							sql);
 					ResultSet rs = ps.executeQuery();
 					while (rs.next()) {
@@ -54,7 +54,7 @@ public class RemoverLocal {
 					String sql2 = "DELETE FROM local WHERE lugar = '" + input
 							+ "';";
 					try {// nova conexão com o BD
-						PreparedStatement ps2 = ConexaoBD.conexao()
+						PreparedStatement ps2 = Conexao.conexao()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
