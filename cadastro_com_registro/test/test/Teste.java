@@ -4,10 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import utilitarias.ValidaCelular;
-import utilitarias.ValidaData;
-import utilitarias.ValidaId;
-import utilitarias.ValidaStrings;
+import uteis.ValidaCelular;
+import uteis.ValidaData;
+import uteis.ValidaId;
+import uteis.ValidaStrings;
 
 
 public class Teste {

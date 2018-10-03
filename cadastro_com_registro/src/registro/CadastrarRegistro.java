@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.Conexao;
-import utilitarias.ValidaData;
-import utilitarias.ValidaId;
-import utilitarias.ValidaStrings;
+import uteis.Conexao;
+import uteis.ValidaData;
+import uteis.ValidaId;
+import uteis.ValidaStrings;
 import local.CadastrarLocal;
 import local.Local;
 import cadastro.CadastroPessoa;

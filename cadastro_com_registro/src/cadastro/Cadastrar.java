@@ -5,12 +5,12 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import registro.CadastrarRegistro;
-import utilitarias.Conexao;
-import utilitarias.ValidaCPF;
-import utilitarias.ValidaCelular;
-import utilitarias.ValidaData;
-import utilitarias.ValidaId;
-import utilitarias.ValidaStrings;
+import uteis.Conexao;
+import uteis.ValidaCPF;
+import uteis.ValidaCelular;
+import uteis.ValidaData;
+import uteis.ValidaId;
+import uteis.ValidaStrings;
 
 public class Cadastrar {
 

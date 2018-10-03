@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.Conexao;
-import utilitarias.ValidaId;
+import uteis.Conexao;
+import uteis.ValidaId;
 
 public class RemoverRegistro {
 

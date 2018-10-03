@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import registro.ListarRegistro;
-import utilitarias.Conexao;
+import uteis.Conexao;
 
 public class Listar {
 	ListarRegistro listarRegistro = new ListarRegistro();

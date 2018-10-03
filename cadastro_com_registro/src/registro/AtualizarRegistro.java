@@ -5,9 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.Conexao;
-import utilitarias.ValidaData;
-import utilitarias.ValidaId;
+import uteis.Conexao;
+import uteis.ValidaData;
+import uteis.ValidaId;
 import local.CadastrarLocal;
 
 public class AtualizarRegistro {
