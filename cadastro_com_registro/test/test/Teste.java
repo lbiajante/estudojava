@@ -8,7 +8,7 @@ import utilitarias.ValidaCelular;
 import utilitarias.ValidaData;
 import utilitarias.ValidaId;
 import utilitarias.ValidaStrings;
-import cadastro.Cadastrar;
+
 
 public class Teste {
 

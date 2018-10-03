@@ -5,11 +5,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import registro.ListarRegistro;
-import utilitarias.Conexao;
+import utilitarias.ConexaoBD;
 
 public class Listar {
 	ListarRegistro listarRegistro = new ListarRegistro();
-	Conexao con = new Conexao();
+	ConexaoBD con = new ConexaoBD();
 	CadastroPessoa cad = new CadastroPessoa();
 
 	public void listarCadastros() {
@@ -18,7 +18,7 @@ public class Listar {
 		// SQL de listagem completa dos cadastros de pessoas
 		String sql = "SELECT * FROM cadastro_de_pessoas";
 		try {
-			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConexaoBD.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			// laço para a apresentação de todos os elementos da tabela cadastro
 			// de pessoas do BD

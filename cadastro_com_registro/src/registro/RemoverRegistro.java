@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import utilitarias.Conexao;
+import utilitarias.ConexaoBD;
 import utilitarias.ValidaId;
 
 public class RemoverRegistro {
@@ -38,7 +38,7 @@ public class RemoverRegistro {
 				// existe
 				String sql = "SELECT * FROM registro_de_visitas";
 				try {// conexão com o BD
-					PreparedStatement ps = Conexao.conexao().prepareStatement(
+					PreparedStatement ps = ConexaoBD.conexao().prepareStatement(
 							sql);
 					ResultSet rs = ps.executeQuery();
 					// laço para se buscar o item solicitado
@@ -61,7 +61,7 @@ public class RemoverRegistro {
 					String sql2 = "DELETE FROM registro_de_visitas WHERE id = '"
 							+ codigo + "';";
 					try { // nova conexão com o BD
-						PreparedStatement ps2 = Conexao.conexao()
+						PreparedStatement ps2 = ConexaoBD.conexao()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
