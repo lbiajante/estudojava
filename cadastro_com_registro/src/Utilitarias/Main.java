@@ -1,16 +1,10 @@
 package utilitarias;
 
-import java.io.IOException;
-import java.net.Socket;
-
-
-
 //classe main inclui o menu principal e os sub menus que chamam os métodos respectivos
 public class Main {
 
 	public static void main(String[] args) {
 
-		
 		Menu menu = new Menu();
 		boolean confere = true;
 
