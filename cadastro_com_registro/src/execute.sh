@@ -1,5 +1,5 @@
-javac utilitarias\Main.java 
+javac uteis/Main.java 
 
 
-jar cfvm sistema.jar manifest.txt utilitarias cadastro registro local 
+jar cfvm sistema.jar manifest.txt uteis cadastro registro local 
 

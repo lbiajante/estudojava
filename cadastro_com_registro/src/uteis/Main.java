@@ -1,6 +1,6 @@
 package uteis;
 
-import uteis.Menu;
+
 //classe main inclui o menu principal e os sub menus que chamam os métodos respectivos
 public class Main {
 
