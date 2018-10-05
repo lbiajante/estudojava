@@ -28,7 +28,7 @@ public class Menu {
 	RemoverLocal remLocal = new RemoverLocal();
 	Atualizar atualizar = new Atualizar();
 	AtualizarRegistro atualRegistro = new AtualizarRegistro();
-	int opcao;
+//	int opcao;
 	int subOpcao;
 
 	private String textInput(String label) {
@@ -36,46 +36,55 @@ public class Menu {
 		return entrada.nextLine();
 	}
 
+	public String menuPrincipal = "\nBEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
+			+ "\n---------------------------------------------------------------------------------------------\n"
+			+ "Digite o numero da opcao selecionada:"
+			+ "\n1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais\n"
+			+ "2 - Listar cadastro de pessoas/ Listar registros de visitas/ Listar locais cadstrados\n"
+			+ "3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais\n"
+			+ "4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas\n"
+			+ "5 - Sair\n"
+			+ "---------------------------------------------------------------------------------------------";
+	
+	public String subMenuCadastrar = "Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+	public String subMenuListar = "Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+	public String subMenuRemover = "Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+	public String subMenuAtualizar = "Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ";
+	public String subMenuSair = "Programa de cadastro finalizado!";
+	
+	
+	String opcao = null;
 	public void menu() {
 		
-		switch (opcao = Integer
-				.parseInt(textInput(
-						"\nBEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
-								+ "\n---------------------------------------------------------------------------------------------\n"
-								+ "Digite o numero da opcao selecionada:"
-								+ "\n1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais\n"
-								+ "2 - Listar cadastro de pessoas/ Listar registros de visitas/ Listar locais cadstrados\n"
-								+ "3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais\n"
-								+ "4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas\n"
-								+ "5 - Sair\n"
-								+ "---------------------------------------------------------------------------------------------")
-						.trim())) {
-		case 1:
+		
+		
+		switch (opcao) {
+		case "1":
 			this.submenu(subOpcao = Integer
 					.parseInt(textInput("Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais")));
-			this.menu();
+		//	this.menu();
 			break;
-		case 2:
+		case "2":
 			this.submenu(subOpcao = Integer
 					.parseInt(textInput("Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais")));
-			this.menu();
+	//		this.menu();
 			break;
-		case 3:
+		case "3":
 			this.submenu(subOpcao = Integer
 					.parseInt(textInput("Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais")));
-			this.menu();
+	//		this.menu();
 			break;
-		case 4:
+		case "4":
 			this.submenu(subOpcao = Integer
 					.parseInt(textInput("Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ")));
-			this.menu();
+	//		this.menu();
 			break;
-		case 5:
+		case "5":
 			System.out.println("Programa de cadastro finalizado!");			
 			break;
 		default:
 			System.out.println("Opcao invalida. Tente novamente!");
-			this.menu();
+		//	this.menu();
 		}		
 	}
 
@@ -120,7 +129,7 @@ public class Menu {
 			break;
 		default:
 			System.out.println("Opcao invalida. Tente novamente!");
-			this.menu();
+		//	this.menu();
 		}
 	}
 }

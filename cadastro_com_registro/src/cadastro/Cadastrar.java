@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import registro.CadastrarRegistro;
-import uteis.Conexao;
+import uteis.ConectaBD;
 import uteis.ValidaCPF;
 import uteis.ValidaCelular;
 import uteis.ValidaData;
@@ -55,7 +55,7 @@ public class Cadastrar {
 						+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
 						+ "' );";
 				try {
-					PreparedStatement ps = Conexao.conexao().prepareStatement(
+					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
 							sql); // conexão com o BD para se executar a SQL
 					ps.execute();
 					ps.close();

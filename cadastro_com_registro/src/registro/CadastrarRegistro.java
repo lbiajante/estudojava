@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import uteis.Conexao;
+import uteis.ConectaBD;
 import uteis.ValidaData;
 import uteis.ValidaId;
 import uteis.ValidaStrings;
@@ -45,7 +45,7 @@ public class CadastrarRegistro {
 				String sql = "SELECT * FROM cadastro_de_pessoas";
 
 				try { //conexão com o BD
-					PreparedStatement ps = Conexao.conexao().prepareStatement(
+					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
 							sql);
 					ResultSet rs = ps.executeQuery();
 					//laço de busca do item indicado
@@ -103,7 +103,7 @@ public class CadastrarRegistro {
 						+ "' , '" + reg.getHora() + "' , '" + reg.getIDpessoa()
 						+ "' , '" + reg.getLocal().trim() + "' );";
 				try {//conexão com o BD
-					PreparedStatement ps = Conexao.conexao().prepareStatement(
+					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
 							sql);
 					ps.execute();
 					ps.close();

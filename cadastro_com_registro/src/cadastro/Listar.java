@@ -5,20 +5,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import registro.ListarRegistro;
-import uteis.Conexao;
+import uteis.ConectaBD;
 
 public class Listar {
 	ListarRegistro listarRegistro = new ListarRegistro();
-	Conexao con = new Conexao();
+	ConectaBD con = new ConectaBD();
 	CadastroPessoa cad = new CadastroPessoa();
-
-	public void listarCadastros() {
+String lista = "-";
+	public String listarCadastros() {
 
 		System.out.println("Lista: cadastros de pessoas");
 		// SQL de listagem completa dos cadastros de pessoas
 		String sql = "SELECT * FROM cadastro_de_pessoas";
 		try {
-			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			// laço para a apresentação de todos os elementos da tabela cadastro
 			// de pessoas do BD
@@ -31,12 +31,13 @@ public class Listar {
 				cad.setCelular(rs.getString("celular"));
 				cad.setEmpresa(rs.getString("empresa"));
 				cad.setAreaDeAtuacao(rs.getString("area_atuação"));
-
-				System.out.println(cad.toString());
+				
+				lista += cad.toString();				
 			}
 			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lista;
 	}
 }

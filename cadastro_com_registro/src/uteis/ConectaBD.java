@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 //classe de abertura de conexão com o BD
-public class Conexao {
+public class ConectaBD {
 	public static Connection conexao() {
 		//constantes utilizadas para conexão
 		String driver = "org.postgresql.Driver";

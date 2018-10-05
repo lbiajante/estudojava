@@ -4,10 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import uteis.Conexao;
+import uteis.ConectaBD;
 
 public class ListarLocais {
-	Conexao con = new Conexao();
+	ConectaBD con = new ConectaBD();
 	Local local = new Local();
 
 	public void listarLocais() {
@@ -16,7 +16,7 @@ public class ListarLocais {
 		//SQL de listagem
 		String sql = "SELECT * FROM local";
 		try {
-			PreparedStatement ps = Conexao.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {				
