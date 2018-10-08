@@ -11,9 +11,10 @@ public class Listar {
 	ListarRegistro listarRegistro = new ListarRegistro();
 	ConectaBD con = new ConectaBD();
 	CadastroPessoa cad = new CadastroPessoa();
-String lista = "-";
+	String lista ;
 	public String listarCadastros() {
 
+		lista = "";
 		System.out.println("Lista: cadastros de pessoas");
 		// SQL de listagem completa dos cadastros de pessoas
 		String sql = "SELECT * FROM cadastro_de_pessoas";

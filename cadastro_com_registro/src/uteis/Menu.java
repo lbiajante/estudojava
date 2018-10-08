@@ -1,5 +1,8 @@
 package uteis;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import registro.AtualizarRegistro;
@@ -28,13 +31,6 @@ public class Menu {
 	RemoverLocal remLocal = new RemoverLocal();
 	Atualizar atualizar = new Atualizar();
 	AtualizarRegistro atualRegistro = new AtualizarRegistro();
-//	int opcao;
-	int subOpcao;
-
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
 
 	public String menuPrincipal = "\nBEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
 			+ "\n---------------------------------------------------------------------------------------------\n"
@@ -45,91 +41,82 @@ public class Menu {
 			+ "4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas\n"
 			+ "5 - Sair\n"
 			+ "---------------------------------------------------------------------------------------------";
-	
-	public String subMenuCadastrar = "Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
-	public String subMenuListar = "Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
-	public String subMenuRemover = "Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
-	public String subMenuAtualizar = "Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ";
-	public String subMenuSair = "Programa de cadastro finalizado!";
-	
-	
-	String opcao = null;
-	public void menu() {
-		
-		
-		
+
+	public String listaSubMenu(int opcao) {
+		String mensagemCliente = null;
 		switch (opcao) {
-		case "1":
-			this.submenu(subOpcao = Integer
-					.parseInt(textInput("Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais")));
-		//	this.menu();
+
+		case 1:
+			mensagemCliente = "Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
 			break;
-		case "2":
-			this.submenu(subOpcao = Integer
-					.parseInt(textInput("Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais")));
-	//		this.menu();
+		case 2:
+			mensagemCliente = "Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
 			break;
-		case "3":
-			this.submenu(subOpcao = Integer
-					.parseInt(textInput("Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais")));
-	//		this.menu();
+		case 3:
+			mensagemCliente = "Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
 			break;
-		case "4":
-			this.submenu(subOpcao = Integer
-					.parseInt(textInput("Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ")));
-	//		this.menu();
+		case 4:
+			mensagemCliente = "Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ";
 			break;
-		case "5":
-			System.out.println("Programa de cadastro finalizado!");			
+		case 5:
+			mensagemCliente = "Programa de cadastro finalizado!";
 			break;
+
 		default:
-			System.out.println("Opcao invalida. Tente novamente!");
-		//	this.menu();
-		}		
+			mensagemCliente = "Opcao invalida";
+		}
+		return mensagemCliente;
 	}
 
-	private void submenu(int subOpcao) {
-		
-		String s = opcao + "" + subOpcao;
-		subOpcao = Integer.parseInt(s);
+	public String submenu(ObjectInputStream input, ObjectOutputStream output, int subOpcao) throws ClassNotFoundException, IOException {
 
+		String mensagemCliente = null;
 		switch (subOpcao) {
 		case 11:
 			cadastrar.cadastrar();
+			mensagemCliente = "Cadastro de pessoa feito com sucesso";
 			break;
 		case 12:
 			cadRegistro.inserirRegistro();
+			mensagemCliente = "Registro de visita feito com sucesso";
 			break;
 		case 13:
 			cadLocal.cadastrarLocal();
+			mensagemCliente = "Local inserido com sucesso";
 			break;
-		case 21:
-			listar.listarCadastros();
+		case 21:			
+			mensagemCliente = listar.listarCadastros();
 			break;
-		case 22:
-			listRegistro.listarRegistros();
+		case 22:			
+			mensagemCliente = listRegistro.listarRegistros();
 			break;
-		case 23:
-			listLocal.listarLocais();
+		case 23:			
+			mensagemCliente = listLocal.listarLocais();
 			break;
 		case 31:
 			remover.removerCadastro();
+			mensagemCliente = "Cadastro removido";
 			break;
 		case 32:
 			remRegistro.removerRegistro();
+			mensagemCliente = "Regiostro removido";
 			break;
 		case 33:
-			remLocal.removerLocal();
+			
+			mensagemCliente = remLocal.removerLocal(input, output);
 			break;
 		case 41:
 			atualizar.atualizarCadastro();
+			mensagemCliente = "Cadastro atualizado";
 			break;
 		case 42:
 			atualRegistro.atualizarRegistro();
+			mensagemCliente = "Registro atualizado";
 			break;
 		default:
 			System.out.println("Opcao invalida. Tente novamente!");
-		//	this.menu();
+			// this.menu();
 		}
+		return mensagemCliente;
 	}
 }

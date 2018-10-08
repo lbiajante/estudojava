@@ -18,14 +18,9 @@ public class Server {
 		Socket socket = data.serverSocket.accept();
 		return socket;
 	}
-
+	
 	private void fechaSocket(Socket s) throws IOException {
 		s.close();
-	}
-
-	private void enviaMsg(Object o, ObjectOutputStream out) throws IOException {
-		out.writeObject(o);
-		out.flush();
 	}
 
 	private void trataConexao(Socket socket) throws IOException,
@@ -36,34 +31,37 @@ public class Server {
 					socket.getOutputStream());
 			ObjectInputStream input = new ObjectInputStream(
 					socket.getInputStream());
-			System.out.println("1");
-			data.fazerOperacoes(input, output);
+			Integer opPrincipal = 0;
+			
+			while (opPrincipal != 5) {
+				opPrincipal = data.tratarMenuPrincipal(input, output);
+			}
 			
 			input.close();
 			output.close();
 		} catch (IOException e) {
-			
 			System.out
 					.println("Problema no tratamento da conexão com o cliente: "
 							+ socket.getInetAddress());
 			System.out.println("Erro: " + e.getMessage());
 			throw e;
-		} finally {		
+		} finally {
 			fechaSocket(socket);
 		}
 	}
-
+	
 	public void fazConexao() {
 		try {
 			Server server = new Server();
 			server.criarServerSocket(5555);
+		
 			while (true) {
 				System.out.println("Aguardando conexão...");
 				Socket socket = server.esperaConexao();
 				System.out.println("Cliente conectado.");
-
 				server.trataConexao(socket);
 				System.out.println("Cliente finalizado.");
+				
 			}
 		} catch (IOException e) {
 			System.out.println("Erro no servidor: " + e.getMessage());
@@ -71,5 +69,4 @@ public class Server {
 			e.printStackTrace();
 		}
 	}
-
 }

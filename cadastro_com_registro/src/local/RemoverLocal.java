@@ -1,10 +1,15 @@
 package local;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import conexao_cliente.MensagemObj;
+import conexao_cliente.Referencia;
 import uteis.ConectaBD;
 import uteis.ValidaStrings;
 
@@ -16,19 +21,28 @@ public class RemoverLocal {
 		return entrada.nextLine();
 	}
 
-	public void removerLocal() {
+	
+	public String removerLocal(ObjectInputStream input, ObjectOutputStream output) throws IOException, ClassNotFoundException {
 		ValidaStrings string = new ValidaStrings();
 		Local local = new Local();
 		boolean existe = false;
 		boolean confere = true;
-		String input = null;
+		String inputz = null;
+		String retorno = null;
 
 		while (confere) {
-			// laço que confere se o item exuste no BD
+			
 			String label = "Digite um lugar para ser removido ou 's' para sair";
-			input = (string.texto(textInput(label), label));
-			if (input.trim().equalsIgnoreCase("s")) {
+			
+			MensagemObj envioCliente1 = new MensagemObj(Referencia.REMOVER,	label);			
+			output.writeObject(envioCliente1);			
+			MensagemObj recebeCliente1 = (MensagemObj) input.readObject();
+			inputz = recebeCliente1.getMensagem();
+						
+			//inputz = (string.texto(textInput(label), label));
+			if (inputz.trim().equalsIgnoreCase("s")) {
 				confere = false;
+				retorno = "Retorna ao menu principal";
 			} else {
 				// SQL de listagem
 				String sql = "SELECT * FROM local";
@@ -39,7 +53,7 @@ public class RemoverLocal {
 					while (rs.next()) {
 						// laço que verifica na tabela se o item existe
 						local.setLugar(rs.getString("lugar"));
-						if (local.getLugar().equals(input)) {
+						if (local.getLugar().equals(inputz)) {
 							existe = true;
 							break;
 						}
@@ -51,31 +65,30 @@ public class RemoverLocal {
 				}
 				// rotina de exclusão do item validado
 				if (existe) {
-					String sql2 = "DELETE FROM local WHERE lugar = '" + input
+					String sql2 = "DELETE FROM local WHERE lugar = '" + inputz
 							+ "';";
 					try {// nova conexão com o BD
 						PreparedStatement ps2 = ConectaBD.conexao()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
-						System.out.println("Local removido");
+						retorno = "Local removido";
 
 					} catch (SQLException e) {
 						// O local que está vinculado ao registro de visitas por
 						// foreign key e lança SQLException se tentar se excluir
-						System.out
-								.println("Local nao pode ser removido "
-										+ "\nporque está vinculado a uma ou mais visitas");
+						retorno = "Local nao pode ser removido "
+										+ "\nporque está vinculado a uma ou mais visitas";
 					}
 					confere = false;
 
 				} else if (existe == false) {
-					System.out
-							.println("O local indicado não existe para ser removido");
+					retorno = ("O local indicado não existe para ser removido");
 					confere = true;
 				}
 			}
 		}
+		return retorno;
 	}
 
 }

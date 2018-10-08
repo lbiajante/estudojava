@@ -6,19 +6,36 @@ import java.util.Map;
 
 public class MensagemObj implements Serializable {
 
-	private String operacao;
+	private String mensagem;
 	private Status status;
+	private Referencia refer;
+	
 	Map <Referencia, Object> params;
+	
 
-	public MensagemObj(String opcao) {
-		this.operacao = opcao;
+	public MensagemObj() {	
+	
+	}
+	
+	public MensagemObj(Referencia refer, String mensagem) {		
+		this.mensagem = mensagem;
+		this.refer = refer;
 		params = new HashMap<>();
 	}
-
-	public String getOperacao() {
-		return operacao;
+	public Referencia getRefer() {
+		return refer;
 	}
+	
+	public void setRefer(Referencia refer) {
+		this.refer = refer;
+	}	
 
+	public String getMensagem() {
+		return mensagem;
+	}
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
 	public void setStatus(Status s) {
 		this.status = s;
 	}
@@ -37,7 +54,7 @@ public class MensagemObj implements Serializable {
 
 	@Override
 	public String toString() {
-		String m = operacao;
+		String m = mensagem;
 	
 		return m;
 	}

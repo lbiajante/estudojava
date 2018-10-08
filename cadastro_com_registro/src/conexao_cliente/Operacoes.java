@@ -5,8 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 
-import cadastro.Listar;
 import uteis.Menu;
+import cadastro.Listar;
 
 public class Operacoes {
 	public ServerSocket serverSocket;
@@ -14,53 +14,46 @@ public class Operacoes {
 	Menu menu = new Menu();
 	Listar listar = new Listar();
 
-	public void fazerOperacoes(ObjectInputStream input,
+	public Integer tratarMenuPrincipal(ObjectInputStream input,
 			ObjectOutputStream output) throws ClassNotFoundException,
 			IOException {
-		// Referencia estado = Referencia.CONECTADO;
-		try {
-			String subMenu = null;
 
-			MensagemObj envioCliente1 = new MensagemObj(menu.menuPrincipal);
-			output.writeObject(envioCliente1);
+		Integer opcaoMenuPrincipal = 0;
+		MensagemObj envioCliente = new MensagemObj();
+		MensagemObj recebeCliente;
 
-			MensagemObj recebeCliente1 = (MensagemObj) input.readObject();
-			Integer
-			opcaoMenuPrincipal = (Integer) recebeCliente1
-					.getParam(Referencia.MENU);
+		envioCliente.setParam(Referencia.PRINCIPAL, menu.menuPrincipal);
+		output.writeObject(envioCliente);
+		output.flush();
 
-			switch (opcaoMenuPrincipal) {
-			case 1:
-				subMenu = menu.subMenuCadastrar;
-				break;
-			case 2:
-				subMenu = menu.subMenuListar;
-				break;
-			case 3:
-				subMenu = menu.subMenuRemover;
-				break;
-			case 4:
-				subMenu = menu.subMenuAtualizar;
-				break;
-			case 5:
-				subMenu = menu.subMenuSair;
-				break;
-			default:
-				System.out.println("Opção Inválida");
-			}
+		recebeCliente = (MensagemObj) input.readObject();
+		opcaoMenuPrincipal = (Integer) Integer.parseInt((String) recebeCliente
+				.getParam(Referencia.MENU));
 
-			MensagemObj envioCliente2 = new MensagemObj(subMenu);
-			output.writeObject(envioCliente2);
+		if (opcaoMenuPrincipal != 5) {
 
-			MensagemObj recebeCliente2 = (MensagemObj) input.readObject();
-			String opcaoSubMenu = (String) recebeCliente2
-					.getParam(Referencia.SUBMENU);
-			MensagemObj envioCliente3 = new MensagemObj(
-					listar.listarCadastros());
-			output.writeObject(envioCliente3);
+			envioCliente.setParam(Referencia.SUBMENU,
+					menu.listaSubMenu(opcaoMenuPrincipal));
+			// MensagemObj envioCliente2 = new MensagemObj(Referencia.SUBMENU,
+			// menu.listaSubMenu(opcaoMenuPrincipal));
+			envioCliente.setStatus(Status.OK);
+			output.writeObject(envioCliente);
+			output.flush();
+			recebeCliente = (MensagemObj) input.readObject();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+			Integer opcaoSubMenu = (Integer) Integer
+					.parseInt((String) recebeCliente
+							.getParam(Referencia.SUBMENU));
+			String s = opcaoMenuPrincipal + "" + opcaoSubMenu;
+			opcaoSubMenu = Integer.parseInt(s);
+
+			envioCliente.setParam(Referencia.LISTAR,
+					menu.submenu(input, output, opcaoSubMenu));
+			output.writeObject(envioCliente);
+			output.flush();
+		} else {
+		}
+		return opcaoMenuPrincipal;
 	}
+
 }

@@ -10,8 +10,10 @@ public class ListarRegistro {
 
 	ConectaBD con = new ConectaBD();
 	RegistroVisita reg = new RegistroVisita();
-
-	public void listarRegistros() {
+	String lista;
+	public String listarRegistros() {
+		
+		lista = "";
 
 		System.out.println("Lista: registro de visitas");
 		//SQL delistagem dos itens da tabela registros de visitas
@@ -29,7 +31,7 @@ public class ListarRegistro {
 				reg.setIDpessoa(rs.getString("id_pessoa"));
 				reg.setLocal(rs.getString("lugar"));
 
-				System.out.println(reg.toString());
+				lista += reg.toString();
 			}
 			ps.close();
 			rs.close();
@@ -37,5 +39,6 @@ public class ListarRegistro {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return lista;
 	}
 }
