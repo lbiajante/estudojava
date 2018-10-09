@@ -2,17 +2,15 @@ package uteis;
 
 import java.text.ParseException;
 import java.util.InputMismatchException;
-import java.util.Scanner;
 
 import javax.swing.text.MaskFormatter;
 
 import cadastro.CadastroPessoa;
+import conexao_cliente.GerenciadorDeClientes;
 
 public class ValidaCPF {
-	private Scanner entrada = new Scanner(System.in);
-//método de verificação se o número digitado é um cpf válido
-	public static boolean isCPF(String CPF) {
 
+	public static boolean isCPF(String CPF) {
 		if (CPF.equals("00000000000") || CPF.equals("11111111111")
 				|| CPF.equals("22222222222") || CPF.equals("33333333333")
 				|| CPF.equals("44444444444") || CPF.equals("55555555555")
@@ -70,23 +68,23 @@ public class ValidaCPF {
 				+ CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
 	}
 //faz solicitação de entrada de dados
-	public String validarCPF() {
+	public String validarCPF(GerenciadorDeClientes msg) {
 		String CPF = null;
 		CadastroPessoa cad = new CadastroPessoa();
 		boolean confere = true;
 		while (confere) {
 			try {
-				System.out.println("Digite o CPF (somente numeros)");
-				CPF = entrada.nextLine().trim();
+				msg.enviaMensagem("Digite o CPF (somente numeros)");
+				CPF = msg.recebeMensagem().trim();
 				if (ValidaCPF.isCPF(CPF)) {
 					CPF = ValidaCPF.imprimeCPF(CPF);
 					cad.setCpf(CPF);
 					confere = false;
 				} else {
-					System.out.println("Numero de CPF invalido");
+					msg.enviaMensagem("Numero de CPF invalido");
 				}
 			} catch (Exception e) {
-				System.out.println("Erro, CPF invalido!");
+				msg.enviaMensagem("Erro, CPF invalido!");
 				confere = true;
 			}
 		}

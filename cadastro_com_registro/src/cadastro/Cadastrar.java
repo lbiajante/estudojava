@@ -2,8 +2,8 @@ package cadastro;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Scanner;
 
+import conexao_cliente.GerenciadorDeClientes;
 import registro.CadastrarRegistro;
 import uteis.ConectaBD;
 import uteis.ValidaCPF;
@@ -21,32 +21,46 @@ public class Cadastrar {
 	ValidaCelular celular = new ValidaCelular();
 	ValidaStrings string = new ValidaStrings();
 	ValidaId validaId = new ValidaId();
-	Scanner entrada = new Scanner(System.in);
+	
 
-	public void cadastrar() {
-
-		// rotina de solicitação dos valores aos atributos a serem cadastrados
-		System.out.println("Cadastro de Usuario");
+	public void cadastrar(GerenciadorDeClientes msg) {
+		String labelOut = "Cadastro de Usuario";
+		msg.enviaMensagem(labelOut);
 		String table = "cadastro_de_pessoas";
-		String label = "Digite o ID a ser cadastrado";
-		cad.setPosicao(validaId.verificaID(textInput(label), table));
-		label = "Digite o nome";
-		cad.setNome(string.texto(textInput(label), label));
-		cad.setDataNascimento(data
-				.data("Digite a data de nascimento com o formato: ddmmaaaa"));
-		cad.setCpf(cpf.validarCPF());
-		label = "Digite o nome da empresa";
-		cad.setEmpresa(string.texto(textInput(label), label));
-		label = "Digite a area de atuacao";
-		cad.setAreaDeAtuacao(string.texto(textInput(label), label));
-		cad.setCelular(celular.formatarCelular());
+		
+		labelOut = "Digite o ID a ser cadastrado";
+		msg.enviaMensagem(labelOut);
+		String labelIn = msg.recebeMensagem();
+		cad.setPosicao(validaId.verificaID(labelIn, table, msg));
+		
+		labelOut ="Digite o nome";
+		msg.enviaMensagem(labelOut);
+		labelIn = msg.recebeMensagem();
+		cad.setNome(string.texto(labelIn, labelOut , msg));
+		
+		labelOut ="Digite a data de nascimento com o formato: ddmmaaaa";				
+		cad.setDataNascimento(data.data(labelOut, msg));
+		
+		cad.setCpf(cpf.validarCPF(msg));
+		
+		labelOut = "Digite o nome da empresa";
+		msg.enviaMensagem (labelOut);
+		labelIn = msg.recebeMensagem();
+		cad.setEmpresa(string.texto(labelIn, labelOut, msg));
+		
+		labelOut = "Digite a area de atuacao";
+		msg.enviaMensagem (labelOut);
+		labelIn = msg.recebeMensagem();
+		cad.setAreaDeAtuacao(string.texto(labelIn, labelOut, msg));
+		
+		cad.setCelular(celular.formatarCelular(msg));
 
-		String cadastrar = textInput("Adicionar cadastro (S/N)?");
-		boolean confere = true;
-		// laço para garantir que a opção de cadastrar ou não seja válida
+		msg.enviaMensagem("Adicionar cadastro (S/N)?");
+		labelIn = msg.recebeMensagem();
+		boolean confere = true;	
 		while (confere) {
-			if (cadastrar.trim().equalsIgnoreCase("s")) {
-				// SQL de inclusão dos novos valores no BD
+			if (labelIn.trim().equalsIgnoreCase("s")) {				
+				
 				String sql = "INSERT INTO cadastro_de_pessoas "
 						+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuação) values"
 						+ "( '" + cad.getPosicao() + "' , '" + cad.getNome()
@@ -56,51 +70,45 @@ public class Cadastrar {
 						+ "' );";
 				try {
 					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
-							sql); // conexão com o BD para se executar a SQL
+							sql); 
 					ps.execute();
 					ps.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				System.out.println("Cadastro adicionado!");
-				System.out.println(cad.toString());
-				confere = false;
-				
-				// oferece a opção de cadastrar registros de visitas vinculados
-				// ao cadastro da pessoa recém incluída
+				msg.enviaMensagem("Cadastro adicionado!");
+				msg.enviaMensagem(cad.toString());
+				confere = false;			
 				boolean conf = true;
 				do {
-					System.out.println("Deseja registrar uma visita? (S/N)");
+					msg.enviaMensagem("Deseja registrar uma visita? (S/N)");
 					String opcaoVisita = null;
-					opcaoVisita = entrada.nextLine();
+					opcaoVisita = msg.recebeMensagem();
 
 					if (opcaoVisita.trim().equalsIgnoreCase("s")) {
-						cadReg.cadastrar(cad.getPosicao(), cad.getNome());
+						cadReg.cadastrar(cad.getPosicao(), cad.getNome(), msg);
 						conf = true;
 
 					} else if (opcaoVisita.equalsIgnoreCase("n")) {
 						conf = false;
 					} else {
-						System.out.println("Opcao invalida! Tente novamente!");
+						msg.enviaMensagem("Opcao invalida! Tente novamente!");
 						conf = true;
 					}
 				} while (conf);
-				// ignora o cadastro preenchido sem abrir o BD
-			} else if (cadastrar.trim().equalsIgnoreCase("n")) {
-				System.out.println("Cadastro ignorado!");
+				
+			} else if (labelIn.trim().equalsIgnoreCase("n")) {
+				msg.enviaMensagem("Cadastro ignorado!");
 				confere = false;
 
 			} else {
-				System.out.println("Opcao invalida");
-				cadastrar = textInput("Digite uma opcao valida. (S/N)");
+				msg.enviaMensagem("Opcao invalida");
+				msg.enviaMensagem("Digite uma opcao valida. (S/N)");
+				labelIn = msg.recebeMensagem();
 				confere = true;
 			}
 		}
 	}
 
-	// método para impressão em tela e captura de entrada de dados do usuário
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
+	
 }

@@ -5,20 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import conexao_cliente.GerenciadorDeClientes;
 import uteis.ConectaBD;
 import uteis.ValidaData;
 import uteis.ValidaId;
 import local.CadastrarLocal;
 
 public class AtualizarRegistro {
-	Scanner entrada = new Scanner(System.in);
-
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
-
-	public void atualizarRegistro() {
+	
+	public void atualizarRegistro(GerenciadorDeClientes msg) {
 
 		RegistroVisita regg = new RegistroVisita();
 		CadastrarLocal cadLocal = new CadastrarLocal();
@@ -29,27 +24,25 @@ public class AtualizarRegistro {
 
 		String codigo = null;
 
-		System.out.println("Atualizar registros");
-		// laço que espera a inserção de um ID válido
+		msg.enviaMensagem("Atualizar registros");
+		
 		while (confere) {
-			codigo = textInput("Digite um ID para ser atualizado ou 's' para sair");
-			// opção de sair sem ter que atualizar um registro para encerrar
+			msg.enviaMensagem("Digite um ID para ser atualizado ou 's' para sair");
+			codigo = msg.recebeMensagem();
+			
 			if (codigo.trim().equalsIgnoreCase("s")) {
 				confere = false;
-
-			} else {
-				// método que valida o ID inserido
-				codigo = validaId.confereID(codigo);
-				// SQL de listagem dos itens da tabela registro de visitas
+			} else {				
+				codigo = validaId.confereID(codigo, msg);
+				
 				String sql = "SELECT * FROM registro_de_visitas";
-				try { // conexão com o BD
+				try {
 					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
 							sql);
 					ResultSet rs = ps.executeQuery();
-					// laço que traz todos os itens da tabela
+				
 					while (rs.next()) {
-						regg.setPosicao(rs.getString("id"));
-						// marcação se o item solicitado existe
+						regg.setPosicao(rs.getString("id"));						
 						if (regg.getPosicao().equals(codigo)) {
 							existe = true;
 							break;
@@ -60,15 +53,14 @@ public class AtualizarRegistro {
 					e.printStackTrace();
 				}
 
-				// rotina de solicitação de novos valores para a atualização do
-				// item
 				if (existe) {
-					regg.setLocal(cadLocal.cadastrarLocal());
-					regg.setData(data
-							.data("Atualize a data da visita com o formato: ddmmaaaa"));
-					regg.setHora(data
-							.hora("Atualize a hora da visita com o formato: hhmm"));
-					// SQL de atualização
+					regg.setLocal(cadLocal.cadastrarLocal(msg));
+					String labelOut = "Atualize a data da visita com o formato: ddmmaaaa";
+					regg.setData(data.data(labelOut, msg));
+					
+					labelOut = "Atualize a hora da visita com o formato: hhmm";
+					regg.setHora(data.hora(labelOut, msg));
+					
 					String sql2 = "UPDATE registro_de_visitas SET data_visita = '"
 							+ regg.getData()
 							+ "' , hora_visita = '"
@@ -78,7 +70,7 @@ public class AtualizarRegistro {
 							+ "' WHERE id = '"
 							+ codigo
 							+ "';";
-					try { // nova conexão com o BD
+					try { 
 						PreparedStatement ps2 = ConectaBD.conexao()
 								.prepareStatement(sql2);
 						ps2.execute();
@@ -90,8 +82,7 @@ public class AtualizarRegistro {
 					confere = false;
 
 				} else if (existe == false) {
-					System.out
-							.println("Nao existe cadastro com esse ID para ser atualizado");
+					msg.enviaMensagem("Nao existe cadastro com esse ID para ser atualizado");
 					confere = true;
 				}
 			}

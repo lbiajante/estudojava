@@ -4,16 +4,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import conexao_cliente.GerenciadorDeClientes;
 import uteis.ConectaBD;
 
 public class ListarLocais {
 	ConectaBD con = new ConectaBD();
 	Local local = new Local();
 	String lista;
-	public String listarLocais() {
+	public void listarLocais(GerenciadorDeClientes msg) {
 
 		lista = "";
-		System.out.println("Lista: locais");
+		msg.enviaMensagem("Lista: locais");
 		//SQL de listagem
 		String sql = "SELECT * FROM local";
 		try {
@@ -24,13 +25,14 @@ public class ListarLocais {
 				local.setLugar(rs.getString("lugar"));
 				lista += local.toString();
 			}
+			msg.enviaMensagem(lista);
 			ps.close();
 			rs.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return lista;
+		
 	}
 
 }

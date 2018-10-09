@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import conexao_cliente.GerenciadorDeClientes;
 import uteis.ConectaBD;
 import uteis.ValidaCPF;
 import uteis.ValidaCelular;
@@ -13,15 +14,8 @@ import uteis.ValidaId;
 import uteis.ValidaStrings;
 
 public class Atualizar {
-	Scanner entrada = new Scanner(System.in);
-
-	//método para impressão em  tela e captura de entrada de dados do usuário
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
-
-	public void atualizarCadastro() {
+	
+	public void atualizarCadastro(GerenciadorDeClientes msg) {
 		
 		CadastroPessoa cad = new CadastroPessoa();
 		ValidaId validaId = new ValidaId();
@@ -33,23 +27,24 @@ public class Atualizar {
 		boolean existe = false;
 		String codigo = null;
 
-		System.out.println("Atualizar: cadastro de pessoas ");
+		msg.enviaMensagem("Atualizar: cadastro de pessoas ");
 
-		while (confere) { //laço para garantir que a entrada do código será válida
-			codigo = textInput("Digite um ID para ser atualizado ou 's' para sair");
-			if (codigo.trim().equalsIgnoreCase("s")) { //opção de sair sem a obrigação de finalizar a rotina de atualização inteira 
+		while (confere) { 
+			msg.enviaMensagem("Digite um ID para ser atualizado ou 's' para sair");
+			codigo = msg.recebeMensagem();
+			if (codigo.trim().equalsIgnoreCase("s")) {  
 				confere = false;
 			} else {
-				codigo = validaId.confereID(codigo); //método de validação de ID
-				String sql = "SELECT * FROM cadastro_de_pessoas"; //SQL para verificar se o cadastro a ser atualizado está no BD
+				codigo = validaId.confereID(codigo, msg); 
+				String sql = "SELECT * FROM cadastro_de_pessoas"; 
 				try {
 					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
-							sql); //abertura de conexão com o BD
+							sql); 
 					ResultSet rs = ps.executeQuery(); 
-					while (rs.next()) { //laço de procura no BD
+					while (rs.next()) { 
 						cad.setPosicao(rs.getString("id")); 
 						if (cad.getPosicao().equals(codigo)) {
-							existe = true;  //marcador de existência do cadastro no BD
+							existe = true;  
 							break;
 						}
 					}
@@ -59,17 +54,28 @@ public class Atualizar {
 					e.printStackTrace();
 				}
 
-				if (existe) { //rotina de atualização com solicitação de novos valores para os atributos
-					String label = "Digite o nome atualizado";
-					cad.setNome(string.texto(textInput(label), label));
+				if (existe) { 
+					String labelOut = "Digite o nome atualizado";
+					msg.enviaMensagem(labelOut);
+					String labelIn = msg.recebeMensagem();
+					cad.setNome(string.texto(labelIn, labelOut, msg));
+					
+					labelOut = "Digite a data de nascimento com o formato: ddmmaaaa";
 					cad.setDataNascimento(data
-							.data("Digite a data de nascimento com o formato: ddmmaaaa"));
-					cad.setCpf(cpf.validarCPF());
-					label = "Digite o nome da empresa atualizado";
-					cad.setEmpresa(string.texto(textInput(label), label));
-					label = "Digite a area de atuacao";
-					cad.setAreaDeAtuacao(string.texto(textInput(label), label));
-					cad.setCelular(celular.formatarCelular());
+							.data(labelOut, msg));
+					
+					cad.setCpf(cpf.validarCPF(msg));
+					labelOut = "Digite o nome da empresa atualizado";
+					msg.enviaMensagem(labelOut);
+					labelIn = msg.recebeMensagem();
+					cad.setEmpresa(string.texto(labelIn, labelOut, msg));
+					
+					labelOut = "Digite a area de atuacao";
+					msg.enviaMensagem(labelOut);
+					labelIn = msg.recebeMensagem();
+					cad.setAreaDeAtuacao(string.texto(labelIn, labelOut, msg));
+					
+					cad.setCelular(celular.formatarCelular(msg));
 
 					String sql2 = "UPDATE cadastro_de_pessoas SET nome_pessoa = '" //SQL de atualização dos atributos no BD
 							+ cad.getNome()
@@ -97,8 +103,7 @@ public class Atualizar {
 					confere = false;
 
 				} else if (existe == false) {
-					System.out
-							.println("Nao existe cadastro com esse ID para ser atualizado");
+					msg.enviaMensagem("Nao existe cadastro com esse ID para ser atualizado");
 					confere = true;
 				}
 			}

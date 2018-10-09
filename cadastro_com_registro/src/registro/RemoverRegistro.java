@@ -3,48 +3,37 @@ package registro;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
+import conexao_cliente.GerenciadorDeClientes;
 import uteis.ConectaBD;
 import uteis.ValidaId;
 
 public class RemoverRegistro {
 
-	Scanner entrada = new Scanner(System.in);
-
-	// método para impressão em tela e captura de entrada de dados do usuário
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
-
-	public void removerRegistro() {
+	public void removerRegistro(GerenciadorDeClientes msg) {
 		ValidaId validaId = new ValidaId();
 		RegistroVisita reg = new RegistroVisita();
 		boolean existe = false;
 		boolean confere = true;
 		String codigo = null;
-		// laço para garantir a entrada de um ID válido
+
 		while (confere) {
-			codigo = textInput("Digite um ID para ser removido ou 's' para sair");
-			// opção de sair sem precisar completar a rotina de apagar um
-			// registro
+
+			msg.enviaMensagem("Digite um ID para ser removido ou 's' para sair");
+			codigo = msg.recebeMensagem();
+
 			if (codigo.trim().equalsIgnoreCase("s")) {
 				confere = false;
 			} else {
-				// método de validação de ID
-				codigo = validaId.confereID(codigo);
-				// SQL de listagem para verificar se o item a ser removido
-				// existe
+				codigo = validaId.confereID(codigo, msg);
 				String sql = "SELECT * FROM registro_de_visitas";
-				try {// conexão com o BD
-					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
-							sql);
+				try {
+					PreparedStatement ps = ConectaBD.conexao()
+							.prepareStatement(sql);
 					ResultSet rs = ps.executeQuery();
-					// laço para se buscar o item solicitado
+
 					while (rs.next()) {
 						reg.setPosicao(rs.getString("id"));
-						// marcação de existência do item na tabela
 						if (reg.getPosicao().equals(codigo)) {
 							existe = true;
 							break;
@@ -55,17 +44,16 @@ public class RemoverRegistro {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				// rotina de exclusão do item solicitado e localizado
+
 				if (existe) {
-					// SQL de exclusão do item
 					String sql2 = "DELETE FROM registro_de_visitas WHERE id = '"
 							+ codigo + "';";
-					try { // nova conexão com o BD
+					try {
 						PreparedStatement ps2 = ConectaBD.conexao()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
-						System.out.println("Registro removido");
+						msg.enviaMensagem("Registro removido");
 
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -73,8 +61,7 @@ public class RemoverRegistro {
 					confere = false;
 
 				} else if (existe == false) {
-					System.out
-							.println("Nao existe registro com esse ID para ser removido");
+					msg.enviaMensagem("Nao existe registro com esse ID para ser removido");
 					confere = true;
 				}
 			}

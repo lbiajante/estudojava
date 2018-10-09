@@ -2,30 +2,27 @@ package uteis;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
+
+import conexao_cliente.GerenciadorDeClientes;
 
 public class ValidaData {
-	private Scanner entrada = new Scanner(System.in);
 
-	public String data(String label) {
+	public String data(String label, GerenciadorDeClientes msg) {
 		boolean confere = true;
 		Date data = null;
-		// laço para garantir a entrada de dados válidos
 		while (confere) {
 			try {
-				// rotina de validação das datas
 				SimpleDateFormat dataFormatIn = new SimpleDateFormat("ddMMyyyy");
-				System.out.println(label);
+				msg.enviaMensagem(label);
 				dataFormatIn.setLenient(false);
-				Date date = dataFormatIn.parse(entrada.nextLine().trim());
+				Date date = dataFormatIn.parse(msg.recebeMensagem().trim());
 				data = date;
 				confere = false;
 			} catch (Exception e) {
-				System.out.println("Data invalida");
+				msg.enviaMensagem("Data invalida");
 			}
 		}
 		String dt = null;
-		// rotina de formatação da data validada
 		try {
 			SimpleDateFormat dataFormatOut = new SimpleDateFormat("dd/MM/yyyy");
 			String dataToString = dataFormatOut.format(data);
@@ -36,26 +33,23 @@ public class ValidaData {
 		return dt;
 	}
 
-	// método de formatar hora
-	public String hora(String label) {
+	public String hora(String label, GerenciadorDeClientes msg) {
 		boolean confere = true;
 		Date tmns = null;
 
 		while (confere) {
-			// rotina de validar hora
 			try {
 				SimpleDateFormat timeFormatIn = new SimpleDateFormat("HHmm");
-				System.out.println(label);
+				msg.enviaMensagem(label);
 				timeFormatIn.setLenient(false);
-				Date time = timeFormatIn.parse(entrada.nextLine().trim());
+				Date time = timeFormatIn.parse(msg.recebeMensagem().trim());
 				tmns = time;
 				confere = false;
 			} catch (Exception e) {
-				System.out.println("Hora invalida");
+				msg.enviaMensagem("Hora invalida");
 			}
 		}
 		String horaVisita = null;
-		// rotina de formatar hora validada
 		try {
 			SimpleDateFormat timeFormatOut = new SimpleDateFormat("HH:mm");
 			String timeToString = timeFormatOut.format(tmns);

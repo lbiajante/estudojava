@@ -3,34 +3,28 @@ package cadastro;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
+import conexao_cliente.GerenciadorDeClientes;
 import uteis.ConectaBD;
 import uteis.ValidaId;
 
 public class Remover {
 
-	Scanner entrada = new Scanner(System.in);
-	
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
-
-	public void removerCadastro() {
+	public void removerCadastro(GerenciadorDeClientes msg) {
 		ValidaId validaId = new ValidaId();
 		CadastroPessoa cad = new CadastroPessoa();
 		String codigo = null;
-		
-		System.out.println("Remover: cadastro de pessoas");
+
+		msg.enviaMensagem("Remover: cadastro de pessoas");
 
 		boolean confere = true;
 		while (confere) {
-			codigo = textInput("Digite um ID para ser removido ou 's' para sair");
+			msg.enviaMensagem("Digite um ID para ser removido ou 's' para sair");
+			codigo = msg.recebeMensagem();
 			if (codigo.trim().equalsIgnoreCase("s")) {
 				confere = false;
 			} else {
-				codigo = validaId.confereID(codigo);
+				codigo = validaId.confereID(codigo, msg);
 				String sql = "SELECT * FROM cadastro_de_pessoas;";
 				boolean existe = false;
 				try {
@@ -59,17 +53,15 @@ public class Remover {
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
-						System.out.println("Cadastro removido");
+						msg.enviaMensagem("Cadastro removido");
 
 					} catch (SQLException e) {
-						System.out
-								.println("Cadastro desta pessoa nao pode ser removido, "
-										+ "\npois esta vinculado a um ou mais registros de visitas");
+						msg.enviaMensagem("Cadastro desta pessoa nao pode ser removido, "
+								+ "\npois esta vinculado a um ou mais registros de visitas");
 					}
 					confere = false;
 				} else if (existe == false) {
-					System.out
-							.println("Nao existe cadastro com esse ID para ser removido");
+					msg.enviaMensagem("Nao existe cadastro com esse ID para ser removido");
 					confere = true;
 				}
 			}

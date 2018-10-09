@@ -2,20 +2,21 @@ package uteis;
 
 import java.util.Scanner;
 
+import conexao_cliente.GerenciadorDeClientes;
+
 public class ValidaStrings {
 	Scanner entrada = new Scanner(System.in);
 	
-	// String verificaTexto;
-
-	public String texto(String verificaTexto, String label) {
+	public String texto(String verificaTexto, String label, GerenciadorDeClientes msg) {
 		boolean confere = true;
 
 		String campo = verificaTexto.trim();
 		while (confere) {
 			if (campo.trim().isEmpty() || campo.trim().equals("")
 					|| campo.trim().equals(null)) {
-				System.out.println("O campo precisa ser preenchido");
-				verificaTexto = textInput(label);
+				msg.enviaMensagem("O campo precisa ser preenchido");
+				msg.enviaMensagem(label);				
+				verificaTexto = msg.recebeMensagem();
 				confere = true;
 			} else {
 				confere = false;
@@ -23,11 +24,5 @@ public class ValidaStrings {
 			campo = verificaTexto;
 		}
 		return campo;
-	}
-
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
-
+	}	
 }

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
+import conexao_cliente.GerenciadorDeClientes;
 import local.Local;
 import cadastro.CadastroPessoa;
 import registro.RegistroVisita;
@@ -17,18 +18,17 @@ public class ValidaId {
 	Scanner entrada = new Scanner(System.in);
 
 	// rotina de validação de ID
-	public String confereID(String codigo) {
+	public String confereID(String codigo, GerenciadorDeClientes msg) {
 		int cod = 0;
 		boolean confere = true;
-
 		do {
 			try {
 				while (confere) {
 					cod = Integer.parseInt(codigo.trim());
 					if (cod <= 0) {
-						System.out
-								.println("O codigo precisa ser maior que zero");
-						codigo = textInput("Digite um numero maior que zero");
+						msg.enviaMensagem("O codigo precisa ser maior que zero");
+						msg.enviaMensagem("Digite um numero maior que zero");
+						codigo = msg.recebeMensagem();
 						confere = true;
 						cod = 0;
 					} else {
@@ -37,8 +37,9 @@ public class ValidaId {
 					}
 				}
 			} catch (NumberFormatException e) {
-				System.out.printf("Voce nao digitou um numero inteiro!\n");
-				codigo = textInput("Digite um numero inteiro");
+				msg.enviaMensagem("Voce nao digitou um numero inteiro!\n");
+				msg.enviaMensagem("Digite um numero inteiro");
+				codigo = msg.recebeMensagem();
 				cod = 0;
 			}
 		} while (cod == 0);
@@ -46,10 +47,12 @@ public class ValidaId {
 	}
 
 	// verificação se o ID existe
-	public String verificaID(String codigo, String table) {
-		String confereCod = this.confereID(codigo);
+	public String verificaID(String codigo, String table,
+			GerenciadorDeClientes msg) {
+
+		String confereCod = this.confereID(codigo, msg);
 		String sql = "SELECT * FROM " + table + ";";
-		
+
 		try {
 			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
@@ -58,12 +61,11 @@ public class ValidaId {
 				while (rs.next()) {
 					cad.setPosicao(rs.getString("id"));
 					if (cad.getPosicao().equals(confereCod)) {
-						System.out
-								.println("Esse ID esta sendo usado, por favor digite outro");
-						confereCod = entrada.next();
+						msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
+						confereCod = msg.recebeMensagem();
 						rs.close();
 						ps.close();
-						this.verificaID(confereCod, table);
+						this.verificaID(confereCod, table, msg);
 						break;
 					}
 				}
@@ -71,12 +73,11 @@ public class ValidaId {
 				while (rs.next()) {
 					reg.setPosicao(rs.getString("id"));
 					if (reg.getPosicao().equals(confereCod)) {
-						System.out
-								.println("Esse ID esta sendo usado, por favor digite outro");
-						confereCod = entrada.next();
+						msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
+						confereCod = msg.recebeMensagem();
 						rs.close();
 						ps.close();
-						this.verificaID(confereCod, table);
+						this.verificaID(confereCod, table, msg);
 						break;
 					}
 				}
@@ -85,12 +86,6 @@ public class ValidaId {
 			e.printStackTrace();
 		}
 		return confereCod;
-	}
-
-	// método para impressão em tela e captura de entrada de dados do usuário
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
 	}
 
 }

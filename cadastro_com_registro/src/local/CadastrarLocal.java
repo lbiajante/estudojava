@@ -3,32 +3,33 @@ package local;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 import uteis.ConectaBD;
 import uteis.ValidaStrings;
+import conexao_cliente.GerenciadorDeClientes;
 
 public class CadastrarLocal {
 
 	Local cadLocal = new Local();
 	ValidaStrings string = new ValidaStrings();
 	String lugar = null;
-	Scanner entrada = new Scanner(System.in);
-
-	public String cadastrarLocal() {
-		System.out.println("Cadastro de lugares");
+	
+	public String cadastrarLocal(GerenciadorDeClientes msg) {
+		msg.enviaMensagem("Cadastro de lugares");
 		boolean existe = true;
 
-		String label = "Digite o lugar";
-		lugar = (string.texto(textInput(label), label));
-		// SQL de listagem de todos os itens da tabela local
+		String labelOut = "Digite o lugar";
+		msg.enviaMensagem(labelOut);
+		String labelIn = msg.recebeMensagem();
+		lugar = (string.texto(labelIn, labelOut, msg));
+
 		String sql = "SELECT * FROM local";
 
-		try { // conexão com o BD
+		try {
 			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				// laço para a verificação se o local digitado já existe no BD
+
 				cadLocal.setLugar(rs.getString("lugar"));
 				if (cadLocal.getLugar().equals(lugar)) {
 					existe = false;
@@ -36,17 +37,16 @@ public class CadastrarLocal {
 				}
 			}
 			if (existe == false) {
-				System.out.println("Lugar já cadastrado");
+				msg.enviaMensagem("Lugar já cadastrado");
 				lugar = cadLocal.getLugar();
 
 			} else if (existe == true) {
-				System.out.println("Lugar não cadastrado ainda!");
-				// novo SQL para inserção de item ainda não cadastrado
+				msg.enviaMensagem("Lugar não cadastrado ainda!");
 				sql = "INSERT INTO local " + "(lugar) values" + "( '"
 						+ lugar.trim() + "' );";
 				ps = ConectaBD.conexao().prepareStatement(sql);
 				ps.execute();
-				System.out.println("Ok! Lugar adicionado!");
+				msg.enviaMensagem("Ok! Lugar adicionado!");
 			}
 			ps.close();
 			rs.close();
@@ -57,9 +57,4 @@ public class CadastrarLocal {
 		return lugar;
 	}
 
-	// método para impressão em tela e captura de entrada de dados do usuário
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
 }

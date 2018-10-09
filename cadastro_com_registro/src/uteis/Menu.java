@@ -1,21 +1,21 @@
 package uteis;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.util.Scanner;
 
+import local.CadastrarLocal;
+import local.ListarLocais;
+import local.RemoverLocal;
 import registro.AtualizarRegistro;
 import registro.CadastrarRegistro;
 import registro.ListarRegistro;
 import registro.RemoverRegistro;
-import local.CadastrarLocal;
-import local.ListarLocais;
-import local.RemoverLocal;
 import cadastro.Atualizar;
 import cadastro.Cadastrar;
 import cadastro.Listar;
 import cadastro.Remover;
+import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.ServidorSocket;
 
 public class Menu {
 
@@ -31,92 +31,103 @@ public class Menu {
 	RemoverLocal remLocal = new RemoverLocal();
 	Atualizar atualizar = new Atualizar();
 	AtualizarRegistro atualRegistro = new AtualizarRegistro();
+	ServidorSocket client = new ServidorSocket();
+	GerenciadorDeClientes msg = new GerenciadorDeClientes(client.server());
 
-	public String menuPrincipal = "\nBEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
-			+ "\n---------------------------------------------------------------------------------------------\n"
-			+ "Digite o numero da opcao selecionada:"
-			+ "\n1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais\n"
-			+ "2 - Listar cadastro de pessoas/ Listar registros de visitas/ Listar locais cadstrados\n"
-			+ "3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais\n"
-			+ "4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas\n"
-			+ "5 - Sair\n"
-			+ "---------------------------------------------------------------------------------------------";
+	int opcao;
+	int subOpcao;
 
-	public String listaSubMenu(int opcao) {
-		String mensagemCliente = null;
-		switch (opcao) {
+	public void menu() {
+
+		msg.enviaMensagem("\n \n \n \n"
+				+ "BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
+				+ "\n---------------------------------------------------------------------------------------------\n"
+				+ "Digite o numero da opcao selecionada:"
+				+ "\n1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais\n"
+				+ "2 - Listar cadastro de pessoas/ Listar registros de visitas/ Listar locais cadstrados\n"
+				+ "3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais\n"
+				+ "4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas\n"
+				+ "5 - Encerrar cliente\n"
+				+ "6 - Encerrar cliente e servidor\n"
+				+ "---------------------------------------------------------------------------------------------");
+		switch (opcao = Integer.parseInt(msg.recebeMensagem())) {
 
 		case 1:
-			mensagemCliente = "Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+			msg.enviaMensagem("Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais");
+			this.submenu(subOpcao = Integer.parseInt(msg.recebeMensagem()));
+			this.menu();
 			break;
 		case 2:
-			mensagemCliente = "Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+			msg.enviaMensagem("Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais");
+			this.submenu(subOpcao = Integer.parseInt(msg.recebeMensagem()));
+			this.menu();
 			break;
 		case 3:
-			mensagemCliente = "Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+			msg.enviaMensagem("Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais");
+			this.submenu(subOpcao = Integer.parseInt(msg.recebeMensagem()));
+			this.menu();
 			break;
 		case 4:
-			mensagemCliente = "Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ";
+			msg.enviaMensagem("Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ");
+			this.submenu(subOpcao = Integer.parseInt(msg.recebeMensagem()));
+			this.menu();
 			break;
 		case 5:
-			mensagemCliente = "Programa de cadastro finalizado!";
+			msg.enviaMensagem("Cliente finalizado!");		
 			break;
-
+		case 6:
+			msg.enviaMensagem("Cliente e servidor finalizados!");
+			msg.fechaCliente();
+			break;
+		
 		default:
-			mensagemCliente = "Opcao invalida";
+			msg.enviaMensagem("Opcao invalida. Tente novamente!");
+			this.menu();
 		}
-		return mensagemCliente;
 	}
 
-	public String submenu(ObjectInputStream input, ObjectOutputStream output, int subOpcao) throws ClassNotFoundException, IOException {
+	private void submenu(int subOpcao) {
 
-		String mensagemCliente = null;
+		String s = opcao + "" + subOpcao;
+		subOpcao = Integer.parseInt(s);
+
 		switch (subOpcao) {
 		case 11:
-			cadastrar.cadastrar();
-			mensagemCliente = "Cadastro de pessoa feito com sucesso";
+			cadastrar.cadastrar(msg);
 			break;
 		case 12:
-			cadRegistro.inserirRegistro();
-			mensagemCliente = "Registro de visita feito com sucesso";
+			cadRegistro.inserirRegistro(msg);
 			break;
 		case 13:
-			cadLocal.cadastrarLocal();
-			mensagemCliente = "Local inserido com sucesso";
+			cadLocal.cadastrarLocal(msg);
 			break;
-		case 21:			
-			mensagemCliente = listar.listarCadastros();
+		case 21:
+			listar.listarCadastros(msg);
 			break;
-		case 22:			
-			mensagemCliente = listRegistro.listarRegistros();
+		case 22:
+			listRegistro.listarRegistros(msg);
 			break;
-		case 23:			
-			mensagemCliente = listLocal.listarLocais();
+		case 23:
+			listLocal.listarLocais(msg);
 			break;
 		case 31:
-			remover.removerCadastro();
-			mensagemCliente = "Cadastro removido";
+			remover.removerCadastro(msg);
 			break;
 		case 32:
-			remRegistro.removerRegistro();
-			mensagemCliente = "Regiostro removido";
+			remRegistro.removerRegistro(msg);
 			break;
 		case 33:
-			
-			mensagemCliente = remLocal.removerLocal(input, output);
+			remLocal.removerLocal(msg);
 			break;
 		case 41:
-			atualizar.atualizarCadastro();
-			mensagemCliente = "Cadastro atualizado";
+			atualizar.atualizarCadastro(msg);
 			break;
 		case 42:
-			atualRegistro.atualizarRegistro();
-			mensagemCliente = "Registro atualizado";
+			atualRegistro.atualizarRegistro(msg);
 			break;
 		default:
-			System.out.println("Opcao invalida. Tente novamente!");
-			// this.menu();
+			msg.enviaMensagem("Opcao invalida. Tente novamente!");
+			this.menu();
 		}
-		return mensagemCliente;
 	}
 }

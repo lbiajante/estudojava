@@ -1,50 +1,41 @@
 package uteis;
 
-import java.util.Scanner;
+import conexao_cliente.GerenciadorDeClientes;
 
 public class ValidaCelular {
 
-	private Scanner entrada = new Scanner(System.in);
 	private String celularFormatado = null;
 	private ValidaCPF cpf = new ValidaCPF();
 	boolean confere = true;
 
-	public String formatarCelular() {
-		String opcaoCelular = textInput("Deseja cadastrar um celular? (S/N)?");
+	public String formatarCelular(GerenciadorDeClientes msg) {
+		msg.enviaMensagem("Deseja cadastrar um celular? (S/N)?");
+		String opcaoCelular = msg.recebeMensagem();
+
 		if (opcaoCelular.equalsIgnoreCase("s")) {
 			while (confere) {
 				try {
-					System.out
-							.println("Digite o celular, somente os numeros com DDD ((##)9####-####): ");
-					String cf = entrada.nextLine().trim();
-					// gera uma máscara para validar o celular
+					msg.enviaMensagem("Digite o celular, somente os numeros com DDD ((##)9####-####): ");
+					String cf = msg.recebeMensagem().trim();
 					if (cf.matches("[1-9][1-9][9][0-9]{8}")) {
 						cf = cpf.formatString(cf, "(##) #####-####");
 						celularFormatado = cf;
 						confere = false;
 					} else {
-						System.out.println("Numero em formato invalido");
+						msg.enviaMensagem("Numero em formato invalido");
 						confere = true;
 					}
 				} catch (Exception e) {
-					System.out.println("Numero em formato invalido");
+					msg.enviaMensagem("Numero em formato invalido");
 					confere = true;
 				}
 			}
-			// opção de não cadastrar um celular (único item não obrigatório)
 		} else if (opcaoCelular.equalsIgnoreCase("n")) {
 			celularFormatado = ("Celular nao cadastrado");
-			System.out.println("Sem telefone");
+			msg.enviaMensagem("Sem telefone");
 		} else {
-			System.out.println("Opcao invalida! Celular nao cadastrado!");
+			msg.enviaMensagem("Opcao invalida! Celular nao cadastrado!");
 		}
 		return celularFormatado;
 	}
-
-	// método para impressão em tela e captura de entrada de dados do usuário
-	private String textInput(String label) {
-		System.out.println(label);
-		return entrada.nextLine();
-	}
-
 }

@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import conexao_cliente.GerenciadorDeClientes;
 import uteis.ConectaBD;
 
 public class ListarRegistro {
@@ -11,11 +12,10 @@ public class ListarRegistro {
 	ConectaBD con = new ConectaBD();
 	RegistroVisita reg = new RegistroVisita();
 	String lista;
-	public String listarRegistros() {
+	public void listarRegistros(GerenciadorDeClientes msg) {
 		
 		lista = "";
-
-		System.out.println("Lista: registro de visitas");
+		msg.enviaMensagem("Lista: registro de visitas");
 		//SQL delistagem dos itens da tabela registros de visitas
 		String sql = "SELECT * FROM registro_de_visitas";
 		try {
@@ -33,12 +33,13 @@ public class ListarRegistro {
 
 				lista += reg.toString();
 			}
+			msg.enviaMensagem(lista);
 			ps.close();
 			rs.close();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return lista;
+		
 	}
 }
