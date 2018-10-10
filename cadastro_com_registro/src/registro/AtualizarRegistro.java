@@ -3,13 +3,12 @@ package registro;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-import conexao_cliente.GerenciadorDeClientes;
+import local.CadastrarLocal;
 import uteis.ConectaBD;
 import uteis.ValidaData;
 import uteis.ValidaId;
-import local.CadastrarLocal;
+import conexao_cliente.GerenciadorDeClientes;
 
 public class AtualizarRegistro {
 	

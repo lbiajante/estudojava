@@ -62,7 +62,7 @@ public class Cadastrar {
 			if (labelIn.trim().equalsIgnoreCase("s")) {				
 				
 				String sql = "INSERT INTO cadastro_de_pessoas "
-						+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuação) values"
+						+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuacao) values"
 						+ "( '" + cad.getPosicao() + "' , '" + cad.getNome()
 						+ "' , '" + cad.getDataNascimento() + "' , '"
 						+ cad.getCpf() + "' , '" + cad.getCelular() + "' , '"

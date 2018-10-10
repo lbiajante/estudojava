@@ -49,43 +49,51 @@ public class ValidaId {
 	// verificação se o ID existe
 	public String verificaID(String codigo, String table,
 			GerenciadorDeClientes msg) {
+		boolean confere = true;
+		String confereCod = null;
+		while (confere) {
+			confereCod = this.confereID(codigo, msg);
+			String sql = "SELECT * FROM " + table + ";";
 
-		String confereCod = this.confereID(codigo, msg);
-		String sql = "SELECT * FROM " + table + ";";
+			try {
+				PreparedStatement ps = ConectaBD.conexao()
+						.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery();
 
-		try {
-			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
-
-			if (table.equals("cadastro_de_pessoas")) {
-				while (rs.next()) {
-					cad.setPosicao(rs.getString("id"));
-					if (cad.getPosicao().equals(confereCod)) {
-						msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
-						confereCod = msg.recebeMensagem();
-						rs.close();
-						ps.close();
-						this.verificaID(confereCod, table, msg);
-						break;
+				if (table.equals("cadastro_de_pessoas")) {
+					while (rs.next()) {
+						cad.setPosicao(rs.getString("id"));
+						if (cad.getPosicao().equals(confereCod)) {
+							msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
+							codigo = msg.recebeMensagem();
+							rs.close();
+							ps.close();
+							confere = true;
+							// this.verificaID(confereCod, table, msg);
+							break;
+						} else {
+							confere = false;
+						}
+					}
+				} else if (table.equals("registro_de_visitas")) {
+					while (rs.next()) {
+						reg.setPosicao(rs.getString("id"));
+						if (reg.getPosicao().equals(confereCod)) {
+							msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
+							codigo = msg.recebeMensagem();
+							rs.close();
+							ps.close();
+							// this.verificaID(confereCod, table, msg);
+							break;
+						} else {
+							confere = false;
+						}
 					}
 				}
-			} else if (table.equals("registro_de_visitas")) {
-				while (rs.next()) {
-					reg.setPosicao(rs.getString("id"));
-					if (reg.getPosicao().equals(confereCod)) {
-						msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
-						confereCod = msg.recebeMensagem();
-						rs.close();
-						ps.close();
-						this.verificaID(confereCod, table, msg);
-						break;
-					}
-				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return confereCod;
 	}
-
 }

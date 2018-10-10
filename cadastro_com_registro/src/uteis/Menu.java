@@ -1,6 +1,5 @@
 package uteis;
 
-import java.net.ServerSocket;
 import java.util.Scanner;
 
 import local.CadastrarLocal;

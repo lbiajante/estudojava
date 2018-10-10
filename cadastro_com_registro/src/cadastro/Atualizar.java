@@ -87,7 +87,7 @@ public class Atualizar {
 							+ cad.getCelular()
 							+ "' , empresa = '"
 							+ cad.getEmpresa()
-							+ "' , area_atuação = '"
+							+ "' , area_atuacao = '"
 							+ cad.getAreaDeAtuacao()
 							+ "' WHERE id = '"
 							+ codigo + "';";

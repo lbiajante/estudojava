@@ -30,7 +30,7 @@ public class Listar {
 				cad.setCpf(rs.getString("cpf"));
 				cad.setCelular(rs.getString("celular"));
 				cad.setEmpresa(rs.getString("empresa"));
-				cad.setAreaDeAtuacao(rs.getString("area_atuação"));
+				cad.setAreaDeAtuacao(rs.getString("area_atuacao"));
 				lista += cad.toString();
 								
 			}
