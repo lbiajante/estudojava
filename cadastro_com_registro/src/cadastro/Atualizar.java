@@ -3,15 +3,14 @@ package cadastro;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
-import conexao_cliente.GerenciadorDeClientes;
 import uteis.ConectaBD;
 import uteis.ValidaCPF;
 import uteis.ValidaCelular;
 import uteis.ValidaData;
 import uteis.ValidaId;
 import uteis.ValidaStrings;
+import conexao_cliente.GerenciadorDeClientes;
 
 public class Atualizar {
 	
