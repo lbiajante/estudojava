@@ -10,11 +10,11 @@ import uteis.ValidaCelular;
 import uteis.ValidaData;
 import uteis.ValidaId;
 import uteis.ValidaStrings;
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 
 public class Atualizar {
 	
-	public void atualizarCadastro(GerenciadorDeClientes msg) {
+	public void atualizarCadastro(Gerenciador msg) {
 		
 		CadastroPessoa cad = new CadastroPessoa();
 		ValidaId validaId = new ValidaId();

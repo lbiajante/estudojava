@@ -3,7 +3,7 @@ package cadastro;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import registro.CadastrarRegistro;
 import uteis.ConectaBD;
 import uteis.ValidaCPF;
@@ -23,7 +23,7 @@ public class Cadastrar {
 	ValidaId validaId = new ValidaId();
 	
 
-	public void cadastrar(GerenciadorDeClientes msg) {
+	public void cadastrar(Gerenciador msg) {
 		String labelOut = "Cadastro de Usuario";
 		msg.enviaMensagem(labelOut);
 		String table = "cadastro_de_pessoas";

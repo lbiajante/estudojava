@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 import uteis.ConectaBD;
 import uteis.ValidaStrings;
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 
 public class CadastrarLocal {
 
@@ -14,7 +14,7 @@ public class CadastrarLocal {
 	ValidaStrings string = new ValidaStrings();
 	String lugar = null;
 	
-	public String cadastrarLocal(GerenciadorDeClientes msg) {
+	public String cadastrarLocal(Gerenciador msg) {
 		msg.enviaMensagem("Cadastro de lugares");
 		boolean existe = true;
 

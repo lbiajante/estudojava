@@ -2,12 +2,12 @@ package uteis;
 
 import java.util.Scanner;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 
 public class ValidaStrings {
 	Scanner entrada = new Scanner(System.in);
 	
-	public String texto(String verificaTexto, String label, GerenciadorDeClientes msg) {
+	public String texto(String verificaTexto, String label, Gerenciador msg) {
 		boolean confere = true;
 
 		String campo = verificaTexto.trim();

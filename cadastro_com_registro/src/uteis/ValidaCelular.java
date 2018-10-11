@@ -1,6 +1,6 @@
 package uteis;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 
 public class ValidaCelular {
 
@@ -8,7 +8,7 @@ public class ValidaCelular {
 	private ValidaCPF cpf = new ValidaCPF();
 	boolean confere = true;
 
-	public String formatarCelular(GerenciadorDeClientes msg) {
+	public String formatarCelular(Gerenciador msg) {
 		msg.enviaMensagem("Deseja cadastrar um celular? (S/N)?");
 		String opcaoCelular = msg.recebeMensagem();
 

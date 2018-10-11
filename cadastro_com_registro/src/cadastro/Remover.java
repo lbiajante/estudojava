@@ -4,13 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import uteis.ConectaBD;
 import uteis.ValidaId;
 
 public class Remover {
 
-	public void removerCadastro(GerenciadorDeClientes msg) {
+	public void removerCadastro(Gerenciador msg) {
 		ValidaId validaId = new ValidaId();
 		CadastroPessoa cad = new CadastroPessoa();
 		String codigo = null;

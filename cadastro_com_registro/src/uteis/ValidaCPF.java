@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import javax.swing.text.MaskFormatter;
 
 import cadastro.CadastroPessoa;
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 
 public class ValidaCPF {
 
@@ -68,7 +68,7 @@ public class ValidaCPF {
 				+ CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
 	}
 //faz solicitação de entrada de dados
-	public String validarCPF(GerenciadorDeClientes msg) {
+	public String validarCPF(Gerenciador msg) {
 		String CPF = null;
 		CadastroPessoa cad = new CadastroPessoa();
 		boolean confere = true;

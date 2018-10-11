@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import uteis.ConectaBD;
 
 public class ListarRegistro {
@@ -12,7 +12,7 @@ public class ListarRegistro {
 	ConectaBD con = new ConectaBD();
 	RegistroVisita reg = new RegistroVisita();
 	String lista;
-	public void listarRegistros(GerenciadorDeClientes msg) {
+	public void listarRegistros(Gerenciador msg) {
 		
 		lista = "";
 		msg.enviaMensagem("Lista: registro de visitas");

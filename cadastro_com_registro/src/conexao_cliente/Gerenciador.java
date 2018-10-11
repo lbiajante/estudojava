@@ -6,15 +6,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class GerenciadorDeClientes extends Thread {
+import uteis.Menu;
+
+public class Gerenciador {
 
 	private Socket cliente;
-	private String nomeCliente;
 	private BufferedReader leitor;
 	private PrintWriter escritor;
-	public GerenciadorDeClientes(Socket cliente) {
-		this.cliente = cliente;
-		start();
+
+	public Gerenciador(Socket cliente) {
+		this.cliente = cliente;		
 	}
 
 	public void enviaMensagem(String label) {
@@ -32,31 +33,27 @@ public class GerenciadorDeClientes extends Thread {
 		String msg = null;
 		try {
 			leitor = new BufferedReader(new InputStreamReader(
-					cliente.getInputStream()));
-			msg = leitor.readLine();
+					cliente.getInputStream()));			
+				msg = leitor.readLine();
 
+			
 		} catch (IOException e) {
-			System.err.println("o cliente fechou a conexao");			
-			e.printStackTrace();
+			System.err.println("o cliente fechou a conexao");
+			this.fechaCliente();
+			Menu menu = new Menu();
+			menu.menu();
+			
 		}
 		return msg;
 	}
 
 	public void fechaCliente() {
 		try {
-			cliente.close();			
-			
+			cliente.close();
 		} catch (IOException e) {
 			System.out.println("problema em encerrar cliente");
 			e.printStackTrace();
 		}
-	}
-	public PrintWriter getEscritor() {
-		return escritor;
-	}
-
-	public String getNomeCliente() {
-		return nomeCliente;
 	}
 
 }

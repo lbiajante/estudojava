@@ -4,14 +4,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import uteis.ConectaBD;
 
 public class ListarLocais {
 	ConectaBD con = new ConectaBD();
 	Local local = new Local();
 	String lista;
-	public void listarLocais(GerenciadorDeClientes msg) {
+	public void listarLocais(Gerenciador msg) {
 
 		lista = "";
 		msg.enviaMensagem("Lista: locais");

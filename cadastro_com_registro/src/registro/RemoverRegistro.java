@@ -4,13 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import uteis.ConectaBD;
 import uteis.ValidaId;
 
 public class RemoverRegistro {
 
-	public void removerRegistro(GerenciadorDeClientes msg) {
+	public void removerRegistro(Gerenciador msg) {
 		ValidaId validaId = new ValidaId();
 		RegistroVisita reg = new RegistroVisita();
 		boolean existe = false;

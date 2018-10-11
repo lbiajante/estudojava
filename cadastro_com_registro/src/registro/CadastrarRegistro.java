@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import uteis.ConectaBD;
 import uteis.ValidaData;
 import uteis.ValidaId;
@@ -24,7 +24,7 @@ public class CadastrarRegistro {
 	ValidaId validaId = new ValidaId();
 	String input;
 
-	public void inserirRegistro(GerenciadorDeClientes msg) {
+	public void inserirRegistro(Gerenciador msg) {
 		boolean conf = true;
 		boolean existe = true;
 
@@ -68,7 +68,7 @@ public class CadastrarRegistro {
 	}
 
 	public void cadastrar(String IdPessoa, String nomePessoa,
-			GerenciadorDeClientes msg) {
+			Gerenciador msg) {
 
 		msg.enviaMensagem("Cadastro de Registro");
 		String table = "registro_de_visitas";

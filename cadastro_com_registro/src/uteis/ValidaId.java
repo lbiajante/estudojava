@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import local.Local;
 import cadastro.CadastroPessoa;
 import registro.RegistroVisita;
@@ -17,14 +17,14 @@ public class ValidaId {
 	Local local = new Local();
 	Scanner entrada = new Scanner(System.in);
 
-	public String confereID(String codigo, GerenciadorDeClientes msg) {
+	public String confereID(String codigo, Gerenciador msg) {
 		int cod = 0;
 		boolean confere = true;
 		do {
 			try {
 				while (confere) {
 					cod = Integer.parseInt(codigo.trim());
-					
+
 					if (cod <= 0) {
 						msg.enviaMensagem("O codigo precisa ser maior que zero");
 						msg.enviaMensagem("Digite um numero maior que zero");
@@ -46,8 +46,7 @@ public class ValidaId {
 		return codigo;
 	}
 
-	public String verificaID(String codigo, String table,
-			GerenciadorDeClientes msg) {
+	public String verificaID(String codigo, String table, Gerenciador msg) {
 		boolean confere = true;
 		String confereCod = null;
 		while (confere) {
@@ -61,30 +60,27 @@ public class ValidaId {
 
 				if (table.equals("cadastro_de_pessoas")) {
 
-					while (rs.next()) {
-						if (rs.getString("id").isEmpty()) {
-							confere = false;
-							break;
-						} else {
+					if (rs.next() == true) {
+						while (rs.next()) {
 							cad.setPosicao(rs.getString("id"));
 							if (cad.getPosicao().equals(confereCod)) {
 								msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
 								codigo = msg.recebeMensagem();
 								rs.close();
 								ps.close();
-								confere = true;								
+								confere = true;
 								break;
 							} else {
 								confere = false;
 								break;
 							}
 						}
+					} else {
+						break;
 					}
 				} else if (table.equals("registro_de_visitas")) {
-					while (rs.next()) {
-						if (rs.getString("id").isEmpty()) {
-							confere = false;
-						} else {
+					if (rs.next() == true) {
+						while (rs.next()) {
 							reg.setPosicao(rs.getString("id"));
 							if (reg.getPosicao().equals(confereCod)) {
 								msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
@@ -96,6 +92,8 @@ public class ValidaId {
 								confere = false;
 							}
 						}
+					} else {
+						break;
 					}
 				}
 			} catch (SQLException e) {

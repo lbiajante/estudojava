@@ -3,11 +3,11 @@ package uteis;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 
 public class ValidaData {
 
-	public String data(String label, GerenciadorDeClientes msg) {
+	public String data(String label, Gerenciador msg) {
 		boolean confere = true;
 		Date data = null;
 		while (confere) {
@@ -33,7 +33,7 @@ public class ValidaData {
 		return dt;
 	}
 
-	public String hora(String label, GerenciadorDeClientes msg) {
+	public String hora(String label, Gerenciador msg) {
 		boolean confere = true;
 		Date tmns = null;
 

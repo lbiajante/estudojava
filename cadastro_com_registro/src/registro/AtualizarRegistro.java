@@ -8,11 +8,11 @@ import local.CadastrarLocal;
 import uteis.ConectaBD;
 import uteis.ValidaData;
 import uteis.ValidaId;
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 
 public class AtualizarRegistro {
 	
-	public void atualizarRegistro(GerenciadorDeClientes msg) {
+	public void atualizarRegistro(Gerenciador msg) {
 
 		RegistroVisita regg = new RegistroVisita();
 		CadastrarLocal cadLocal = new CadastrarLocal();

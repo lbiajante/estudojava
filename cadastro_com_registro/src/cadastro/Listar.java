@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import registro.ListarRegistro;
 import uteis.ConectaBD;
 
@@ -13,7 +13,7 @@ public class Listar {
 	ConectaBD con = new ConectaBD();
 	CadastroPessoa cad = new CadastroPessoa();
 	String lista ;
-	public void listarCadastros(GerenciadorDeClientes msg) {
+	public void listarCadastros(Gerenciador msg) {
 		
 		msg.enviaMensagem("Lista: cadastros de pessoas");
 		

@@ -4,13 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import conexao_cliente.GerenciadorDeClientes;
+import conexao_cliente.Gerenciador;
 import uteis.ConectaBD;
 import uteis.ValidaStrings;
 
 public class RemoverLocal {
 
-	public void removerLocal(GerenciadorDeClientes msg) {
+	public void removerLocal(Gerenciador msg) {
 		ValidaStrings string = new ValidaStrings();
 		Local local = new Local();
 		boolean existe = false;
