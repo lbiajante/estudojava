@@ -17,7 +17,6 @@ public class ValidaId {
 	Local local = new Local();
 	Scanner entrada = new Scanner(System.in);
 
-	// rotina de validação de ID
 	public String confereID(String codigo, GerenciadorDeClientes msg) {
 		int cod = 0;
 		boolean confere = true;
@@ -25,6 +24,7 @@ public class ValidaId {
 			try {
 				while (confere) {
 					cod = Integer.parseInt(codigo.trim());
+					
 					if (cod <= 0) {
 						msg.enviaMensagem("O codigo precisa ser maior que zero");
 						msg.enviaMensagem("Digite um numero maior que zero");
@@ -46,7 +46,6 @@ public class ValidaId {
 		return codigo;
 	}
 
-	// verificação se o ID existe
 	public String verificaID(String codigo, String table,
 			GerenciadorDeClientes msg) {
 		boolean confere = true;
@@ -61,32 +60,41 @@ public class ValidaId {
 				ResultSet rs = ps.executeQuery();
 
 				if (table.equals("cadastro_de_pessoas")) {
+
 					while (rs.next()) {
-						cad.setPosicao(rs.getString("id"));
-						if (cad.getPosicao().equals(confereCod)) {
-							msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
-							codigo = msg.recebeMensagem();
-							rs.close();
-							ps.close();
-							confere = true;
-							// this.verificaID(confereCod, table, msg);
+						if (rs.getString("id").isEmpty()) {
+							confere = false;
 							break;
 						} else {
-							confere = false;
+							cad.setPosicao(rs.getString("id"));
+							if (cad.getPosicao().equals(confereCod)) {
+								msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
+								codigo = msg.recebeMensagem();
+								rs.close();
+								ps.close();
+								confere = true;								
+								break;
+							} else {
+								confere = false;
+								break;
+							}
 						}
 					}
 				} else if (table.equals("registro_de_visitas")) {
 					while (rs.next()) {
-						reg.setPosicao(rs.getString("id"));
-						if (reg.getPosicao().equals(confereCod)) {
-							msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
-							codigo = msg.recebeMensagem();
-							rs.close();
-							ps.close();
-							// this.verificaID(confereCod, table, msg);
-							break;
-						} else {
+						if (rs.getString("id").isEmpty()) {
 							confere = false;
+						} else {
+							reg.setPosicao(rs.getString("id"));
+							if (reg.getPosicao().equals(confereCod)) {
+								msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
+								codigo = msg.recebeMensagem();
+								rs.close();
+								ps.close();
+								break;
+							} else {
+								confere = false;
+							}
 						}
 					}
 				}
