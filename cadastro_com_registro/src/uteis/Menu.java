@@ -1,5 +1,7 @@
 package uteis;
 
+import java.net.Socket;
+
 import local.CadastrarLocal;
 import local.ListarLocais;
 import local.RemoverLocal;
@@ -28,36 +30,45 @@ public class Menu {
 	Atualizar atualizar = new Atualizar();
 	AtualizarRegistro atualRegistro = new AtualizarRegistro();
 	ServidorSocket client = new ServidorSocket();
-	Gerenciador msg = new Gerenciador(client.server());
+	Socket cliente;
+	Gerenciador msg;
 	String mensagemSubmenu = null;
 	int opcao;
 	int subOpcao;
 
+	public Menu(Socket cliente) {
+		this.cliente = cliente;
+		this.menu();
+	}
+
 	public void menu() {
 
+		msg = new Gerenciador(cliente);
 		boolean confere = true;
-		while (confere) {	
-
-			msg.enviaMensagem("\n \n \n \n"
+		
+		while (confere) {
+			msg.enviaMensagem("\n \n"
 					+ "BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
 					+ "\n---------------------------------------------------------------------------------------------\n"
-					+ "Digite o numero da opcao selecionada:"
+					+ "Digite o numero da opcao selecionada ou 'sair' para encerrar:"
 					+ "\n1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais\n"
 					+ "2 - Listar cadastro de pessoas/ Listar registros de visitas/ Listar locais cadstrados\n"
 					+ "3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais\n"
 					+ "4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas\n"
-					+ "5 - Encerrar cliente\n"
-					+ "6 - Encerrar cliente e servidor\n"
+					+ "'sair' - Encerrar conexao do cliente\n"
 					+ "---------------------------------------------------------------------------------------------");
-//			if (msg.recebeMensagem().equalsIgnoreCase("sair")){
-//				msg.fechaCliente();
-//				client.startSocket();
-//			}else {
-			try {
-				switch (opcao = Integer.parseInt(msg.recebeMensagem())) {
 
+			try {
+				String trataOpcao = msg.recebeMensagem();							
+				if (trataOpcao.equalsIgnoreCase("sair"))  {
+					opcao = 5;
+				} else {
+					opcao = Integer.parseInt(trataOpcao);
+				}
+
+				switch (opcao) {
 				case 1:
-					mensagemSubmenu = "Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+					mensagemSubmenu = "Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais\n4 - Retornar ao Menu principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -65,7 +76,7 @@ public class Menu {
 					confere = false;
 					break;
 				case 2:
-					mensagemSubmenu = "Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+					mensagemSubmenu = "Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais\n4 - Retornar ao Menu principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -73,7 +84,7 @@ public class Menu {
 					confere = false;
 					break;
 				case 3:
-					mensagemSubmenu = "Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais";
+					mensagemSubmenu = "Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais\n4 - Retornar ao Menu principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -81,7 +92,7 @@ public class Menu {
 					confere = false;
 					break;
 				case 4:
-					mensagemSubmenu = "Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n ";
+					mensagemSubmenu = "Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Retornar ao Menu principal ";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -89,27 +100,24 @@ public class Menu {
 					confere = false;
 					break;
 				case 5:
-					mensagemSubmenu = "Cliente finalizado!";
-					msg.enviaMensagem(mensagemSubmenu);
+					System.out.println("cliente finalizado");
 					confere = false;
+					
 					break;
-				case 6:
-					mensagemSubmenu = "Cliente e servidor finalizados!";
-					msg.enviaMensagem(mensagemSubmenu);
 
-					confere = false;
-					break;
 				default:
-					msg.enviaMensagem("Opcao invalida, escolha de 1 a 6. Tente novamente!");
+					msg.enviaMensagem("Opcao invalida, escolha de 1 a 5. Tente novamente!");
 					confere = true;
 					this.menu();
 				}
-			} catch (NumberFormatException e) {
-				msg.enviaMensagem("A opcao precisa ser numerica de 1 a 6. Tente novamente.");
+			}catch (NullPointerException npe){
+				confere = false;
+			}
+			catch (NumberFormatException e) {
+				msg.enviaMensagem("A opcao precisa ser numerica de 1 a 5. Tente novamente.");
 				confere = true;
 			}
 		}
-		//}
 	}
 
 	private void submenu(int subOpcao) {
@@ -134,6 +142,9 @@ public class Menu {
 					confere = false;
 					cadLocal.cadastrarLocal(msg);
 					break;
+				case 14:					
+					confere = false;
+					break;
 				case 21:
 					confere = false;
 					listar.listarCadastros(msg);
@@ -145,6 +156,9 @@ public class Menu {
 				case 23:
 					confere = false;
 					listLocal.listarLocais(msg);
+					break;
+				case 24:					
+					confere = false;
 					break;
 				case 31:
 					confere = false;
@@ -158,6 +172,9 @@ public class Menu {
 					confere = false;
 					remLocal.removerLocal(msg);
 					break;
+				case 34:					
+					confere = false;
+					break;
 				case 41:
 					confere = false;
 					atualizar.atualizarCadastro(msg);
@@ -165,6 +182,9 @@ public class Menu {
 				case 42:
 					confere = false;
 					atualRegistro.atualizarRegistro(msg);
+					break;
+				case 43:					
+					confere = false;
 					break;
 				default:
 					confere = true;

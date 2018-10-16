@@ -5,10 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import conexao_cliente.Gerenciador;
 import local.Local;
-import cadastro.CadastroPessoa;
 import registro.RegistroVisita;
+import cadastro.CadastroPessoa;
+import conexao_cliente.Gerenciador;
 
 public class ValidaId {
 
@@ -46,7 +46,8 @@ public class ValidaId {
 		return codigo;
 	}
 
-	public String verificaID(String codigo, String table, Gerenciador msg) {
+	public String verificaID(String codigo, String table,
+			Gerenciador msg) {
 		boolean confere = true;
 		String confereCod = null;
 		while (confere) {
@@ -54,14 +55,22 @@ public class ValidaId {
 			String sql = "SELECT * FROM " + table + ";";
 
 			try {
-				PreparedStatement ps = ConectaBD.conexao()
-						.prepareStatement(sql);
+				int x = 0;
+				PreparedStatement ps = ConectaBD.conexao().prepareStatement(
+						sql, ResultSet.TYPE_SCROLL_SENSITIVE,
+						ResultSet.CONCUR_UPDATABLE);
 				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					x++;
+				}
+				if (x == 0) {
+					confere = false;
 
-				if (table.equals("cadastro_de_pessoas")) {
-
-					if (rs.next() == true) {
+				} else {
+					rs.beforeFirst();
+					if (table.equals("cadastro_de_pessoas")) {
 						while (rs.next()) {
+
 							cad.setPosicao(rs.getString("id"));
 							if (cad.getPosicao().equals(confereCod)) {
 								msg.enviaMensagem("Esse ID esta sendo usado, por favor digite outro");
@@ -75,11 +84,9 @@ public class ValidaId {
 								break;
 							}
 						}
-					} else {
-						break;
-					}
-				} else if (table.equals("registro_de_visitas")) {
-					if (rs.next() == true) {
+
+					} else if (table.equals("registro_de_visitas")) {
+
 						while (rs.next()) {
 							reg.setPosicao(rs.getString("id"));
 							if (reg.getPosicao().equals(confereCod)) {
@@ -90,10 +97,9 @@ public class ValidaId {
 								break;
 							} else {
 								confere = false;
+								break;
 							}
 						}
-					} else {
-						break;
 					}
 				}
 			} catch (SQLException e) {

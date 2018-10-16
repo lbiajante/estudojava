@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import uteis.Menu;
-
 public class Gerenciador {
 
 	private Socket cliente;
@@ -15,45 +13,34 @@ public class Gerenciador {
 	private PrintWriter escritor;
 
 	public Gerenciador(Socket cliente) {
-		this.cliente = cliente;		
+		this.cliente = cliente;
 	}
 
 	public void enviaMensagem(String label) {
 
-		try {
-			escritor = new PrintWriter(cliente.getOutputStream(), true);
+		try {			
+			escritor = new PrintWriter(cliente.getOutputStream());
 			escritor.println(label);
+			escritor.flush();
+			
 		} catch (IOException e) {
-			System.err.println("o cliente fechou a conexao");
+			System.err.println("o cliente fechou");
 			e.printStackTrace();
 		}
 	}
 
 	public String recebeMensagem() {
 		String msg = null;
-		try {
-			leitor = new BufferedReader(new InputStreamReader(
-					cliente.getInputStream()));			
-				msg = leitor.readLine();
-
-			
+		try {			
+				leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));			
+			msg = leitor.readLine();
+			if (msg.equalsIgnoreCase("sair")){
+				cliente.close();
+			}
 		} catch (IOException e) {
-			System.err.println("o cliente fechou a conexao");
-			this.fechaCliente();
-			Menu menu = new Menu();
-			menu.menu();
+			System.err.println("o cliente caiu");
 			
 		}
 		return msg;
 	}
-
-	public void fechaCliente() {
-		try {
-			cliente.close();
-		} catch (IOException e) {
-			System.out.println("problema em encerrar cliente");
-			e.printStackTrace();
-		}
-	}
-
 }

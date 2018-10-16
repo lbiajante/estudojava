@@ -1,12 +1,29 @@
 package uteis;
 
-//classe main inclui o menu principal e os sub menus que chamam os métodos respectivos
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+import conexao_cliente.ServidorSocket;
+
 public class Main {
 
 	public static void main(String[] args) {
 
-		Menu menu = new Menu();
-		menu.menu();
+		try {
+			ServidorSocket servidor = new ServidorSocket();
+			ServerSocket server = servidor.server();
+			
+			while (true){
+				Socket cliente = server.accept();	
+				System.out.println("cliente conectado");
+				new Menu(cliente);
+			}
+			
+		} catch (IOException e) {
+		System.err.println("Erro ao conectar");
+			
+		}
 
 	}
 }
