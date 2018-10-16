@@ -1,72 +1,48 @@
-
+﻿
 CREATE DATABASE database
-    WITH 
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'Portuguese_Brazil.1252'
-    LC_CTYPE = 'Portuguese_Brazil.1252'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1;
-    
+ WITH OWNER = postgres
+ ENCODING = 'UTF8' LC_COLLATE = 'Portuguese_Brazil.1252' LC_CTYPE = 'Portuguese_Brazil.1252';
 
-CREATE TABLE public.cadastro_de_pessoas
-(
-    nome_pessoa character varying(100) COLLATE pg_catalog."default",
-    id character varying(10) COLLATE pg_catalog."default" NOT NULL,
-    empresa character varying(100) COLLATE pg_catalog."default",
-    data_nasc character varying(20) COLLATE pg_catalog."default",
-    cpf character varying(20) COLLATE pg_catalog."default",
-    celular character varying(100) COLLATE pg_catalog."default",
-    "area_atuação" character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT cadastro_de_pessoas_pkey PRIMARY KEY (id)
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
 
-ALTER TABLE public.cadastro_de_pessoas
-    OWNER to postgres;
-    
+
+CREATE TABLE public.cadastro_de_pessoas 
+(nome_pessoa character varying(100), id character varying(10) NOT NULL,
+ empresa character varying(100), data_nasc character varying(20), cpf character varying(20) COLLATE, celular character varying(100), "area_atuacao" character varying(100) COLLATE, CONSTRAINT cadastro_de_pessoas_pkey PRIMARY KEY (id)
+)
+WITH (OIDS = FALSE
+);
+
+
+ALTER TABLE public.cadastro_de_pessoas OWNER to postgres;
+
+
 
 CREATE TABLE public.local
-(
-    lugar character varying(100) COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT local_pkey PRIMARY KEY (lugar)
+ (lugar character varying(100) NOT NULL,
+ CONSTRAINT local_pkey PRIMARY KEY (lugar)
 )
-WITH (
-    OIDS = FALSE
+WITH (OIDS = FALSE
 )
-TABLESPACE pg_default;
+;
 
-ALTER TABLE public.local
-    OWNER to postgres;
-    
+
+ALTER TABLE public.local OWNER to postgres;
+
+
 
 CREATE TABLE public.registro_de_visitas
-(
-    id character varying(10) COLLATE pg_catalog."default" NOT NULL,
-    visitante character varying(100) COLLATE pg_catalog."default",
-    data_visita character varying(20) COLLATE pg_catalog."default",
-    hora_visita character varying(20) COLLATE pg_catalog."default",
-    id_pessoa character varying(10) COLLATE pg_catalog."default",
-    lugar character varying(100) COLLATE pg_catalog."default",
-    CONSTRAINT id PRIMARY KEY (id),
-    CONSTRAINT lugar FOREIGN KEY (lugar)
-        REFERENCES public.local (lugar) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT pessoa FOREIGN KEY (id_pessoa)
-        REFERENCES public.cadastro_de_pessoas (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+ (id character varying(10) NOT NULL,
+ visitante character varying(100), data_visita character varying(20), hora_visita character varying(20), id_pessoa character varying(10),
+ lugar character varying(100), CONSTRAINT id PRIMARY KEY (id), CONSTRAINT lugar FOREIGN KEY (lugar) REFERENCES public.local (lugar) MATCH SIMPLE ON UPDATE NO ACTION
+ ON DELETE NO ACTION,
+ CONSTRAINT pessoa FOREIGN KEY (id_pessoa) REFERENCES public.cadastro_de_pessoas (id) MATCH SIMPLE
+ ON UPDATE NO ACTION
+ ON DELETE NO ACTION
 )
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
+WITH (OIDS = FALSE
+);
 
-ALTER TABLE public.registro_de_visitas
-    OWNER to postgres;
+
+ALTER TABLE public.registro_de_visitas OWNER to postgres;
     
     
