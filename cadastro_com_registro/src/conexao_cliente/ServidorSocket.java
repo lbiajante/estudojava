@@ -4,16 +4,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import uteis.Menu;
-
 public class ServidorSocket {
 	Socket cliente = null;
 	ServerSocket servidor = null;
+	
 
-	public ServerSocket server() {
+	public ServerSocket server(int port) {
 		try {
 			System.out.println("startando o servidor");
-			servidor = new ServerSocket(5555);
+		
+			servidor = new ServerSocket(port);
 			System.out.println("servidor startado");				
 			
 		} catch (IOException e) {

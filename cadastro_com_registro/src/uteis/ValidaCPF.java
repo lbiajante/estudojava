@@ -62,12 +62,10 @@ public class ValidaCPF {
 			return (false);
 		}
 	}
-//formata o retorno do cpf
 	public static String imprimeCPF(String CPF) {
 		return (CPF.substring(0, 3) + "." + CPF.substring(3, 6) + "."
 				+ CPF.substring(6, 9) + "-" + CPF.substring(9, 11));
 	}
-//faz solicitação de entrada de dados
 	public String validarCPF(Gerenciador msg) {
 		String CPF = null;
 		CadastroPessoa cad = new CadastroPessoa();
@@ -90,7 +88,6 @@ public class ValidaCPF {
 		}
 		return CPF;
 	}
-//cria uma máscara para retorno do campo formatado 
 	public String formatString(String campo, String mascara) {
 		MaskFormatter mf;
 		try {

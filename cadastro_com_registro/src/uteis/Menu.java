@@ -41,7 +41,7 @@ public class Menu {
 		this.menu();
 	}
 
-	public void menu() {
+	private void menu() {
 
 		msg = new Gerenciador(cliente);
 		boolean confere = true;
@@ -50,8 +50,8 @@ public class Menu {
 			msg.enviaMensagem("\n \n"
 					+ "BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
 					+ "\n---------------------------------------------------------------------------------------------\n"
-					+ "Digite o numero da opcao selecionada ou 'sair' para encerrar:"
-					+ "\n1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais\n"
+					+ "Digite o numero da opcao selecionada ou 'sair' para encerrar:\n"
+					+ "1 - Cadastrar pessoas/ Novos registros de visitas/ Novos locais\n"
 					+ "2 - Listar cadastro de pessoas/ Listar registros de visitas/ Listar locais cadstrados\n"
 					+ "3 - Apagar item do cadastro de pessoas/ Apagar registros de visitas/ Apagar locais\n"
 					+ "4 - Atualizar cadastro de pessoas/ Atualizar registros de visitas\n"
