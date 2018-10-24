@@ -11,6 +11,10 @@ import conexao_dispositivo.LerDispositivo;
 
 public class MenuPrincipal {
 	private Scanner entrada = new Scanner(System.in);
+	
+	public MenuPrincipal() {
+	
+	}
 
 	public void menuPrincipal() {
 		boolean confere = true;
@@ -18,7 +22,7 @@ public class MenuPrincipal {
 		while (confere) {
 			try {
 				System.out.println("inicializando servidor...\n"
-						+ "Indique o tipo de conexão:\n"
+						+ "Indique o tipo de conexao:\n"
 						+ "1 - Cliente administrador do banco\n"
 						+ "2 - Dispositivo de ronda\n"
 						+ "3 - Encerrar servidor");

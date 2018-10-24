@@ -1,3 +1,0 @@
-Main-Class: uteis.Main
-Name: uteis/Main.java
-Java-Bean: True

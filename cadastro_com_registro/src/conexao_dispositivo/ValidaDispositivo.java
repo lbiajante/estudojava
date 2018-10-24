@@ -15,6 +15,7 @@ public class ValidaDispositivo {
 
 	public void validaDispositivo(Socket cliente) {
 
+		String nome = null;
 		msg = new Gerenciador(cliente);
 		msg.enviaMensagem("::PRONTO");
 		String recebeDispositivo = msg.recebeMensagem();
@@ -24,8 +25,7 @@ public class ValidaDispositivo {
 				.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
 						ResultSet.CONCUR_UPDATABLE);
 		ResultSet rs = ps.executeQuery()){
-			int x = 0;
-			
+			int x = 0;			
 			while (rs.next()) {
 				x++;
 			}
@@ -34,7 +34,7 @@ public class ValidaDispositivo {
 						.println("Usuario inexistente no cadasatro. Conexao encerrada");
 				msg.enviaMensagem("::ERRO");
 			} else {
-				String nome = null;
+				
 				rs.beforeFirst();
 				while (rs.next()) {
 					id = rs.getString("id");
@@ -46,13 +46,13 @@ public class ValidaDispositivo {
 					break;
 				}
 				rs.close();
-				ps.close();
+				ps.close();			
 				
-				crd.recebeArquivoDispositivo(cliente, msg, id, nome);
-				crd.cadastrarRegistroDispositivo(id, nome);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		crd.recebeArquivoDispositivo(cliente, msg, id, nome);
+		crd.cadastrarRegistroDispositivo(id, nome);
 	}
 }

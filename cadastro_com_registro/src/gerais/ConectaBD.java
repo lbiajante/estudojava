@@ -15,7 +15,7 @@ public class ConectaBD {
 		Connection con = null;
 		try {
 			Class.forName(driver);
-			con = (Connection) DriverManager.getConnection(url, user, senha);
+			con = DriverManager.getConnection(url, user, senha);
 			
 		} catch (ClassNotFoundException ex) {
 			System.err.print(ex.getMessage());

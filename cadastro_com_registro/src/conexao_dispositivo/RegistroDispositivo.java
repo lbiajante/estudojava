@@ -21,8 +21,7 @@ public class RegistroDispositivo {
 	private String path = null;
 
 	FormataDataDispositivo fdd = new FormataDataDispositivo();
-	RegistroVisita reg = new RegistroVisita();
-	GeraIdRegistro idAutomatico = new GeraIdRegistro();
+	RegistroVisita reg = new RegistroVisita();	
 	CadastrarLocalDispositivo cld = new CadastrarLocalDispositivo();
 
 	public void recebeArquivoDispositivo(Socket cliente, Gerenciador msg,
@@ -69,7 +68,7 @@ public class RegistroDispositivo {
 				System.out.println("Cadastro vazio");
 			}
 
-			while (linha != null) {				
+			while (linha != null) {
 				String[] linhaSplit = linha.split(";");
 				lugarS.add(linhaSplit[0]);
 				dataS.add(linhaSplit[1]);
@@ -84,13 +83,14 @@ public class RegistroDispositivo {
 			System.err.printf("Erro na manipulacao do arquivo recebido");
 		}
 
-		System.out.println("Quantidade de registros importados do dispositivo = " + x);
+		System.out
+				.println("Quantidade de registros importados do dispositivo = "
+						+ x);
 		String sql = "INSERT INTO registro_de_visitas "
 				+ "(visitante, data_visita, hora_visita, id_pessoa, lugar) "
 				+ "values (?,?,?,?,?);";
 
-		try {
-			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
+		try (PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql)) {
 			for (int i = 0; i < x; i++) {
 
 				reg.setLocal(cld.cadastrarLocal(lugarS.get(i)));
@@ -107,6 +107,7 @@ public class RegistroDispositivo {
 				ps.addBatch();
 			}
 			ps.executeBatch();
+			ps.clearBatch();
 			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
