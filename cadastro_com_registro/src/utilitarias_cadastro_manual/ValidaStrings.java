@@ -6,7 +6,7 @@ import conexao_cliente_manual.Gerenciador;
 
 public class ValidaStrings {
 	Scanner entrada = new Scanner(System.in);
-	
+
 	public String texto(String verificaTexto, String label, Gerenciador msg) {
 		boolean confere = true;
 
@@ -15,7 +15,7 @@ public class ValidaStrings {
 			if (campo.trim().isEmpty() || campo.trim().equals("")
 					|| campo.trim().equals(null)) {
 				msg.enviaMensagem("O campo precisa ser preenchido");
-				msg.enviaMensagem(label);				
+				msg.enviaMensagem(label);
 				verificaTexto = msg.recebeMensagem();
 				confere = true;
 			} else {
@@ -24,5 +24,5 @@ public class ValidaStrings {
 			campo = verificaTexto;
 		}
 		return campo;
-	}	
+	}
 }

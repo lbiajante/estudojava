@@ -39,7 +39,7 @@ public class CadastrarRegistro {
 				String sql = "SELECT * FROM cadastro_de_pessoas";
 
 				try {
-					PreparedStatement ps = ConectaBD.conexao()
+					PreparedStatement ps = ConectaBD.getConnection()
 							.prepareStatement(sql);
 					ResultSet rs = ps.executeQuery();
 					while (rs.next()) {
@@ -68,8 +68,7 @@ public class CadastrarRegistro {
 		}
 	}
 
-	public void cadastrar(String IdPessoa, String nomePessoa,
-			Gerenciador msg) {
+	public void cadastrar(String IdPessoa, String nomePessoa, Gerenciador msg) {
 
 		msg.enviaMensagem("Cadastro de Registro");
 		reg.setLocal(cadLocal.cadastrarLocal(msg));
@@ -97,7 +96,7 @@ public class CadastrarRegistro {
 						+ "' , '" + reg.getHora() + "' , '" + reg.getIDpessoa()
 						+ "' , '" + reg.getLocal().trim() + "' );";
 				try {
-					PreparedStatement ps = ConectaBD.conexao()
+					PreparedStatement ps = ConectaBD.getConnection()
 							.prepareStatement(sql);
 					ps.execute();
 					ps.close();

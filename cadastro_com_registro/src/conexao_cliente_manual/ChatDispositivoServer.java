@@ -7,14 +7,15 @@ import java.util.Scanner;
 
 public class ChatDispositivoServer {
 	Scanner entrada;
+
 	public ChatDispositivoServer() {
 		ServerSocket server;
-		
+
 		try {
 			server = new ServerSocket(6666);
 			while (true) {
 				Socket socket = server.accept();
-				new Thread(new EscutaCliente(socket)).start();				
+				new Thread(new EscutaCliente(socket)).start();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -22,21 +23,22 @@ public class ChatDispositivoServer {
 	}
 
 	private class EscutaCliente implements Runnable {
-		public EscutaCliente (Socket socket){
-			try{
-				entrada = new Scanner(socket.getInputStream());				
-			} catch (Exception e){				
+		public EscutaCliente(Socket socket) {
+			try {
+				entrada = new Scanner(socket.getInputStream());
+			} catch (Exception e) {
 			}
 		}
 
 		@Override
 		public void run() {
 			String texto;
-			while ((texto = entrada.nextLine())!= null){
-				System.out.println(texto);				
-			}				
-		}		
+			while ((texto = entrada.nextLine()) != null) {
+				System.out.println(texto);
+			}
+		}
 	}
+
 	public static void main(String[] args) {
 		new ChatDispositivoServer();
 

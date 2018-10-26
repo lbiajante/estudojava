@@ -14,7 +14,7 @@ public class CadastrarLocal {
 	Local cadLocal = new Local();
 	ValidaStrings string = new ValidaStrings();
 	String lugar = null;
-	
+
 	public String cadastrarLocal(Gerenciador msg) {
 		msg.enviaMensagem("Cadastro de lugares");
 		boolean existe = true;
@@ -27,7 +27,7 @@ public class CadastrarLocal {
 		String sql = "SELECT * FROM local";
 
 		try {
-			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 
@@ -45,7 +45,7 @@ public class CadastrarLocal {
 				msg.enviaMensagem("Lugar não cadastrado ainda!");
 				sql = "INSERT INTO local " + "(lugar) values" + "( '"
 						+ lugar.trim() + "' );";
-				ps = ConectaBD.conexao().prepareStatement(sql);
+				ps = ConectaBD.getConnection().prepareStatement(sql);
 				ps.execute();
 				msg.enviaMensagem("Ok! Lugar adicionado!");
 			}

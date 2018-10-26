@@ -12,17 +12,18 @@ public class ListarLocais {
 	ConectaBD con = new ConectaBD();
 	Local local = new Local();
 	String lista;
+
 	public void listarLocais(Gerenciador msg) {
 
 		lista = "";
 		msg.enviaMensagem("Lista: locais");
-		//SQL de listagem
+		// SQL de listagem
 		String sql = "SELECT * FROM local";
 		try {
-			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
-			while (rs.next()) {				
+			while (rs.next()) {
 				local.setLugar(rs.getString("lugar"));
 				lista += local.toString();
 			}
@@ -33,7 +34,7 @@ public class ListarLocais {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

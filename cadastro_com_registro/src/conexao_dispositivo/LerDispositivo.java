@@ -5,7 +5,6 @@ import java.net.Socket;
 
 public class LerDispositivo {
 
-	
 	private ValidaDispositivo validaDispositivo = new ValidaDispositivo();
 
 	public LerDispositivo(Socket cliente) {
@@ -14,13 +13,10 @@ public class LerDispositivo {
 		try {
 			cliente.close();
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
 		}
-		
+
 	}
 
-
-	
-	
 }

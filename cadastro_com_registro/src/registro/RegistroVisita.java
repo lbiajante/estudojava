@@ -2,25 +2,24 @@ package registro;
 
 import java.io.Serializable;
 
-
 //@Entity
 //@Table (name = "Registro_de_visitas")
 public class RegistroVisita implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	//@Id
-	//@Column (name = "ID")
+
+	// @Id
+	// @Column (name = "ID")
 	private String posicao;
-	//@Column (name = "lugar")
+	// @Column (name = "lugar")
 	private String local;
-	//@Column (name = "data_visita")
+	// @Column (name = "data_visita")
 	private String data;
-	//@Column (name = "hora_visita")
+	// @Column (name = "hora_visita")
 	private String hora;
-	//@Column (name = "ID_pessoa")
+	// @Column (name = "ID_pessoa")
 	private String IDpessoa;
-	//@Column (name = "visitante")
+	// @Column (name = "visitante")
 	private String nomePessoa;
 
 	public String getIDpessoa() {

@@ -29,7 +29,7 @@ public class Remover {
 				String sql = "SELECT * FROM cadastro_de_pessoas;";
 				boolean existe = false;
 				try {
-					PreparedStatement ps = ConectaBD.conexao()
+					PreparedStatement ps = ConectaBD.getConnection()
 							.prepareStatement(sql);
 					ResultSet rs = ps.executeQuery();
 
@@ -50,7 +50,7 @@ public class Remover {
 					String sql2 = "DELETE FROM cadastro_de_pessoas WHERE id = '"
 							+ codigo + "';";
 					try {
-						PreparedStatement ps2 = ConectaBD.conexao()
+						PreparedStatement ps2 = ConectaBD.getConnection()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();

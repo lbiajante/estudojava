@@ -21,7 +21,7 @@ public class RegistroDispositivo {
 	private String path = null;
 
 	FormataDataDispositivo fdd = new FormataDataDispositivo();
-	RegistroVisita reg = new RegistroVisita();	
+	RegistroVisita reg = new RegistroVisita();
 	CadastrarLocalDispositivo cld = new CadastrarLocalDispositivo();
 
 	public void recebeArquivoDispositivo(Socket cliente, Gerenciador msg,
@@ -57,7 +57,7 @@ public class RegistroDispositivo {
 		ArrayList<String> lugarS = new ArrayList<String>();
 		ArrayList<String> dataS = new ArrayList<String>();
 		ArrayList<String> horaS = new ArrayList<String>();
-		int x = 0;
+		int qtdeDeRegistros = 0;
 
 		try {
 			FileInputStream arq = new FileInputStream(path);
@@ -73,7 +73,7 @@ public class RegistroDispositivo {
 				lugarS.add(linhaSplit[0]);
 				dataS.add(linhaSplit[1]);
 				horaS.add(linhaSplit[2]);
-				x++;
+				qtdeDeRegistros++;
 				linha = lerCadastro.readLine();
 			}
 
@@ -85,13 +85,14 @@ public class RegistroDispositivo {
 
 		System.out
 				.println("Quantidade de registros importados do dispositivo = "
-						+ x);
+						+ qtdeDeRegistros);
+
 		String sql = "INSERT INTO registro_de_visitas "
 				+ "(visitante, data_visita, hora_visita, id_pessoa, lugar) "
 				+ "values (?,?,?,?,?);";
 
-		try (PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql)) {
-			for (int i = 0; i < x; i++) {
+		try (PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql)) {
+			for (int i = 0; i < qtdeDeRegistros; i++) {
 
 				reg.setLocal(cld.cadastrarLocal(lugarS.get(i)));
 				reg.setData(fdd.data(dataS.get(i)));

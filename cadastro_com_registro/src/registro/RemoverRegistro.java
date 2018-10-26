@@ -28,7 +28,7 @@ public class RemoverRegistro {
 					cod = Integer.parseInt(codigo);
 					String sql = "SELECT * FROM registro_de_visitas where id = "
 							+ cod + ";";
-					PreparedStatement ps = ConectaBD.conexao()
+					PreparedStatement ps = ConectaBD.getConnection()
 							.prepareStatement(sql);
 					ResultSet rs = ps.executeQuery();
 
@@ -48,7 +48,7 @@ public class RemoverRegistro {
 					String sql2 = "DELETE FROM registro_de_visitas WHERE id = '"
 							+ cod + "';";
 					try {
-						PreparedStatement ps2 = ConectaBD.conexao()
+						PreparedStatement ps2 = ConectaBD.getConnection()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();

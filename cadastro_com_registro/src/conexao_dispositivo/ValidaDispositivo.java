@@ -20,12 +20,12 @@ public class ValidaDispositivo {
 		msg.enviaMensagem("::PRONTO");
 		String recebeDispositivo = msg.recebeMensagem();
 		String id = "";
-		String sql = "SELECT * FROM cadastro_de_pessoas WHERE id = '" + recebeDispositivo.toString() + "';";
-		try (PreparedStatement ps = ConectaBD.conexao()
-				.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
-						ResultSet.CONCUR_UPDATABLE);
-		ResultSet rs = ps.executeQuery()){
-			int x = 0;			
+		String sql = "SELECT * FROM cadastro_de_pessoas WHERE id = '"
+				+ recebeDispositivo.toString() + "';";
+		try (PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql,
+				ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				ResultSet rs = ps.executeQuery()) {
+			int x = 0;
 			while (rs.next()) {
 				x++;
 			}
@@ -34,7 +34,7 @@ public class ValidaDispositivo {
 						.println("Usuario inexistente no cadasatro. Conexao encerrada");
 				msg.enviaMensagem("::ERRO");
 			} else {
-				
+
 				rs.beforeFirst();
 				while (rs.next()) {
 					id = rs.getString("id");
@@ -46,8 +46,8 @@ public class ValidaDispositivo {
 					break;
 				}
 				rs.close();
-				ps.close();			
-				
+				ps.close();
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

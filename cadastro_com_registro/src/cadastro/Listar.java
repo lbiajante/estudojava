@@ -13,14 +13,15 @@ public class Listar {
 	ListarRegistro listarRegistro = new ListarRegistro();
 	ConectaBD con = new ConectaBD();
 	CadastroPessoa cad = new CadastroPessoa();
-	String lista ;
+	String lista;
+
 	public void listarCadastros(Gerenciador msg) {
-		
+
 		msg.enviaMensagem("Lista: cadastros de pessoas");
-		
+
 		String sql = "SELECT * FROM cadastro_de_pessoas";
 		try {
-			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			lista = "\n";
 			while (rs.next()) {
@@ -33,15 +34,14 @@ public class Listar {
 				cad.setEmpresa(rs.getString("empresa"));
 				cad.setAreaDeAtuacao(rs.getString("area_atuacao"));
 				lista += cad.toString();
-								
+
 			}
 			ps.close();
 			msg.enviaMensagem(lista);
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }

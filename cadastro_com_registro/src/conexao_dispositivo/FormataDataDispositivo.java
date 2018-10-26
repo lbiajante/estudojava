@@ -33,7 +33,7 @@ public class FormataDataDispositivo {
 			tmns = time;
 			SimpleDateFormat timeFormatOut = new SimpleDateFormat("HH:mm");
 			timeToString = timeFormatOut.format(tmns);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

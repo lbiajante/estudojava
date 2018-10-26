@@ -57,7 +57,7 @@ public class ValidaId {
 
 			try {
 				int x = 0;
-				PreparedStatement ps = ConectaBD.conexao().prepareStatement(
+				PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
 						sql, ResultSet.TYPE_SCROLL_SENSITIVE,
 						ResultSet.CONCUR_UPDATABLE);
 				ResultSet rs = ps.executeQuery();

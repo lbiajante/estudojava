@@ -6,10 +6,10 @@ public class Main {
 		Main cm = new Main();
 		cm.chamaMetodo();
 	}
-	
-	public void chamaMetodo (){
+
+	public void chamaMetodo() {
 		MenuPrincipal mp = new MenuPrincipal();
 		mp.menuPrincipal();
-		
+
 	}
 }

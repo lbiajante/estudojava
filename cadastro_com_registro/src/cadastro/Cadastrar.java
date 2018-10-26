@@ -22,46 +22,45 @@ public class Cadastrar {
 	ValidaCelular celular = new ValidaCelular();
 	ValidaStrings string = new ValidaStrings();
 	ValidaId validaId = new ValidaId();
-	
 
 	public void cadastrar(Gerenciador msg) {
 		String labelOut = "Cadastro de Usuario";
 		msg.enviaMensagem(labelOut);
 		String table = "cadastro_de_pessoas";
-		
+
 		labelOut = "Digite o ID a ser cadastrado";
 		msg.enviaMensagem(labelOut);
 		String labelIn = msg.recebeMensagem();
 		cad.setPosicao(validaId.verificaID(labelIn, table, msg));
-		
-		labelOut ="Digite o nome";
+
+		labelOut = "Digite o nome";
 		msg.enviaMensagem(labelOut);
 		labelIn = msg.recebeMensagem();
-		cad.setNome(string.texto(labelIn, labelOut , msg));
-		
-		labelOut ="Digite a data de nascimento com o formato: ddmmaaaa";				
+		cad.setNome(string.texto(labelIn, labelOut, msg));
+
+		labelOut = "Digite a data de nascimento com o formato: ddmmaaaa";
 		cad.setDataNascimento(data.data(labelOut, msg));
-		
+
 		cad.setCpf(cpf.validarCPF(msg));
-		
+
 		labelOut = "Digite o nome da empresa";
-		msg.enviaMensagem (labelOut);
+		msg.enviaMensagem(labelOut);
 		labelIn = msg.recebeMensagem();
 		cad.setEmpresa(string.texto(labelIn, labelOut, msg));
-		
+
 		labelOut = "Digite a area de atuacao";
-		msg.enviaMensagem (labelOut);
+		msg.enviaMensagem(labelOut);
 		labelIn = msg.recebeMensagem();
 		cad.setAreaDeAtuacao(string.texto(labelIn, labelOut, msg));
-		
+
 		cad.setCelular(celular.formatarCelular(msg));
 
 		msg.enviaMensagem("Adicionar cadastro (S/N)?");
 		labelIn = msg.recebeMensagem();
-		boolean confere = true;	
+		boolean confere = true;
 		while (confere) {
-			if (labelIn.trim().equalsIgnoreCase("s")) {				
-				
+			if (labelIn.trim().equalsIgnoreCase("s")) {
+
 				String sql = "INSERT INTO cadastro_de_pessoas "
 						+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuacao) values"
 						+ "( '" + cad.getPosicao() + "' , '" + cad.getNome()
@@ -70,8 +69,8 @@ public class Cadastrar {
 						+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
 						+ "' );";
 				try {
-					PreparedStatement ps = ConectaBD.conexao().prepareStatement(
-							sql); 
+					PreparedStatement ps = ConectaBD.getConnection()
+							.prepareStatement(sql);
 					ps.execute();
 					ps.close();
 				} catch (SQLException e) {
@@ -79,7 +78,7 @@ public class Cadastrar {
 				}
 				msg.enviaMensagem("Cadastro adicionado!");
 				msg.enviaMensagem(cad.toString());
-				confere = false;			
+				confere = false;
 				boolean conf = true;
 				do {
 					msg.enviaMensagem("Deseja registrar uma visita? (S/N)");
@@ -97,7 +96,7 @@ public class Cadastrar {
 						conf = true;
 					}
 				} while (conf);
-				
+
 			} else if (labelIn.trim().equalsIgnoreCase("n")) {
 				msg.enviaMensagem("Cadastro ignorado!");
 				confere = false;
@@ -111,5 +110,4 @@ public class Cadastrar {
 		}
 	}
 
-	
 }

@@ -13,14 +13,15 @@ public class ListarRegistro {
 	ConectaBD con = new ConectaBD();
 	RegistroVisita reg = new RegistroVisita();
 	String lista;
+
 	public void listarRegistros(Gerenciador msg) {
-		
+
 		lista = "";
 		msg.enviaMensagem("Lista: registro de visitas");
-		//SQL delistagem dos itens da tabela registros de visitas
+		// SQL delistagem dos itens da tabela registros de visitas
 		String sql = "SELECT * FROM registro_de_visitas";
 		try {
-			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -41,6 +42,6 @@ public class ListarRegistro {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 }

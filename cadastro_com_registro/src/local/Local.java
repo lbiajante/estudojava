@@ -3,13 +3,13 @@ package local;
 import java.io.Serializable;
 
 //@Entity
-public class Local implements Serializable{
+public class Local implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String toString() {
-		return "\nLocal: " + lugar ;
+		return "\nLocal: " + lugar;
 	}
 
 	private String lugar;

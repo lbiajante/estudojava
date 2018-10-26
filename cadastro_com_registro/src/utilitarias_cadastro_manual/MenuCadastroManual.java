@@ -45,7 +45,7 @@ public class MenuCadastroManual {
 
 		msg = new Gerenciador(cliente);
 		boolean confere = true;
-		
+
 		while (confere) {
 			msg.enviaMensagem("\n \n"
 					+ "BEM VINDO AO CADASTRO DE PESSOAS E REGISTROS DE VISITAS\n"
@@ -59,8 +59,8 @@ public class MenuCadastroManual {
 					+ "---------------------------------------------------------------------------------------------");
 
 			try {
-				String trataOpcao = msg.recebeMensagem();							
-				if (trataOpcao.equalsIgnoreCase("sair"))  {
+				String trataOpcao = msg.recebeMensagem();
+				if (trataOpcao.equalsIgnoreCase("sair")) {
 					opcao = 5;
 				} else {
 					opcao = Integer.parseInt(trataOpcao);
@@ -102,7 +102,7 @@ public class MenuCadastroManual {
 				case 5:
 					System.out.println("cliente finalizado");
 					confere = false;
-					
+
 					break;
 
 				default:
@@ -110,10 +110,9 @@ public class MenuCadastroManual {
 					confere = true;
 					this.menu();
 				}
-			}catch (NullPointerException npe){
+			} catch (NullPointerException npe) {
 				confere = false;
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				msg.enviaMensagem("A opcao precisa ser numerica de 1 a 5. Tente novamente.");
 				confere = true;
 			}
@@ -142,7 +141,7 @@ public class MenuCadastroManual {
 					confere = false;
 					cadLocal.cadastrarLocal(msg);
 					break;
-				case 14:					
+				case 14:
 					confere = false;
 					break;
 				case 21:
@@ -157,7 +156,7 @@ public class MenuCadastroManual {
 					confere = false;
 					listLocal.listarLocais(msg);
 					break;
-				case 24:					
+				case 24:
 					confere = false;
 					break;
 				case 31:
@@ -172,7 +171,7 @@ public class MenuCadastroManual {
 					confere = false;
 					remLocal.removerLocal(msg);
 					break;
-				case 34:					
+				case 34:
 					confere = false;
 					break;
 				case 41:
@@ -183,7 +182,7 @@ public class MenuCadastroManual {
 					confere = false;
 					atualRegistro.atualizarRegistro(msg);
 					break;
-				case 43:					
+				case 43:
 					confere = false;
 					break;
 				default:

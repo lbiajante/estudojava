@@ -11,9 +11,9 @@ import conexao_dispositivo.LerDispositivo;
 
 public class MenuPrincipal {
 	private Scanner entrada = new Scanner(System.in);
-	
+
 	public MenuPrincipal() {
-	
+
 	}
 
 	public void menuPrincipal() {
@@ -29,7 +29,7 @@ public class MenuPrincipal {
 				i = entrada.nextInt();
 
 				if (i == 1) {
-					menuEscolhido(5555);					
+					menuEscolhido(5555);
 					this.menuPrincipal();
 					break;
 
@@ -103,7 +103,7 @@ public class MenuPrincipal {
 					}
 					cliente.close();
 				}
-			}			
+			}
 		} catch (IOException e) {
 			System.err
 					.println("Erro ao conectar cliente ou conexao_dispositivo");

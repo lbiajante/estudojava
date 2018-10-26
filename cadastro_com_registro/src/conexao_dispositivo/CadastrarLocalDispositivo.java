@@ -7,28 +7,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CadastrarLocalDispositivo {
-	public String cadastrarLocal(String local) {	
-		int x= 0;
+	public String cadastrarLocal(String local) {
+		int x = 0;
 		String lugar = local;
-		String sql = "SELECT * FROM local where lugar = '" + local +"';";
+		String sql = "SELECT * FROM local where lugar = '" + lugar + "';";
 
 		try {
-			PreparedStatement ps = ConectaBD.conexao().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				x++;
-				}				
-			if (x!=0) {	
-			} else if (x == 0) {				
+				ps.close();
+				rs.close();
+				break;
+			}
+			if (x == 0) {
 				sql = "INSERT INTO local " + "(lugar) values" + "( '"
-						+ local.trim() + "' );";				
-				ps.executeUpdate(sql);
+						+ lugar.trim() + "' );";
+
+				ps.execute(sql);
 				ps.close();
 			}
-			ps.close();	
+			ps.close();
 			rs.close();
 
 		} catch (SQLException e) {
+			System.out.println("erro no cadastrar local");
 			e.printStackTrace();
 		}
 		return lugar;

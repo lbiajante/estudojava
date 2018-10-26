@@ -29,7 +29,7 @@ public class RemoverLocal {
 			} else {
 				String sql = "SELECT * FROM local";
 				try {
-					PreparedStatement ps = ConectaBD.conexao()
+					PreparedStatement ps = ConectaBD.getConnection()
 							.prepareStatement(sql);
 					ResultSet rs = ps.executeQuery();
 					while (rs.next()) {
@@ -49,7 +49,7 @@ public class RemoverLocal {
 					String sql2 = "DELETE FROM local WHERE lugar = '" + input
 							+ "';";
 					try {
-						PreparedStatement ps2 = ConectaBD.conexao()
+						PreparedStatement ps2 = ConectaBD.getConnection()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
