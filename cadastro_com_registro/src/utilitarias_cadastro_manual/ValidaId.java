@@ -28,8 +28,8 @@ public class ValidaId {
 					cod = Integer.parseInt(codigo.trim());
 
 					if (cod <= 0) {
-						msg.enviaMensagem("O codigo precisa ser maior que zero");
-						msg.enviaMensagem("Digite um numero maior que zero");
+						msg.enviaMensagem("O codigo precisa ser maior que zero\n"
+								+ "Digite um numero maior que zero");					
 						codigo = msg.recebeMensagem();
 						confere = true;
 						cod = 0;
@@ -39,8 +39,8 @@ public class ValidaId {
 					}
 				}
 			} catch (NumberFormatException e) {
-				msg.enviaMensagem("Voce nao digitou um numero inteiro!\n");
-				msg.enviaMensagem("Digite um numero inteiro");
+				msg.enviaMensagem("Voce nao digitou um numero inteiro!\n"
+						+ "Digite um numero inteiro");				
 				codigo = msg.recebeMensagem();
 				cod = 0;
 			}

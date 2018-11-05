@@ -42,7 +42,6 @@ public class MenuCadastroManual {
 	}
 
 	private void menu() {
-
 		msg = new Gerenciador(cliente);
 		boolean confere = true;
 
@@ -68,7 +67,11 @@ public class MenuCadastroManual {
 
 				switch (opcao) {
 				case 1:
-					mensagemSubmenu = "Deseja cadastrar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais\n4 - Retornar ao MenuCadastroManual principal";
+					mensagemSubmenu = "Deseja cadastrar: \n"
+							+ "1 - Pessoas\n"
+							+ "2 - Registros de Visitas\n"
+							+ "3 - Locais\n"
+							+ "4 - Retornar ao MenuCadastroManual principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -76,7 +79,11 @@ public class MenuCadastroManual {
 					confere = false;
 					break;
 				case 2:
-					mensagemSubmenu = "Deseja listar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais\n4 - Retornar ao MenuCadastroManual principal";
+					mensagemSubmenu = "Deseja listar: \n"
+							+ "1 - Pessoas\n"
+							+ "2 - Registros de Visitas\n"
+							+ "3 - Locais\n"
+							+ "4 - Retornar ao MenuCadastroManual principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -84,7 +91,11 @@ public class MenuCadastroManual {
 					confere = false;
 					break;
 				case 3:
-					mensagemSubmenu = "Deseja remover: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Locais\n4 - Retornar ao MenuCadastroManual principal";
+					mensagemSubmenu = "Deseja remover: \n"
+							+ "1 - Pessoas\n"
+							+ "2 - Registros de Visitas\n"
+							+ "3 - Locais\n"
+							+ "4 - Retornar ao MenuCadastroManual principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -92,7 +103,10 @@ public class MenuCadastroManual {
 					confere = false;
 					break;
 				case 4:
-					mensagemSubmenu = "Deseja atualizar: \n1 - Pessoas\n2 - Registros de Visitas\n3 - Retornar ao MenuCadastroManual principal ";
+					mensagemSubmenu = "Deseja atualizar: \n"
+							+ "1 - Pessoas\n"
+							+ "2 - Registros de Visitas\n"
+							+ "3 - Retornar ao MenuCadastroManual principal ";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));

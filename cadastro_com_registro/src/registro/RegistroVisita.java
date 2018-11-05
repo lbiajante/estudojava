@@ -2,46 +2,32 @@ package registro;
 
 import java.io.Serializable;
 
-//@Entity
-//@Table (name = "Registro_de_visitas")
 public class RegistroVisita implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	// @Id
-	// @Column (name = "ID")
 	private String posicao;
-	// @Column (name = "lugar")
 	private String local;
-	// @Column (name = "data_visita")
 	private String data;
-	// @Column (name = "hora_visita")
 	private String hora;
-	// @Column (name = "ID_pessoa")
 	private String IDpessoa;
-	// @Column (name = "visitante")
 	private String nomePessoa;
 
 	public String getIDpessoa() {
 		return IDpessoa;
 	}
-
 	public void setIDpessoa(String iDpessoa) {
 		IDpessoa = iDpessoa;
 	}
-
 	public String getNomePessoa() {
 		return nomePessoa;
 	}
-
 	public void setNomePessoa(String nomePessoa) {
 		this.nomePessoa = nomePessoa;
 	}
-
 	public RegistroVisita() {
 		super();
 	}
-
 	public RegistroVisita(String posicao, String local, String data,
 			String hora, String iDpessoa, String nomePessoa) {
 		super();
@@ -52,39 +38,30 @@ public class RegistroVisita implements Serializable {
 		IDpessoa = iDpessoa;
 		this.nomePessoa = nomePessoa;
 	}
-
 	public String getPosicao() {
 		return posicao;
 	}
-
 	public void setPosicao(String posicao) {
 		this.posicao = posicao;
 	}
-
 	public String getLocal() {
 		return local;
 	}
-
 	public void setLocal(String local) {
 		this.local = local;
 	}
-
 	public String getData() {
 		return data;
 	}
-
 	public void setData(String data) {
 		this.data = data;
 	}
-
 	public String getHora() {
 		return hora;
 	}
-
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
-
 	@Override
 	public String toString() {
 		RegistroVisita registroEmArquivo = this;
