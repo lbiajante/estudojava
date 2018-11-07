@@ -71,7 +71,7 @@ public class MenuCadastroManual {
 							+ "1 - Pessoas\n"
 							+ "2 - Registros de Visitas\n"
 							+ "3 - Locais\n"
-							+ "4 - Retornar ao MenuCadastroManual principal";
+							+ "4 - Retornar ao Menu principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -83,7 +83,7 @@ public class MenuCadastroManual {
 							+ "1 - Pessoas\n"
 							+ "2 - Registros de Visitas\n"
 							+ "3 - Locais\n"
-							+ "4 - Retornar ao MenuCadastroManual principal";
+							+ "4 - Retornar ao Menu principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -95,7 +95,7 @@ public class MenuCadastroManual {
 							+ "1 - Pessoas\n"
 							+ "2 - Registros de Visitas\n"
 							+ "3 - Locais\n"
-							+ "4 - Retornar ao MenuCadastroManual principal";
+							+ "4 - Retornar ao Menu principal";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
@@ -106,7 +106,7 @@ public class MenuCadastroManual {
 					mensagemSubmenu = "Deseja atualizar: \n"
 							+ "1 - Pessoas\n"
 							+ "2 - Registros de Visitas\n"
-							+ "3 - Retornar ao MenuCadastroManual principal ";
+							+ "3 - Retornar ao Menu principal ";
 					msg.enviaMensagem(mensagemSubmenu);
 					this.submenu(subOpcao = Integer.parseInt(msg
 							.recebeMensagem()));
