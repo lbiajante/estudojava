@@ -1,5 +1,7 @@
 package gerais;
 
+import servlet.ListaCadastroServlet;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -7,9 +9,10 @@ public class Main {
 		cm.chamaMetodo();
 	}
 
-	public void chamaMetodo() {
+	public void chamaMetodo() {				
+				
 		MenuPrincipal mp = new MenuPrincipal();
 		mp.menuPrincipal();
-
+	
 	}
 }

@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="_css/estilo.css" />
 <link rel="stylesheet" href="_css/form.css" />
 </head>
-<script language="javascript" src="_javascript/funcoes.js"></script>
+<script language="javascript" src="_javascript/lista.js"></script>
 <body>
 	<div id="interface">
 
@@ -39,19 +39,16 @@
 
 			<body>
 				<h1>Selecione a lista que deseja visualizar</h1>
+				 <form id="fLista" >
+            <fieldset id="listar">
+                <legend>Listagem:</legend>
+                <input type="radio" name="tlistagem" id="cCadastro" value="cadastro"/><label for="cCadastro">Cadastro de Pessoas</label><br/>
+                <input type="radio" name="tlistagem" id="cRegistro" value="registro"/><label for="cRegistro">Registro de Visitas</label><br/>
+                <input type="radio" name="tlistagem" id="cLugar" value="local"/><label for="cLugar">Lugares Visitados</label>
 
-				<form method="post" id="fListar" action="" oninput="calc_total()">
-					<fieldset id="listar">
-						<legend>Listagem:</legend>
-						<input type="radio" name="tlistagem" id="cCadastro" /><label
-							for="cCadastro">Cadastro de Pessoas</label><br /> <input
-							type="radio" name="tlistagem" id="cRegistro" /><label
-							for="cRegistro">Registro de Visitas</label><br /> <input
-							type="radio" name="tlistagem" id="cLugar" /><label for="cLugar">Lugares
-							Visitados</label>
-					</fieldset>
-				</form>
-				<input type="image" name="tEnviarLista"
-					src="_imagens/botao-enviar.png" onclick="optionList()">
+            </fieldset>
+            <input type="image" name="tEnviarLista" src="_imagens/botao-enviar.png" onclick="optionList()">
+            </form>
+
 			</body>
 </html>

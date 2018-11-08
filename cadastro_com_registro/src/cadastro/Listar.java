@@ -5,6 +5,7 @@ import gerais.ConectaBD;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import conexao_cliente_manual.Gerenciador;
 import registro.ListarRegistro;
@@ -14,14 +15,15 @@ public class Listar {
 	ConectaBD con = new ConectaBD();
 	CadastroPessoa cad = new CadastroPessoa();
 	String lista;
-
+	
 	public void listarCadastros(Gerenciador msg) {
 
 		msg.enviaMensagem("Lista: cadastros de pessoas");
 
 		String sql = "SELECT * FROM cadastro_de_pessoas";
 		try {
-			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
 			ResultSet rs = ps.executeQuery();
 			lista = "\n";
 			while (rs.next()) {
