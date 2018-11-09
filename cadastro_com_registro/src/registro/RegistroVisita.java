@@ -65,11 +65,11 @@ public class RegistroVisita implements Serializable {
 	@Override
 	public String toString() {
 		RegistroVisita registroEmArquivo = this;
-		return "Local Visitado: ID - " + registroEmArquivo.getPosicao()
-				+ ", Local - " + registroEmArquivo.getLocal() + ", Data - "
-				+ registroEmArquivo.getData() + ", Hora - "
-				+ registroEmArquivo.getHora() + "\n Visitado por:  ID - "
-				+ registroEmArquivo.getIDpessoa() + ", Nome - "
+		return "\n$ Visita - (ID: " + registroEmArquivo.getPosicao()
+				+ " #Local: " + registroEmArquivo.getLocal() + " #Data: "
+				+ registroEmArquivo.getData() + " #Hora: "
+				+ registroEmArquivo.getHora() + "\n #Visitado por -  #ID: "
+				+ registroEmArquivo.getIDpessoa() + " #Nome: "
 				+ registroEmArquivo.getNomePessoa() + ".\n";
 	}
 }

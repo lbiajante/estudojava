@@ -11,15 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import local.ListarLocais;
+import registro.ListarRegistro;
 import cadastro.CadastroPessoa;
+import cadastro.Listar;
 
 @WebServlet(name = "Recebe Dados", urlPatterns = "/RecebeDadosServlet")
 public class RecebeDadosServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -7891159096554766799L;
-	ListaCadastroServlet listCad = new ListaCadastroServlet();
+
+	Listar listCad = new Listar();
+	ListarRegistro listReg = new ListarRegistro();
+	ListarLocais listLocal = new ListarLocais();
 	String opcao;
-	private List<CadastroPessoa> lis;
+	private List<String> l;
 
 	public RecebeDadosServlet() {
 		super();
@@ -36,12 +42,23 @@ public class RecebeDadosServlet extends HttpServlet {
 		PrintWriter writer = response.getWriter();
 		opcao = request.getParameter("tlistagem");
 		if (opcao.equals("cadastro")) {
-			writer.println("<h1>Lista solicitada "+ opcao +"</h1>");			
-			 
-			lis = listCad.listarCadastros();
-		request.setAttribute("lis", lis);
-		RequestDispatcher saida = request.getRequestDispatcher("RecebeDadosServlet");
-		saida.forward(request, response);
+			writer.println("<h1>Lista solicitada: " + opcao + "</h1>");
+			l = listCad.listarCadastros();
+			for (int i = 0; i < l.size(); i++) {
+				writer.println(l.get(i) + "</br></br>");
+			}
+		} else if (opcao.equals("registro")) {
+			writer.println("<h1>Lista solicitada: " + opcao + "</h1>");
+			l = listReg.listarRegistros();
+			for (int i = 0; i < l.size(); i++) {
+				writer.println(l.get(i) + "</br></br>");
+			}
+		} else if (opcao.equals("lugar")) {
+			writer.println("<h1>Lista solicitada: " + opcao + "</h1>");
+			l = listLocal.listarLocais();
+			for (int i = 0; i < l.size(); i++) {
+				writer.println(l.get(i) + "</br></br>");
+			}
 		}
 	}
 }
