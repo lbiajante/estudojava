@@ -9,7 +9,7 @@ public class Local implements Serializable {
 
 	@Override
 	public String toString() {
-		return "\nLocal: " + lugar;
+		return "\n$ Local: #" + lugar;
 	}
 
 	private String lugar;

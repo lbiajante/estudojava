@@ -89,12 +89,12 @@ public class CadastroPessoa implements Serializable {
 	@Override
 	public String toString() {
 		CadastroPessoa cadastroEmArquivo = this;
-		return " \n$ID: " + cadastroEmArquivo.getPosicao() 
-				+ " #Nome: " + cadastroEmArquivo.getNome()
-				+ " #Data nasc: " + cadastroEmArquivo.getDataNascimento() 
-				+ " #CPF: " + cadastroEmArquivo.getCpf()
-				+ " #Celular: " + cadastroEmArquivo.getCelular()
-				+ " #Empresa: " + cadastroEmArquivo.getEmpresa()
-				+ " #Area de Atuacao: " + cadastroEmArquivo.getAreaDeAtuacao();
+		return " \n$ ID: #" + cadastroEmArquivo.getPosicao() 
+				+ "$ Nome: #" + cadastroEmArquivo.getNome()
+				+ "$ Data nasc: #" + cadastroEmArquivo.getDataNascimento() 
+				+ "$ CPF: #" + cadastroEmArquivo.getCpf()
+				+ "$ Celular: #" + cadastroEmArquivo.getCelular()
+				+ "$ Empresa: #" + cadastroEmArquivo.getEmpresa()
+				+ "$ Area de Atuacao: #" + cadastroEmArquivo.getAreaDeAtuacao();
 	}
 }

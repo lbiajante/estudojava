@@ -1,5 +1,7 @@
 package gerais;
 
+import local.ListarLocais;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -8,7 +10,10 @@ public class Main {
 	}
 
 	public void chamaMetodo() {			
-		MenuPrincipal mp = new MenuPrincipal();
-		mp.menuPrincipal();	
+		ListarLocais l = new ListarLocais();
+		System.out.println(l.listarLocais());
+//		
+//		MenuPrincipal mp = new MenuPrincipal();
+//		mp.menuPrincipal();	
 	}
 }

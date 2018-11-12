@@ -51,14 +51,21 @@ public class RecebeDadosServlet extends HttpServlet {
 			writer.println("<h1>Lista solicitada: " + opcao + "</h1>");
 			l = listReg.listarRegistros();
 			for (int i = 0; i < l.size(); i++) {
+				
 				writer.println(l.get(i) + "</br></br>");
 			}
 		} else if (opcao.equals("lugar")) {
+			
 			writer.println("<h1>Lista solicitada: " + opcao + "</h1>");
 			l = listLocal.listarLocais();
+			
+			writer.println("<table border=1><tr><th>Locais</th></tr>");
 			for (int i = 0; i < l.size(); i++) {
-				writer.println(l.get(i) + "</br></br>");
+				writer.println("<tr><td>"+l.get(i).split("#")+"</td></tr>");						
+			}
+			writer.println( "</table>");
+					
 			}
 		}
 	}
-}
+
