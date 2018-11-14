@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: gerais.Main
+Class-Path: postgresql-42.2.5.jre7.jar
+Name: gerais/Main.java
+Java-Bean: True
