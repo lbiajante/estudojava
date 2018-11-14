@@ -14,6 +14,8 @@ import utilitarias_cadastro_manual.ValidaStrings;
 import conexao_cliente_manual.Gerenciador;
 
 public class Atualizar {
+	
+	//atualizar
 
 	public void atualizarCadastro(Gerenciador msg) {
 

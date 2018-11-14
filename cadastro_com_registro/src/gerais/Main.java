@@ -10,10 +10,10 @@ public class Main {
 	}
 
 	public void chamaMetodo() {			
-		ListarLocais l = new ListarLocais();
-		System.out.println(l.listarLocais());
+//		ListarLocais l = new ListarLocais();
+//		System.out.println(l.listarLocais());
 //		
-//		MenuPrincipal mp = new MenuPrincipal();
-//		mp.menuPrincipal();	
+		MenuPrincipal mp = new MenuPrincipal();
+		mp.menuPrincipal();	
 	}
 }

@@ -14,13 +14,23 @@ public class ListarLocais {
 	ConectaBD con = new ConectaBD();
 	Local local = new Local();
 	String lista;
+	List<String> listLugar = new ArrayList<>();
+
+	public List<String> getListLugar() {
+		return listLugar;
+	}
+
+	public void setListLugar(List<String> listLugar) {
+		this.listLugar = listLugar;
+	}
 
 	public void listarLocais(Gerenciador msg) {
 		lista = "";
-		msg.enviaMensagem("Lista: locais");		
+		msg.enviaMensagem("Lista: locais");
 		String sql = "SELECT * FROM local";
 		try {
-			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -35,17 +45,20 @@ public class ListarLocais {
 			e.printStackTrace();
 		}
 	}
+
 	public List<String> listarLocais() {
-		List<String> listLocal = new ArrayList<>();		
+		List<String> listLocal = new ArrayList<>();
 		String sql = "SELECT * FROM local";
 		try {
-			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
 			ResultSet rs = ps.executeQuery();
 
 			while (rs.next()) {
 				local.setLugar(rs.getString("lugar"));
-			listLocal.add(local.toString());
-			}		
+				listLugar.add(local.getLugar());
+				listLocal.add(local.toString());
+			}
 			ps.close();
 			rs.close();
 
