@@ -91,6 +91,22 @@ public class ValidaCPF {
 		return CPF;
 	}
 
+	public String validarCPF(String cpfServlet) {
+		String CPF = null;
+		CadastroPessoa cad = new CadastroPessoa();
+				try {				
+				CPF = cpfServlet;
+				if (ValidaCPF.isCPF(CPF)) {
+					CPF = ValidaCPF.imprimeCPF(CPF);					
+				} else {
+					CPF = "nulo";
+				}
+			} catch (Exception e) {
+				CPF = "nulo";				
+			}
+		return CPF;
+		}
+		
 	public String formatString(String campo, String mascara) {
 		MaskFormatter mf;
 		try {

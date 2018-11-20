@@ -1,6 +1,5 @@
 package gerais;
 
-import local.ListarLocais;
 
 public class Main {
 

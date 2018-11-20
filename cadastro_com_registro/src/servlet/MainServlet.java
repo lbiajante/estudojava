@@ -31,9 +31,7 @@ public class MainServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
-			}
-		
-
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -42,21 +40,21 @@ public class MainServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-	
-PrintWriter writer = response.getWriter();
-		
-		writer.println("<h1>Listagem de Cadastro de Pessoas,"
-				+ " Registros de Visitas e	Lugares</h1>");
-		writer.println("<html><head><title>Listagem</title></head>"
-				+ "<body><form action=RecebeDadosServlet method='POST'><fieldset id='listar'>"
-				+ "<legend>Listagem:</legend>"
-				+ "<input type='radio' name='tlistagem' id'cCadastro' value='cadastro'/><label for='cCadastro'>Cadastro de Pessoas</label><br/>"
-				+ "<input type='radio' name='tlistagem' id='cRegistro' value='registro'/><label for='cRegistro'>Registro de Visitas</label><br/>"
-				+ "<input type='radio' name='tlistagem' id='cLugar' value='lugar'/><label for='cLugar'>Lugares Visitados</label>"
+
+		PrintWriter writer = response.getWriter();
+
+		writer.println("<h1>Menu Principal</h1>");
+		writer.println("<html><head><title>Menu</title></head>"
+				+ "<body><form action=RecebeMenuServlet method='POST'><fieldset id='listar'>"
+				+ "<legend>Menu:</legend>"
+				+ "<input type='radio' name='tmenu' id='cIncluir' value='incluir'/><label for='cIncluir'>Incluir Cadastro, Registros, Lugares</label><br/>"
+				+ "<input type='radio' name='tmenu' id='cListagem' value='listar'/><label for='cListagem'>Listar Cadastro, Registro, Lugares</label><br/>"
+				+ "<input type='radio' name='tmenu' id='cAtualizacao' value='atualizar'/><label for='cAtualizacao'>Atualizar Cadastro, Registro, Lugares</label><br/>"
+				+ "<input type='radio' name='tmenu' id='cRemover' value='remover'/><label for='cRemover'>Remover Cadastro, Registro, Lugares</label><br/>"
+
 				+ "</fieldset>"
-				+ "<input name='Enviar' type='submit' value='Enviar'> "
+				+ "<input type='image' name='Enviar' src='_imagens/botao-enviar.png' value='Enviar' onclick='RecebeMenuServlet'>"
 				+ "</form></body></html>");
-		
-	
+
 	}
 }

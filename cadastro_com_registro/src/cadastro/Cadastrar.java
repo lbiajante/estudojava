@@ -23,6 +23,44 @@ public class Cadastrar {
 	ValidaStrings string = new ValidaStrings();
 	ValidaId validaId = new ValidaId();
 
+	public String cadastrar(String id, String nome, String cpf, String cel,
+			String data, String emp, String area) {
+		String retorno = null;
+		
+		cad.setPosicao(id);
+		cad.setNome(nome);
+		cad.setCpf(cpf);
+		cad.setDataNascimento(this.data.data(data));
+		cad.setEmpresa(emp);
+		cad.setAreaDeAtuacao(area);
+
+		if (cel.equals("") || cel.equals(null)) {
+			cel = "Celular nao informado";
+		}
+		cad.setCelular(cel);
+		
+		String sql = "INSERT INTO cadastro_de_pessoas "
+				+ "(id, nome_pessoa, data_nasc, cpf, celular, empresa, area_atuacao) values"
+				+ "( '" + cad.getPosicao() + "' , '" + cad.getNome()
+				+ "' , '" + cad.getDataNascimento() + "' , '"
+				+ cad.getCpf() + "' , '" + cad.getCelular() + "' , '"
+				+ cad.getEmpresa() + "' , '" + cad.getAreaDeAtuacao()
+				+ "' );";
+		try {
+			PreparedStatement ps = ConectaBD.getConnection()
+					.prepareStatement(sql);
+			ps.execute();
+			ps.close();
+			retorno = "Cadastro efetuado com sucesso";
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			retorno = "Cadastro não efetuado";
+		}
+		
+return retorno;
+	}
+
 	public void cadastrar(Gerenciador msg) {
 		String labelOut = "Cadastro de Usuario";
 		msg.enviaMensagem(labelOut);

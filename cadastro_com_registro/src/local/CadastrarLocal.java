@@ -27,7 +27,8 @@ public class CadastrarLocal {
 		String sql = "SELECT * FROM local";
 
 		try {
-			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 
@@ -58,4 +59,42 @@ public class CadastrarLocal {
 		return lugar;
 	}
 
+	public String cadastrarLocal(String localServlet) {
+
+		boolean existe = false;
+		String mensagem = null;
+
+		lugar = localServlet;
+		String sql = "SELECT * FROM local";
+
+		try {
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				cadLocal.setLugar(rs.getString("lugar"));
+				if (cadLocal.getLugar().equals(lugar)) {
+					existe = true;
+					break;
+				}
+			}
+			if (existe == true) {
+				mensagem = "Lugar já cadastrado";
+				lugar = cadLocal.getLugar();
+
+			} else if (existe == false) {
+				sql = "INSERT INTO local " + "(lugar) values" + "( '"
+						+ lugar.trim() + "' );";
+				ps = ConectaBD.getConnection().prepareStatement(sql);
+				ps.execute();
+				mensagem = "Lugar não cadastrado, foi adicionado!";
+			}
+			ps.close();
+			rs.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mensagem;
+	}
 }

@@ -1,5 +1,6 @@
 package utilitarias_cadastro_manual;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -58,6 +59,21 @@ public class ValidaData {
 			e.printStackTrace();
 		}
 		return horaVisita;
+	}
+
+	public String data(String data) {
+		String dataToString = null;
+		SimpleDateFormat dataFormatIn = new SimpleDateFormat("yyyy-MM-dd");
+		dataFormatIn.setLenient(false);
+		Date dateS;
+		try {
+			dateS = dataFormatIn.parse(data);
+			SimpleDateFormat dataFormatOut = new SimpleDateFormat("dd/MM/yyyy");
+			dataToString = dataFormatOut.format(dateS);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dataToString;
 	}
 
 }

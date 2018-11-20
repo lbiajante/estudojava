@@ -15,7 +15,7 @@ import registro.ListarRegistro;
 import cadastro.Listar;
 
 @WebServlet(name = "Recebe Dados", urlPatterns = "/RecebeDadosServlet")
-public class RecebeDadosServlet extends HttpServlet {
+public class RecebeListaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = -7891159096554766799L;
 
@@ -25,7 +25,7 @@ public class RecebeDadosServlet extends HttpServlet {
 	String opcao;
 	private List<String> l;
 
-	public RecebeDadosServlet() {
+	public RecebeListaServlet() {
 		super();
 	}
 
@@ -59,7 +59,7 @@ public class RecebeDadosServlet extends HttpServlet {
 				writer.println("<td>" + listCad.getListCpf().get(i) + "</td>");
 				writer.println("<td>" + listCad.getListCel().get(i) + "</td>");
 				writer.println("<td>" + listCad.getListEmp().get(i) + "</td>");
-				writer.println("><td>" + listCad.getListArea().get(i)
+				writer.println("<td>" + listCad.getListArea().get(i)
 						+ "</td></tr>");
 			}
 			writer.println("</table>");
@@ -87,7 +87,7 @@ public class RecebeDadosServlet extends HttpServlet {
 						+ "</td>");
 				writer.println("<td>" + listReg.getListRegIdPessoa().get(i)
 						+ "</td>");
-				writer.println("><td>" + listReg.getListRegVisit().get(i)
+				writer.println("<td>" + listReg.getListRegVisit().get(i)
 						+ "</td></tr>");
 			}
 			writer.println("</table>");
