@@ -20,7 +20,6 @@ public class RecebeCadastroServlet extends HttpServlet {
 	ValidaCPF validaCpf = new ValidaCPF();
 	ValidaId validaId = new ValidaId();
 	Cadastrar cad = new Cadastrar();
-//	String opcao;
 
 	public RecebeCadastroServlet() {
 		super();

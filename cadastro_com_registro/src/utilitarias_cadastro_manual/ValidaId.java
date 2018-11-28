@@ -93,6 +93,7 @@ public class ValidaId {
 	}
 
 	public String verificaID(String codigo) {
+		boolean existe = false;
 		String codRetorno = null;
 		int cod = 0;
 
@@ -111,6 +112,7 @@ public class ValidaId {
 				x++;
 			}
 			if (x == 0) {
+				existe = false;
 				codRetorno = codigo;
 			} else {
 				rs.beforeFirst();

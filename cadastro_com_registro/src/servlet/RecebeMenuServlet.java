@@ -27,7 +27,7 @@ public class RecebeMenuServlet extends HttpServlet {
 		String opcao = request.getParameter ("tmenu");
 		String opDispatcher = null;
 		if (opcao.equals("incluir")){
-			opDispatcher = "IncluirCadastroServlet";
+			opDispatcher = "IncluirServlet";
 			
 		}else if (opcao.equals("listar")){
 			opDispatcher = "ListaServlet";
@@ -35,7 +35,7 @@ public class RecebeMenuServlet extends HttpServlet {
 		}else if (opcao.equals("atualizar")){
 			writer.println("<h1>A: " + opcao + "</h1>");
 		}else if (opcao.equals("remover")){
-			writer.println("<h1>R: " + opcao + "</h1>");
+			opDispatcher = "RemoverServlet";
 		}
 		RequestDispatcher acesso = request.getRequestDispatcher(opDispatcher);
 		acesso.forward(request,response);

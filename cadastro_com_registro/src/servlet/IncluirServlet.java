@@ -91,9 +91,7 @@ public class IncluirServlet extends HttpServlet {
 				+ "<input type='text' name='tLocal' id='cLocal' maxlength='30' size='20'></p>"
 
 				+ "<input type='image' name='tEnviarLocal' src='_imagens/botao-enviar.png'value='EnviarLocal' onclick='RecebeLocalServlet'>"
-				+ "</fieldset></form>"
-
-				+ "</article></section>");
+				+ "</fieldset></form>");
 	
 	}
 }
