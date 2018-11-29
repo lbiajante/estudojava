@@ -84,13 +84,13 @@ public class IncluirServlet extends HttpServlet {
 				+ "<input type='image' name='tEnviarRegistro' src='_imagens/botao-enviar.png' value='EnviarRegistro' onclick='RecebeRegistroServlet'>"
 				+ "</fieldset></form>"
 
-				+ "<form method='post' id='fLocal' action='RecebeLocalServlet'>"
+				+ "<form method='post' id='fLocal' action='RecebeCadastroServlet'>"
 				+ "<fieldset id='local'><legend>Cadastro de Novo Local</legend>"
 
 				+ "<p><label class='local' for='cLocal'>Local: </label>"
 				+ "<input type='text' name='tLocal' id='cLocal' maxlength='30' size='20'></p>"
 
-				+ "<input type='image' name='tEnviarLocal' src='_imagens/botao-enviar.png'value='EnviarLocal' onclick='RecebeLocalServlet'>"
+				+ "<input type='image' name='tEnviarLocal' src='_imagens/botao-enviar.png'value='EnviarLocal' onclick='RecebeCadastroServlet'>"
 				+ "</fieldset></form>");
 	
 	}

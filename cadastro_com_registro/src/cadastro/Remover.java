@@ -69,20 +69,12 @@ public class Remover {
 		}
 	}
 	public String removerCadastro(String id) {
-		ValidaId validaId = new ValidaId();
+		
+		String mensagem = null;
 		CadastroPessoa cad = new CadastroPessoa();
-		String codigo = null;
-
-		msg.enviaMensagem("Remover: cadastro de pessoas");
-
-		boolean confere = true;
-		while (confere) {
-			msg.enviaMensagem("Digite um ID para ser removido ou 's' para sair");
-			codigo = msg.recebeMensagem();
-			if (codigo.trim().equalsIgnoreCase("s")) {
-				confere = false;
-			} else {
-				codigo = validaId.confereID(codigo, msg);
+		int cod = Integer.parseInt(id);
+		id = String.format("%06d", cod);
+				
 				String sql = "SELECT * FROM cadastro_de_pessoas;";
 				boolean existe = false;
 				try {
@@ -92,7 +84,7 @@ public class Remover {
 
 					while (rs.next()) {
 						cad.setPosicao(rs.getString("id"));
-						if (cad.getPosicao().equals(codigo)) {
+						if (cad.getPosicao().equals(id)) {
 							existe = true;
 							break;
 						}
@@ -105,25 +97,21 @@ public class Remover {
 
 				if (existe) {
 					String sql2 = "DELETE FROM cadastro_de_pessoas WHERE id = '"
-							+ codigo + "';";
+							+ id + "';";
 					try {
 						PreparedStatement ps2 = ConectaBD.getConnection()
 								.prepareStatement(sql2);
 						ps2.execute();
 						ps2.close();
-						msg.enviaMensagem("Cadastro removido");
+						mensagem = "removido";
 
 					} catch (SQLException e) {
-						msg.enviaMensagem("Cadastro desta pessoa nao pode ser removido, "
-								+ "\npois esta vinculado a um ou mais registros de visitas");
+						mensagem ="registro";
 					}
-					confere = false;
+					
 				} else if (existe == false) {
-					msg.enviaMensagem("Nao existe cadastro com esse ID para ser removido");
-					confere = true;
+					mensagem = "NID";					
 				}
-			}
-		}
-	}
-	
+				return mensagem;
+			}	
 }

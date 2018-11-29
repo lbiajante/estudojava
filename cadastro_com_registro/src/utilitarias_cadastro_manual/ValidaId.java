@@ -134,7 +134,6 @@ public class ValidaId {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return codRetorno;
 	}
 

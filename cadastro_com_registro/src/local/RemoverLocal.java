@@ -68,4 +68,49 @@ public class RemoverLocal {
 			}
 		}
 	}
+
+	public String removerLocal(String input) {
+
+		Local local = new Local();
+		boolean existe = false;
+		boolean confere = true;
+		String mensagem = null;
+
+		String sql = "SELECT * FROM local";
+		try {
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				local.setLugar(rs.getString("lugar"));
+				if (local.getLugar().equals(input)) {
+					existe = true;
+					break;
+				}
+			}
+			ps.close();
+			rs.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		if (existe) {
+			String sql2 = "DELETE FROM local WHERE lugar = '" + input + "';";
+			try {
+				PreparedStatement ps2 = ConectaBD.getConnection()
+						.prepareStatement(sql2);
+				ps2.execute();
+				ps2.close();
+				mensagem = "removido";
+
+			} catch (SQLException e) {
+				mensagem = "registro";
+			}
+
+		} else if (existe == false) {
+			mensagem = "NLocal";
+			confere = true;
+		}
+		return mensagem;
+	}
 }
