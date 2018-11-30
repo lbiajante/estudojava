@@ -92,8 +92,7 @@ public class ValidaId {
 		return confereCod;
 	}
 
-	public String verificaID(String codigo) {
-		boolean existe = false;
+	public String verificaID(String codigo) {		
 		String codRetorno = null;
 		int cod = 0;
 
@@ -111,8 +110,7 @@ public class ValidaId {
 			while (rs.next()) {
 				x++;
 			}
-			if (x == 0) {
-				existe = false;
+			if (x == 0) {				
 				codRetorno = codigo;
 			} else {
 				rs.beforeFirst();

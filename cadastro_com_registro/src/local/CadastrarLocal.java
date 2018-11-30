@@ -84,7 +84,7 @@ public class CadastrarLocal {
 
 			} else if (existe == false) {
 				sql = "INSERT INTO local " + "(lugar) values" + "( '"
-						+ lugar.trim() + "' );";
+						+ lugar + "' );";
 				ps = ConectaBD.getConnection().prepareStatement(sql);
 				ps.execute();
 				mensagem = "Lugar não cadastrado, foi adicionado!";

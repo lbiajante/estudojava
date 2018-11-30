@@ -14,8 +14,43 @@ import utilitarias_cadastro_manual.ValidaStrings;
 import conexao_cliente_manual.Gerenciador;
 
 public class Atualizar {
-	
-	//atualizar
+
+	// atualizar
+
+	public String atualizarCadastro(String id, String nome, String cpf,
+			String cel, String data, String emp, String area) {
+		String mensagem = null;
+		CadastroPessoa cad = new CadastroPessoa();
+		
+		ValidaData datas = new ValidaData();
+		boolean confere = true;
+		boolean existe = false;
+		String codigo = (String.format("%06d", (Integer.parseInt(id))));
+
+		cad.setNome(nome);
+		cad.setDataNascimento(datas.data(data));
+		cad.setCpf(cpf);
+		cad.setEmpresa(emp);
+		cad.setAreaDeAtuacao(area);
+		cad.setCelular(cel);
+
+		String sql2 = "UPDATE cadastro_de_pessoas SET nome_pessoa = '"
+				+ cad.getNome() + "' , data_nasc = '" + cad.getDataNascimento()
+				+ "' , cpf = '" + cad.getCpf() + "' , celular = '"
+				+ cad.getCelular() + "' , empresa = '" + cad.getEmpresa()
+				+ "' , area_atuacao = '" + cad.getAreaDeAtuacao()
+				+ "' WHERE id = '" + codigo + "';";
+		try {
+			PreparedStatement ps2 = ConectaBD.getConnection().prepareStatement(
+					sql2);
+			ps2.execute();
+			ps2.close();
+			mensagem = "Atualizacao realizada com sucesso";
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mensagem;
+	}
 
 	public void atualizarCadastro(Gerenciador msg) {
 

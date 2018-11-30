@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import registro.CadastrarRegistro;
 import local.CadastrarLocal;
 import utilitarias_cadastro_manual.ValidaCPF;
 import utilitarias_cadastro_manual.ValidaId;
@@ -21,7 +22,8 @@ public class RecebeCadastroServlet extends HttpServlet {
 	ValidaCPF validaCpf = new ValidaCPF();
 	ValidaId validaId = new ValidaId();
 	Cadastrar cad = new Cadastrar();
-    CadastrarLocal cadLocal = new CadastrarLocal();
+	CadastrarLocal cadLocal = new CadastrarLocal();
+	CadastrarRegistro cadReg = new CadastrarRegistro();
 
 	public RecebeCadastroServlet() {
 		super();
@@ -36,12 +38,13 @@ public class RecebeCadastroServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		boolean retorno = false;
 
 		PrintWriter writer = response.getWriter();
 		String id = request.getParameter("tId");
 		String local = request.getParameter("tLocal");
+		String idVisita = request.getParameter("tIdVisita");
 
+		// bloco cadastro de pessoas
 		if (id != (null)) {
 			String nome = request.getParameter("tNome");
 			String cpf = request.getParameter("tCpf");
@@ -52,6 +55,8 @@ public class RecebeCadastroServlet extends HttpServlet {
 
 			id = validaId.verificaID(id);
 			cpf = validaCpf.validarCPF(cpf);
+			boolean retorno = false;
+
 			if (id.equals("000000")) {
 				writer.println("<script>confirm('ID esta sendo usado');</script>");
 				retorno = true;
@@ -73,8 +78,47 @@ public class RecebeCadastroServlet extends HttpServlet {
 						+ "onclick='MainServlet'> </form>");
 			}
 		}
+		// bloco registro de visitas
+		if (idVisita != null) {
+			boolean retorno = false;
+			String visitante = cadReg.confereRegistro(idVisita);
+			String[] splitVisitante;
+
+			if (visitante.equals("NCAD")) {
+				writer.println("<script>confirm('Não tem pessoa cadastrada com esse ID');</script>");
+				retorno = true;
+			}
+
+			else {
+				splitVisitante = visitante.split(",");
+				String idVisitante = splitVisitante[0];
+				String nomeVisitante = splitVisitante[1];
+				String idReg = request.getParameter("tIdPessoaRegistro");
+				String data = request.getParameter("tDataVisita");
+				String hora = request.getParameter("tHoraVisita");
+				String localVis = request.getParameter("tLocalVisita");
+
+				String cadLocalVis = cadLocal.cadastrarLocal(localVis);
+				String cR = cadReg.cadastrar(idVisitante, nomeVisitante, idReg,
+						data, hora, localVis);
+
+				writer.println("<p>" + cR + "</p>");
+				writer.println("<p>" + cadLocalVis + "</p>");
+				writer.println("<form method='post' id='fReturn' action='MainServlet'>"
+						+ "<input type='submit' name='tRetornar' value='Retornar' "
+						+ "onclick='MainServlet'> </form>");
+			}
+
+			if (retorno) {
+				writer.println("<form method='post' id='fReturn' action='IncluirServlet'>"
+						+ "<p>Clique no botao abaixo para preencher o formulario novamente</p>"
+						+ "<input type='submit' name='tRetornar' value='Retornar' "
+						+ "onclick='IncluirServlet'> </form>");
+			}
+		}
+		// bloco local
 		if (local != null) {
-			String m = cadLocal.cadastrarLocal(local);			
+			String m = cadLocal.cadastrarLocal(local);
 			writer.println("<h1>" + local + "</h1>");
 			writer.println("<p>" + m + "</p>");
 			writer.println("<form method='post' id='fReturn' action='MainServlet'>"

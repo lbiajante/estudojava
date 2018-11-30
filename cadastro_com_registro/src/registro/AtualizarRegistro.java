@@ -79,11 +79,62 @@ public class AtualizarRegistro {
 					confere = false;
 
 				} else if (x == 0) {
-					msg.enviaMensagem("Nao existe cadastro com esse ID para ser atualizado");
+					msg.enviaMensagem("Nao existe registro com esse ID para ser atualizado");
 					confere = true;
 				}
 			}
 		}
 	}
 
+	public String atualizarRegistro(String id, String local, String data,
+			String hora) {
+
+		RegistroVisita regg = new RegistroVisita();
+		CadastrarLocal cadLocal = new CadastrarLocal();
+		ValidaData validaData = new ValidaData();
+		int confere = 0;
+		int cod = Integer.parseInt(id);
+		String mensagem = ("" + cod);
+
+		try {
+			String sql = "SELECT * FROM registro_de_visitas where id = " + cod
+					+ ";";
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				confere++;
+			}
+			ps.close();
+			rs.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			mensagem = "caiu no catch";
+		}
+		if (confere != 0) {
+			regg.setLocal(local);
+			regg.setData(validaData.data(data));
+			regg.setHora(hora);
+			mensagem = (regg.getData() + regg.getHora()+regg.getLocal());
+			String sql2 = "UPDATE registro_de_visitas SET data_visita = '"
+					+ regg.getData() + "' , hora_visita = '" + regg.getHora()
+					+ "' , lugar = '" + regg.getLocal() + "' WHERE id = '"
+					+ cod + "';";			
+			try {
+				PreparedStatement ps2 = ConectaBD.getConnection()
+						.prepareStatement(sql2);
+				ps2.execute();
+				ps2.close();
+				mensagem = "Registro atualizado com sucesso";
+			} catch (SQLException e) {
+				mensagem = (mensagem + "caiu no outro catch");
+				e.printStackTrace();
+			}
+
+		} else {
+			mensagem = "Nao existe registro com esse ID para ser atualizado";
+		}
+		return mensagem;
+	}
 }

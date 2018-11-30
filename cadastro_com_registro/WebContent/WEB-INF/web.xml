@@ -9,9 +9,31 @@
 		<servlet-name>Atualizar</servlet-name>
 		<servlet-class>servlet.Atualizar</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>AtualizarServlet</display-name>
+		<servlet-name>AtualizarServlet</servlet-name>
+		<servlet-class>servlet.AtualizarServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>RecebeAtualizarServlet</display-name>
+		<servlet-name>RecebeAtualizarServlet</servlet-name>
+		<servlet-class>servlet.RecebeAtualizarServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Atualizar</servlet-name>
 		<url-pattern>/Atualizar</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AtualizarServlet</servlet-name>
+		<url-pattern>/AtualizarServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RecebeAtualizarServlet</servlet-name>
+		<url-pattern>/RecebeAtualizarServlet</url-pattern>
 	</servlet-mapping>
 	
 	

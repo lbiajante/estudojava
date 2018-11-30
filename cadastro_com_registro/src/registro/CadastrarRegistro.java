@@ -20,7 +20,7 @@ public class CadastrarRegistro {
 	CadastrarLocal cadLocal = new CadastrarLocal();
 	Local local = new Local();
 	RegistroVisita reg = new RegistroVisita();
-	ValidaData data = new ValidaData();
+	ValidaData validaData = new ValidaData();
 	ValidaStrings string = new ValidaStrings();
 	ValidaId validaId = new ValidaId();
 	String input;
@@ -74,10 +74,10 @@ public class CadastrarRegistro {
 		reg.setLocal(cadLocal.cadastrarLocal(msg));
 
 		String labelOut = "Digite a data da visita com o formato: ddmmaaaa";
-		reg.setData(data.data(labelOut, msg));
+		reg.setData(validaData.data(labelOut, msg));
 
 		labelOut = "Digite a hora da visita com o formato: hhmm";
-		reg.setHora(data.hora(labelOut, msg));
+		reg.setHora(validaData.hora(labelOut, msg));
 
 		reg.setIDpessoa(IdPessoa);
 		reg.setNomePessoa(nomePessoa);
@@ -116,4 +116,67 @@ public class CadastrarRegistro {
 			}
 		}
 	}
+
+	public String confereRegistro(String idVisita) {
+
+		boolean existe = false;
+		String mensagem = null;
+
+		int cod = Integer.parseInt(idVisita);
+		idVisita = String.format("%06d", cod);
+		String sql = "SELECT * FROM cadastro_de_pessoas";
+
+		try {
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				cad.setPosicao(rs.getString("id"));
+				cad.setNome(rs.getString("nome_pessoa"));
+				if (cad.getPosicao().equals(idVisita)) {
+					existe = true;
+					mensagem = (cad.getPosicao() + "," + cad.getNome());
+					break;
+
+				}
+			}
+			if (existe == false) {
+				mensagem = ("NCAD");
+			}
+			ps.close();
+			rs.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mensagem;
+	}
+
+	public String cadastrar(String idVisitante, String nomeVisitante,
+			String idReg, String data, String hora, String localVis) {
+		
+
+		reg.setLocal(localVis);
+		reg.setData(validaData.data(data));
+		reg.setHora(hora);
+		reg.setIDpessoa(idVisitante);
+		reg.setNomePessoa(nomeVisitante);
+
+		String sql = "INSERT INTO registro_de_visitas "
+				+ "(visitante, data_visita, hora_visita, id_pessoa, lugar) values"
+				+ "( '" + reg.getNomePessoa() + "' , '" + reg.getData()
+				+ "' , '" + reg.getHora() + "' , '" + reg.getIDpessoa()
+				+ "' , '" + reg.getLocal().trim() + "' );";
+		try {
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
+			ps.execute();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ("Registro adicionado!");
+
+	}
+
 }

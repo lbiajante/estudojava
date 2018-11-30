@@ -92,8 +92,7 @@ public class ValidaCPF {
 	}
 
 	public String validarCPF(String cpfServlet) {
-		String CPF = null;
-		CadastroPessoa cad = new CadastroPessoa();
+		String CPF = null;		
 				try {				
 				CPF = cpfServlet;
 				if (ValidaCPF.isCPF(CPF)) {

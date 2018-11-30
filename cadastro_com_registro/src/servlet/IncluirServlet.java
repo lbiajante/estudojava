@@ -34,6 +34,7 @@ public class IncluirServlet extends HttpServlet {
 				+ "<h1>Cadastro de Pessoas, Registros de Visitas e Lugares</h1>"
 				+ "<h2>por Leandro</h2><h3 class='dir'>Atualizado em nov/2018</h3></header>"
 
+				// bloco Cadastro de Pessoas
 				+ "<form method='post' id='fCadastro' action='RecebeCadastroServlet'>"
 				+ "<fieldset id='cadastro'><legend>Cadastro de Pessoas</legend>"
 
@@ -65,12 +66,15 @@ public class IncluirServlet extends HttpServlet {
 				+ "<input type='image' name='tEnviarCadastro' src='_imagens/botao-enviar.png' "
 				+ "value='EnviarCadastro' onclick='RecebeCadastroServlet'>"
 				+ "</fieldset></form>"
+				// fim do Cadastro de Pessoas
 
-				+ "<form method='post' id='fRegistro' action='RecebeRegistroServlet'>"
+				// Bloco Registro de Visitas
+				
+				+ "<form method='post' id='fRegistro' action='RecebeCadastroServlet'>"
 				+ "<fieldset id='registro'><legend>Registro de Visitas</legend>"
 
-				+ "<p><label class='registro' for='cIdPessoaRegistro'>ID: </label>"
-				+ "<input type='number' name='tIdPessoaRegistro' id='cIdPessoaRegistro'	size='6' maxlength='6' placeholder='999999'/></p>"
+				+ "<p><label class='registro' for='cIdVisita'>ID Pessoa: </label>"
+				+ "<input type='number' name='tIdVisita' id='cIdVisita' size='6' maxlength='6' placeholder='999999' required/></p>"
 
 				+ "<p><label class='registro' for='cDataVisita'>Data Visita: </label>"
 				+ "<input type='date' name='tDataVisita' id='cDataVisita'></p>"
@@ -79,9 +83,9 @@ public class IncluirServlet extends HttpServlet {
 				+ "<input type='time' name='tHoraVisita' id='cHoraVisita'></p>"
 
 				+ "<p><label class='registro' for='cLocal'>Local: </label>"
-				+ "<input type='text' name='tLocal' id='cLocal' maxlength='30' size='20'></p>"
+				+ "<input type='text' name='tLocalVisita' id='cLocal' maxlength='30' size='20'></p>"
 
-				+ "<input type='image' name='tEnviarRegistro' src='_imagens/botao-enviar.png' value='EnviarRegistro' onclick='RecebeRegistroServlet'>"
+				+ "<input type='image' name='tEnviarRegistro' src='_imagens/botao-enviar.png' value='EnviarRegistro' onclick='RecebeCadastroServlet'>"
 				+ "</fieldset></form>"
 
 				+ "<form method='post' id='fLocal' action='RecebeCadastroServlet'>"
@@ -92,6 +96,6 @@ public class IncluirServlet extends HttpServlet {
 
 				+ "<input type='image' name='tEnviarLocal' src='_imagens/botao-enviar.png'value='EnviarLocal' onclick='RecebeCadastroServlet'>"
 				+ "</fieldset></form>");
-	
+
 	}
 }

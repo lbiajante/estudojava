@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +22,7 @@ public class RecebeMenuServlet extends HttpServlet {
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		PrintWriter writer = response.getWriter();
+		
 		String opcao = request.getParameter ("tmenu");
 		String opDispatcher = null;
 		if (opcao.equals("incluir")){
@@ -33,7 +32,8 @@ public class RecebeMenuServlet extends HttpServlet {
 			opDispatcher = "ListaServlet";
 			
 		}else if (opcao.equals("atualizar")){
-			writer.println("<h1>A: " + opcao + "</h1>");
+			opDispatcher = "AtualizarServlet";
+			
 		}else if (opcao.equals("remover")){
 			opDispatcher = "RemoverServlet";
 		}

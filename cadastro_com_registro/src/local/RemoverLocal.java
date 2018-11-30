@@ -73,7 +73,6 @@ public class RemoverLocal {
 
 		Local local = new Local();
 		boolean existe = false;
-		boolean confere = true;
 		String mensagem = null;
 
 		String sql = "SELECT * FROM local";
@@ -109,7 +108,6 @@ public class RemoverLocal {
 
 		} else if (existe == false) {
 			mensagem = "NLocal";
-			confere = true;
 		}
 		return mensagem;
 	}
