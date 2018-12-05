@@ -13,7 +13,8 @@ public class CadastrarLocalDispositivo {
 		String sql = "SELECT * FROM local where lugar = '" + lugar + "';";
 
 		try {
-			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql);
+			PreparedStatement ps = ConectaBD.getConnection().prepareStatement(
+					sql);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				x++;
@@ -23,13 +24,16 @@ public class CadastrarLocalDispositivo {
 			}
 			if (x == 0) {
 				sql = "INSERT INTO local " + "(lugar) values" + "( '"
-						+ lugar.trim() + "' );";
-
-				ps.execute(sql);
-				ps.close();
-			}
+						+ lugar + "' );";
+				ps = ConectaBD.getConnection().prepareStatement(sql);
+				ps.execute();				
+			
 			ps.close();
 			rs.close();
+			} else {
+				System.out.println("caiu no else");
+			}
+			
 
 		} catch (SQLException e) {
 			System.out.println("erro no cadastrar local");

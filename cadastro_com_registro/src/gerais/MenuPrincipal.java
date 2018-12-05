@@ -25,7 +25,8 @@ public class MenuPrincipal {
 						+ "Indique o tipo de conexao:\n"
 						+ "1 - Cliente administrador do banco\n"
 						+ "2 - Dispositivo de ronda\n"
-						+ "3 - Encerrar servidor");
+						+ "3 - Cadastro por linha de comando\n"
+						+ "4 - Encerrar servidor");
 				i = entrada.nextInt();
 
 				if (i == 1) {
@@ -35,6 +36,10 @@ public class MenuPrincipal {
 
 				} else if (i == 2) {
 					menuEscolhido(6666);
+					this.menuPrincipal();
+					break;
+				} else if (i == 3) {
+					menuEscolhido(6667);
 					this.menuPrincipal();
 					break;
 				} else if (i == 3) {
@@ -101,6 +106,14 @@ public class MenuPrincipal {
 						conf = false;
 						break;
 					}
+					cliente.close();
+				} else if (port == 6667) {
+					System.out.println("conexao por linha de comando - conectado");
+					new LerDispositivo(cliente);
+					
+						System.out
+								.println("aguardando nova conexão de dispositivo");
+						conf = true;					
 					cliente.close();
 				}
 			}
