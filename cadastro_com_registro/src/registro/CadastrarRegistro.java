@@ -153,7 +153,7 @@ public class CadastrarRegistro {
 	}
 
 	public String cadastrar(String idVisitante, String nomeVisitante,
-			String idReg, String data, String hora, String localVis) {
+			String data, String hora, String localVis) {
 		
 
 		reg.setLocal(localVis);

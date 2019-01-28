@@ -99,7 +99,7 @@ public class RecebeCadastroServlet extends HttpServlet {
 				String localVis = request.getParameter("tLocalVisita");
 
 				String cadLocalVis = cadLocal.cadastrarLocal(localVis);
-				String cR = cadReg.cadastrar(idVisitante, nomeVisitante, idReg,
+				String cR = cadReg.cadastrar(idVisitante, nomeVisitante,
 						data, hora, localVis);
 
 				writer.println("<p>" + cR + "</p>");

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: servlet.MainServletLinhaDeComando
+Name: servlet/MainServletLinhaDeComando.java
+Java-Bean: True
