@@ -1,4 +1,4 @@
-package conexao_dispositivo;
+package utilitarias_cadastro_manual;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
