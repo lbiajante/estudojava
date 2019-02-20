@@ -70,10 +70,27 @@ public class ValidaData {
 			dateS = dataFormatIn.parse(data);
 			SimpleDateFormat dataFormatOut = new SimpleDateFormat("dd/MM/yyyy");
 			dataToString = dataFormatOut.format(dateS);
+
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return dataToString;
+	}
+
+	public String hora(String h) {
+		String timeToString = null;
+		SimpleDateFormat timeFormatIn = new SimpleDateFormat("HHmm");
+		timeFormatIn.setLenient(false);
+		Date time;
+		try {
+			time = timeFormatIn.parse(h);
+			SimpleDateFormat timeFormatOut = new SimpleDateFormat("HH:mm");
+			timeToString = timeFormatOut.format(time);
+
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return timeToString;
 	}
 
 }

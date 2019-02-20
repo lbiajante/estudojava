@@ -23,6 +23,13 @@
 		<servlet-name>RecebeAtualizarServlet</servlet-name>
 		<servlet-class>servlet.RecebeAtualizarServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>ServletRegistroTerminal</display-name>
+		<servlet-name>ServletRegistroTerminal</servlet-name>
+		<servlet-class>registro_terminal.ServletRegistroTerminal</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>Atualizar</servlet-name>
 		<url-pattern>/Atualizar</url-pattern>
@@ -34,6 +41,10 @@
 	<servlet-mapping>
 		<servlet-name>RecebeAtualizarServlet</servlet-name>
 		<url-pattern>/RecebeAtualizarServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ServletRegistroTerminal</servlet-name>
+		<url-pattern>/ServletRegistroTerminal</url-pattern>
 	</servlet-mapping>
 	
 	
