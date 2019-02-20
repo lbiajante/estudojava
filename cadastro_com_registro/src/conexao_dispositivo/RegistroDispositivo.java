@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import registro.RegistroVisita;
+import utilitarias_cadastro_manual.FormataDataDispositivo;
 import conexao_cliente_manual.Gerenciador;
 
 public class RegistroDispositivo {
