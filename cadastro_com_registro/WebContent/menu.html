@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="UTF-8" />
+	<title>Listagem</title>
+
+	<link rel="stylesheet" type="text/css" href="_css/estilo.css" />
+	<link rel="stylesheet" href="_css/form.css" />
+</head>
+<script language="javascript" src="_javascript/lista.js"></script>
+
+<div id="interface">
+
+	<header id="cabecalho">
+
+		<nav id="menu">
+			<h1>Menu Principal</h1>
+			<form action=RecebeDadosServlet method='POST'>
+			<ul type="square">
+				<li><a href="cadastro.html" name='tlistagem' id='cCadastro' value='cadastro' onclick='RecebeDadosServlet'>Cadastro</a></li>
+				<li><a href="./RecebeDadosServlet" name='tlistagem' id='cRegistro' value='registro' onclick='RecebeDadosServlet'>Registro</a></li>
+				<li><a href="local.html" name='tlistagem' id='cLugar' value='lugar' onclick='RecebeDadosServlet'>Local</a></li>
+			</ul>
+
+			</form>
+		</nav>
+
+	</header>
+
+
+		<body id="titulo">
+		<h1>Bem Vindo ao Registro de Visitas</h1>
+
+		</body>
+</div>
+</html>

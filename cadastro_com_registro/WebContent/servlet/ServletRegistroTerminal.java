@@ -1,27 +1,36 @@
-package registro_terminal;
+package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import registro.CadastrarRegistro;
+
+@WebServlet("/ServletRegistroTerminal")  
 public class ServletRegistroTerminal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	CadastrarRegistro cadReg = new CadastrarRegistro();
 	private String local;
 	private String date;
 	private String horario;
-       
+    
     public ServletRegistroTerminal() {
         super();
     }
     
     public void recebeDadosMainTerminal (String lugar, String data, String hora){
+    	    	
     	local = lugar;
     	date = data;
     	horario = hora;    	
+    	//request
     }
 
     @Override
@@ -31,13 +40,19 @@ public class ServletRegistroTerminal extends HttpServlet {
     
     @Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-    	
-    	/*reg.setLocal(cld.cadastrarLocal(lugarS.get(i)));
-				reg.setData(fdd.data(dataS.get(i)));
-				reg.setHora(fdd.hora(horaS.get(i)));
-				reg.setIDpessoa(IdPessoa);
-				reg.setNomePessoa(nomePessoa);*/
+		PrintWriter writer = response.getWriter();
+
+    	 String localServlet = request.getParameter(local);
+    	 String dateServlet = request.getParameter(date);
+    	 String horarioServlet = request.getParameter(horario);
+    	 writer.println("<h1>Menu Principal</h1>");
+    	 writer.println("<p>" + localServlet + "</p>");
+    	//String resposta = cadReg.cadastrar(localServlet, dateServlet, horarioServlet);  	 
 	}
+    
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+    	
+    }
 
 }

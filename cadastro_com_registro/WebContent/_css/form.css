@@ -3,7 +3,6 @@
 form {
     width: 500px;
     margin: auto;
-
 }
 input, textarea {
     font-family: sans-serif;
@@ -15,10 +14,6 @@ input, textarea {
 input:hover, textarea:hover {
     background-color: #dddddd;
 }
-label.cadastro {
-    text-align: justify-all;
-}
-
 
 legends {
     color: #888888;
@@ -30,24 +25,18 @@ fieldset {
     border-color: #cecece;
     margin: 20px;
 }
-
-fieldset#cadastro {
-background: url("../_imagens/addressbook-icon.png") no-repeat 95% 95%;
-
+fieldset#sexo {
+    width: 150pt;
 }
-fieldset#registro{
-    background: url("../_imagens/alert-clock-icon.png") no-repeat 95% 95%;
+fieldset#usuario {
+background: url("../_imagens/icone-contato.png") no-repeat 95% 95%;
 }
-fieldset#local {
-    background: url("../_imagens/location.png")  no-repeat 95% 95%;
+fieldset#endereco{
+    background: url("../_imagens/icone-endereco.png") no-repeat 95% 95%;
 }
-fieldset#listar{
-    background: url("../_imagens/list-icon.png") no-repeat 95% 95%;
-
+fieldset#mensagem {
+    background: url("../_imagens/icone-mensagem.png") no-repeat 95% 95%;
 }
-fieldset#remover{
-    background: url("../_imagens/remove.png") no-repeat 95% 95%;
-}
-fieldset#atualizar {
-    background: url("../_imagens/update-button.png")  no-repeat 95% 95%;
+fieldset#pedidos{
+    background: url("../_imagens/icone-pagamento.png") no-repeat 95% 95%;
 }

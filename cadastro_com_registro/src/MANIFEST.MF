@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Main-Class: gerais.Main
-Class-Path: postgresql-42.2.5.jre7.jar
-Name: gerais/Main.java
+Main-Class: registro_terminal.MainRegistroTerminal
+Class-Path: ./libs/
+Name: registro_terminal/MainRegistroTerminal.java
 Java-Bean: True

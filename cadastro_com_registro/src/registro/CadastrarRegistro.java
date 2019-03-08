@@ -178,5 +178,41 @@ public class CadastrarRegistro {
 		return ("Registro adicionado!");
 
 	}
+	
+	public String cadastrar(String local, String data, String hora) {
+		
+		String pessoa = "UsuárioServlet";
+		String IdPessoa = "100000";
+		
+String sql = "INSERT INTO registro_de_visitas "
+				+ "(visitante, data_visita, hora_visita, id_pessoa, lugar) "
+				+ "values (?,?,?,?,?);";
+
+		try (PreparedStatement ps = ConectaBD.getConnection().prepareStatement(sql)) {
+			
+
+				reg.setLocal(cadLocal.cadastrarLocal(local));
+				reg.setData(data);
+				reg.setHora(hora);
+				reg.setIDpessoa(IdPessoa);
+				reg.setNomePessoa(pessoa);
+
+				ps.setString(1, reg.getNomePessoa());
+				ps.setString(2, reg.getData());
+				ps.setString(3, reg.getHora());
+				ps.setString(4, reg.getIDpessoa());
+				ps.setString(5, reg.getLocal());
+				ps.addBatch();
+			
+			ps.executeBatch();
+			ps.clearBatch();
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			
+		return ("Registro adicionado!");
+
+	}
 
 }

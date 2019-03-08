@@ -93,7 +93,7 @@ public class RecebeCadastroServlet extends HttpServlet {
 				splitVisitante = visitante.split(",");
 				String idVisitante = splitVisitante[0];
 				String nomeVisitante = splitVisitante[1];
-				String idReg = request.getParameter("tIdPessoaRegistro");
+		//		String idReg = request.getParameter("tIdPessoaRegistro");
 				String data = request.getParameter("tDataVisita");
 				String hora = request.getParameter("tHoraVisita");
 				String localVis = request.getParameter("tLocalVisita");
